@@ -33,7 +33,7 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 | VLAN ID  | Nom du VLAN | Catégorie | Usage |
 |----------|-------------|-----------|-------|
-| 1        | *Supprimé* | Sécurité | Non utilisé  |
+| 1        | *Supprimé* | - | Non utilisé  |
 | 10       | VLAN-DEV | Utilisateurs | Développement logiciel |
 | 20       | VLAN-COMMERCIAL | Utilisateurs | Service Commercial | 
 | 30       | VLAN-COMMUNICATION | Utilisateurs | Communication et RP | 
@@ -269,4 +269,5 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 **Protection infrastructure :**
 - VLAN Administration dédié (99) pour la gestion
 - VLANs backup non accessibles directement
+
 
