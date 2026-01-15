@@ -1,5 +1,18 @@
 # Infrastructure - Services
 
+Sommaire :  
+1) [Introduction](#1-introduction)  
+2) [Liste des services déployés](#2-liste-des-services-déployés)  
+    - [Active Directory Domain Services](#21-active-directory-domain-services-ad-ds)  
+    - [Domain Name System](#22-domain-name-system-dns)  
+    - [Dynamic Host Configuration Protocol](#23-dynamic-host-configuration-protocol-dhcp)  
+    - [Serveur de fichiers](#24-serveur-de-fichiers)  
+    - [Group Policy Management](#25-group-policy-management-gpo)  
+    - [Windows Server Update Services](#26-windows-server-update-services-wsus)  
+3) [Ordre logique de mise en place](#3-ordre-logique-de-mise-en-place)
+
+---  
+
 ## 1. Introduction
 
 Ce document présente la vue globale des services qui seront déployés dans l'infrastructure de BillU. Il décrit le rôle de chaque service, leurs interdépendances et leur ordre logique de mise en place.
@@ -128,4 +141,5 @@ L'ordre de déploiement suivant respecte les dépendances techniques entre servi
 8. **Sauvegarde** - protection des données
 9. **Serveur d'impression** - gestion des imprimantes
 10. **Services optionnels** (RDS, VPN) - selon planification
+
 
