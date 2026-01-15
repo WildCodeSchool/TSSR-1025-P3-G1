@@ -35,15 +35,14 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 |----------|-------------|-----------|-------|
 | 1        | *Supprimé* | - | Non utilisé  |
 | 10       | VLAN-DEV | Utilisateurs | Développement logiciel |
-| 20       | VLAN-COMMERCIAL | Utilisateurs | Service Commercial | 
-| 30       | VLAN-COMMUNICATION | Utilisateurs | Communication et RP | 
+| 20       | VLAN-COMMER | Utilisateurs | Service Commercial | 
+| 30       | VLAN-COMMU | Utilisateurs | Communication et RP | 
 | 40       | VLAN-VOIP | Fonctionnel | Téléphonie IP |  
-| 50       | VLAN-JURIDIQUE | Utilisateurs | Département Juridique | 
+| 50       | VLAN-JURI | Utilisateurs | Département Juridique | 
 | 60       | VLAN-DSI | Utilisateurs | DSI | 
 | 70       | VLAN-COMPTA | Utilisateurs | Comptabilité et Finance | 
-| 80       | VLAN-DIRECTION | Utilisateurs | Direction | 
+| 80       | VLAN-DIREC | Utilisateurs | Direction | 
 | 90       | VLAN-IMPRESSION | Fonctionnel | Services d'impression |
-| 99       | VLAN-ADMIN | Infrastructure | Administration infrastructure | 
 | 100      | VLAN-QHSE | Utilisateurs | Département QHSE |
 | 110      | VLAN-RH | Utilisateurs | Ressources Humaines | 
 
@@ -51,25 +50,15 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 | VLAN ID  | Nom du VLAN | Usage |
 |----------|-------------|-------|
-| 200      | VLAN-SERVEURS | Serveurs principaux (AD, DNS, DHCP)| 
-| 210      | VLAN-FICHIERS | Serveur de fichiers| 
-| 220      | VLAN-MESSAGERIE | Serveur de messagerie| 
-| 230      | VLAN-GLPI | Serveur GLPI (ticketing)| 
+| 120      | VLAN-SERVEUR-AD | Serveurs Active Directory (AD, DNS, DHCP)| 
+| 130      | VLAN-SERVEURS | Serveurs messagerie, fichiers, GLPI, BDD| 
 
-### Zone Serveurs - VLANs Backup
+### Zone Administration et Invités
 
 | VLAN ID  | Nom du VLAN | Usage |
 |----------|-------------|-------|
-| 300      | VLAN-BKP-SERVEURS | Backup serveurs principaux | 
-| 310      | VLAN-BKP-FICHIERS | Backup serveur fichiers| 
-| 320      | VLAN-BKP-MESSAGERIE | Backup messagerie| 
-| 330      | VLAN-BKP-GLPI | Backup GLPI| 
-
-### Zone Invités
-
-| VLAN ID  | Nom du VLAN | Usage |
-|----------|-------------|-------|
-| 400      | VLAN-INVITE | Réseau invité isolé | 
+| 140      | VLAN-INVITE | Réseau invité isolé | 
+| 150      | VLAN-ADMIN | Administration infrastructure | 
 
 ---  
 
@@ -113,10 +102,6 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 - **Fonction :** Imprimantes et copieurs réseau
 - **Usage :** Impression départementale
 
-#### VLAN 99 - Administration infrastructure
-- **Fonction :** Gestion des équipements réseau et serveurs
-- **Usage :** Interfaces d'administration (switches, firewalls, hyperviseurs)
-
 #### VLAN 100 - QHSE
 - **Utilisateurs :** Équipe qualité (3 services)
 - **Usage :** Documentation qualité et certifications
@@ -125,35 +110,25 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 - **Utilisateurs :** Service RH et recrutement
 - **Usage :** SIRH et gestion des données personnelles
 
-### VLANs Serveurs - Production (200-230)
+### VLANs Serveurs - Production (120-130)
 
-#### VLAN 200 - Serveurs principaux
+#### VLAN 120 - Serveurs Active Directory
 - **Fonction :** Services d'annuaire et réseau de base
 - **Usage :** Active Directory, DNS, DHCP
 
-#### VLAN 210 - Serveur de fichiers
-- **Fonction :** Stockage centralisé
-- **Usage :** Partages de fichiers départementaux
+#### VLAN 130 - Serveurs métier
+- **Fonction :** Services applicatifs et stockage
+- **Usage :** Messagerie, fichiers, GLPI, bases de données
 
-#### VLAN 220 - Serveur de messagerie
-- **Fonction :** Messagerie interne
-- **Usage :** Service de mail d'entreprise
+### VLANs Administration et Invités (140-150)
 
-#### VLAN 230 - Serveur GLPI
-- **Fonction :** Gestion des incidents et assets IT
-- **Usage :** Ticketing et inventaire
-
-### VLANs Serveurs - Backup (300-330)
-
-#### VLAN 300 à 330 - Zone de sauvegarde
-- **Fonction :** Infrastructure de backup
-- **Usage :** Réplication et sauvegarde des serveurs de production
-
-### VLAN Invité (400)
-
-#### VLAN 400 - Réseau invité
+#### VLAN 140 - Réseau invité
 - **Fonction :** Accès internet pour visiteurs
 - **Usage :** Connexion temporaire invités et partenaires
+
+#### VLAN 150 - Administration infrastructure
+- **Fonction :** Gestion des équipements réseau et serveurs
+- **Usage :** Interfaces d'administration (switches, firewalls, hyperviseurs)
 
 ---  
 
@@ -164,22 +139,19 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 **Architecture générale :**
 - Les VLANs utilisateurs communiquent avec les VLANs serveurs selon leurs besoins métier
 - La DSI dispose d'accès complets pour l'administration
-- Les VLANs backup sont isolés (accès admin uniquement)
 - Le VLAN invité est complètement isolé du réseau interne
 
 ### Matrice de flux simplifiée
 
 | Source | Destination | Type de flux | Règle |
 |--------|-------------|--------------|-------|
-| VLANs utilisateurs | VLAN Serveurs (200-230) | Services métier (AD, fichiers, mail, GLPI) | Autorisé |
+| VLANs utilisateurs | VLAN Serveurs (120-130) | Services métier (AD, fichiers, mail, GLPI) | Autorisé |
 | VLANs utilisateurs | VLAN Impression | Services d'impression | Autorisé |
 | VLANs utilisateurs | Internet | Navigation et services cloud | Autorisé |
 | VLAN DSI | VLAN Admin | Administration infrastructure | Autorisé |
 | VLAN DSI | Tous VLANs | Support et administration | Autorisé |
-| VLANs Serveurs production | VLANs Backup | Réplication et sauvegarde | Autorisé |
 | VLAN Invité | Internet | Navigation web | Autorisé |
 | VLAN Invité | VLANs internes | Tous | **Interdit** |
-| VLANs utilisateurs | VLANs backup | Tous | **Interdit** |
 | VLANs utilisateurs | VLAN Admin | Administration | **Interdit** (sauf DSI) |
 
 
@@ -202,7 +174,7 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Architecture de routage :**
 - Switch L3 core assure le routage entre tous les VLANs internes
-- Séparation logique entre zones (utilisateurs / serveurs / backup / invités)
+- Séparation logique entre zones (utilisateurs / serveurs / invités)
 - Firewall périmétrique pour la sortie internet et filtrage externe
 
 ### Passerelle Internet
@@ -230,7 +202,6 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 - VLANs utilisateurs : dimensionnés selon effectifs départementaux
 - VLAN VoIP : dimensionnement large, tous les utilisateurs de l'entreprise
 - VLANs serveurs : sous-réseaux de petite taille
-- VLANs backup : sous-réseaux de petite taille
 
 ---  
 
@@ -258,7 +229,6 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 **Segmentation :**
 - Isolation stricte par VLANs départementaux
 - VLAN 1 désactivé 
-- Zone backup isolée (pas d'accès utilisateurs)
 - VLAN invité totalement séparé du réseau interne
 
 **Contrôle d'accès :**
@@ -267,7 +237,4 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 - Principe du moindre privilège (flux autorisés au strict nécessaire)
 
 **Protection infrastructure :**
-- VLAN Administration dédié (99) pour la gestion
-- VLANs backup non accessibles directement
-
-
+- VLAN Administration dédié (150) pour la gestion
