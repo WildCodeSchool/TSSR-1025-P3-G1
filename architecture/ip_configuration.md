@@ -1,5 +1,17 @@
 # Architecture - Configuration IP
 
+Sommaire : 
+1) [Vue d'ensemble du plan d'adressage](#1-vue-densemble-du-plan-dadressage)
+2) [Configuration IP par VLAN](#2-configuration-ip-par-vlan)
+3) [Configuration IP des équipements réseau](#3-configuration-ip-des-équipements-réseau)
+4) [Configuration DHCP](#4-configuration-dhcp)
+5) [Configuration DNS](#5-configuration-dns)
+6) [Récapitulatif de l'utilisation des adresses](#6-récapitulatif-de-lutilisation-des-adresses)
+7) [Documentation des réservations DHCP](#7-documentation-des-réservations-dhcp)
+8) [Plan de migration](#8-plan-de-migration)
+
+---  
+
 ## 1. Vue d'ensemble du plan d'adressage
 
 ### Objectifs du plan d'adressage
@@ -339,4 +351,5 @@
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
