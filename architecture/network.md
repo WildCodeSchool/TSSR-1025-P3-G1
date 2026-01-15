@@ -1,5 +1,18 @@
 # Architecture - Réseau
 
+Sommaire :  
+1) [Vue d'ensemble du réseau](#1-vue-densemble-du-réseau)  
+2) [Découpage en zones réseau](#2-découpage-en-zones-réseau)  
+3) [Rôle de chaque VLAN](#3-rôle-de-chaque-vlan)  
+4) [Flux principaux entre zones](#4-flux-principaux-entre-zones)  
+5) [Schéma réseau logique](#5-schéma-réseau-logique)  
+6) [Principes de routage et filtrage](#6-principes-de-routage-et-filtrage)  
+7) [Adressage réseau](#7-adressage-réseau)  
+8) [Équipements réseau](#8-équipements-réseau)  
+9) [Sécurité réseau](#9-sécurité-réseau)
+
+---  
+
 ## 1. Vue d'ensemble du réseau
 
 ### Contexte actuel
@@ -238,3 +251,4 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Protection infrastructure :**
 - VLAN Administration dédié (150) pour la gestion
+
