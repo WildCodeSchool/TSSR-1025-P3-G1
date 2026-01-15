@@ -101,44 +101,45 @@ Ainsi que la topologie du réseau.
 
 ### 1.5 Estimation du temps par objectifs
 
-- **Objectif 1**:
+- Objectif 1: **1.5 JH**
 
-- **Objectif 2**:
+- Objectif 2: **0.5 JH**
 
-- **Objectif 3**:
+- Objectif 3: **9 JH**
 
-- **Objectif 4**:
+- Objectif 4: **3 JH**
 
-- **Objectif 5**:
+- Objectif 5: **0.6 JH**
 
 ### 1.6 Estimation du temps par tâches
 
 - **Objectif 1**:
-			- Tâche 1 :
-			- Tâche 2 :
-			- Tâche 3 :
-			- Tâche 4 :
+			- Tâche 1 : **0.5 JH** 
+			- Tâche 2 : **0.4 JH**
+			- Tâche 3 : **0.3 JH**
+			- Tâche 4 : **0.3 JH**
 
 - **Objectif 2**:
-			- Tâche 1 :
-			- Tâche 2 :
+			- Tâche 1 : **0.2 JH**
+			- Tâche 2 : **0.3 JH**
 
 - **Objectif 3**:
-			- Tâche 1 :
-			- Tâche 2 :
-			- Tâche 3 :
-			- Tâche 4 :
-			- Tâche 5 :
-			- Tâche 6 :
+			- Tâche 1 : **1.5 JH**
+			- Tâche 2 : **1.5 JH**
+			- Tâche 3 : **4 JH**
+			- Tâche 4 : **1 JH**
+			- Tâche 5 : **0.5 JH**
+			- Tâche 6 : **0.5 JH**
 
 - **Objectif 4**:
-			- Tâche 1 :
+			- Tâche 1 : **3 JH**
 
 - **Objectif 5**:
-			- Tâche 1 :
+			- Tâche 1 : **0.6 JH**
 
 ### 1.7 Synthèse
 
+![](sprints/Ressources/Synthese_sprint_1.png)
 
 ## 2. Sprint 2
 

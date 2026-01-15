@@ -1,11 +1,11 @@
 ## Sommaire
 
-1. [Les objectifs pris par le groupe sur le sprint 1](app://obsidian.md/index.html#1-lesobjectifsprisparlegroupesurlesprint1)
-2. [La finalité de ces objectifs à la fin du sprint](app://obsidian.md/index.html#2-pr%C3%A9la-finalite-de-ces-objectifs-a-la-fin-du-sprint)
-3. [Membres du groupe du sprint 1](app://obsidian.md/index.html#3-membres-du-groupe-du-sprint-1)
-4. [Les problèmes rencontrés](app://obsidian.md/index.html#4-pr%C3%A9les-problemes-rencontres)
-5. [Les décisions techniques](app://obsidian.md/index.html#5-les-decisions-techniques)
-6. [Ce qu'il reste à faire](app://obsidian.md/index.html#6-ce-quil-reste-a-faire)
+1. [Les objectifs pris par le groupe sur le sprint 1](#1-lesobjectifsprisparlegroupesurlesprint1)
+2. [La finalité de ces objectifs à la fin du sprint](#2-la-finalite-de-ces-objectifs-a-la-fin-du-sprint)
+3. [Membres du groupe du sprint 1](#3-membres-du-groupe-du-sprint-1)
+4. [Les problèmes rencontrés](#4-pr%C3%A9les-problemes-rencontres)
+5. [Les décisions techniques](#5-les-decisions-techniques)
+6. [Ce qu'il reste à faire](#6-ce-quil-reste-a-faire)
 
 
 # 1. Les objectifs pris par le groupe sur le sprint
@@ -18,7 +18,8 @@
 
 # 2. La finalité de ces objectifs à la fin du sprint
 
-
+Nous avons atteints les objectifs 1-2-4-5 à 100%
+L'objectif 3 est atteins à 50 %
 
 # 3. Membres du groupe du sprint 1
 
@@ -29,7 +30,7 @@
 | Matthias  | Technicien |
 # 4. Les problèmes rencontrés
 
-
+Au cours de ce premier sprint, notre équipe a rencontré un point de blocage majeur concernant l'adressage IP du réseau de l'entreprise BillU. Des divergences d'interprétation sont apparues entre les trois membres du groupe sur la stratégie de découpage et d'attribution des plages d'adresses IP. Face à ce blocage technique, nous avons sollicité l'intervention de notre formateur qui nous a permis de clarifier les bonnes pratiques en matière de plan d'adressage IP et de débloquer la situation. Cette intervention nous a permis de progresser sur la rédaction du fichier IP_configuration.md et d'établir une topologie réseau cohérente.
 
 # 5. Les décisions techniques
 
@@ -42,7 +43,7 @@ La Partie matérielle :
 	- 1 BDD : optionnel
 	- 1 Laptop
 	- 1 Switch L2
-	- 1 Switcht L3
+	- 2 Switcht L3
 	- 1 PFSENSE : routeur , VPN
 	- 1 Serveur de messagerie
 
@@ -66,4 +67,13 @@ La Partie matérielle :
 
 # 6. Ce qu'il reste à faire 
 
+Les tâches suivantes n'ont pas pu être finalisées durant ce Sprint 1 :
 
+- **Adressage IP statique :**
+    - Lister tous les équipements nécessitant une IP fixe
+    - Définir les plages d'adresses réservées
+    - Documenter l'attribution dans IP_configuration.md
+- **Complétion de la documentation :**
+    - Finaliser certaines sections des fichiers HLD
+    - Compléter les fichiers LLD
+    - Enrichir les procédures d'installation et de configuration
