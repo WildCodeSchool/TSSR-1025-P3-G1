@@ -74,8 +74,8 @@
 BillU connaît une phase de croissance importante. Un partenariat stratégique est actuellement en cours de négociation et pourrait aboutir dans les prochains mois. Cette évolution, combinée à l'augmentation des effectifs et aux enjeux de sécurité liés au secteur de la facturation, nécessite une refonte complète de l'infrastructure réseau actuelle.
 
 L'infrastructure doit être capable de :
-- Supporter la croissance des effectifs et l'extension potentielle (partenariat)
-- Garantir la sécurité des données sensibles (facturation, données clients, propriété intellectuelle)
+- Supporter la croissance des effectifs et l'extension potentielle 
+- Garantir la sécurité des données sensibles 
 - Faciliter la collaboration inter-départements et avec de futurs partenaires
 - Répondre aux exigences de conformité réglementaire (RGPD, protection des données)
 
@@ -129,4 +129,5 @@ L'infrastructure doit être capable de :
 
 
 ## 5. Public cible
+
 
