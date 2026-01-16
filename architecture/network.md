@@ -25,7 +25,6 @@ Sommaire :
 
 **Nouvelle infrastructure :**
 - Réseau segmenté par VLANs (départements/services)
-- Plage réseau globale : 172.16.0.0/22
 - Équipements réseau professionnels
 - Architecture évolutive
 
@@ -172,7 +171,7 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 ## 5. Schéma réseau logique
 
-![Schéma réseau logique]()
+![image infra](ressources/topology.png)
 
 
 ---  
@@ -182,21 +181,21 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 ### Routage inter-VLANs
 
 **Approche retenue :**
-- Routage sur switch L3 core
+- Routage sur routeur core
 
 
 **Architecture de routage :**
-- Switch L3 core assure le routage entre tous les VLANs internes
+- Routeur core assure le routage entre tous les VLANs internes
 - Séparation logique entre zones (utilisateurs / serveurs / invités)
 - Firewall périmétrique pour la sortie internet et filtrage externe
 
 ### Passerelle Internet
 
 **Configuration générale :**
-- Firewall périmétrique pour la sortie internet (ou routeur dédié)
-- NAT pour tous les VLANs (masquage d'adresses internes)
+- Firewall périmétrique pour la sortie internet 
+- NAT pour tous les VLANs
 - Filtrage des flux entrants/sortants vers internet
-- Connexion entre switch L3 core et firewall/box internet
+- Connexion entre le Routeur Core et firewall/box internet
 
 ---  
 
@@ -206,7 +205,6 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 ### Plan d'adressage global
 
-- **Plage globale retenue :** 172.16.0.0/22 (1024 adresses disponibles)
 - **Répartition :** Un sous-réseau par VLAN, dimensionné selon les besoins
 - **Réserves :** Anticipation de la croissance et du partenariat futur
 
@@ -251,3 +249,4 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Protection infrastructure :**
 - VLAN Administration dédié (150) pour la gestion
+
