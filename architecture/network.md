@@ -228,7 +228,8 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Rôle de chaque niveau :**
 - **Firewall/Routeur périmétrique** : filtrage internet, NAT, première barrière de sécurité
-- **Switch L3 core** : routage inter-VLANs (cœur de l'architecture réseau interne)
+- **Routeur core** : routage inter-VLANs (cœur de l'architecture réseau interne)
+- **Switch L3 Distribution : switch de distribution aux switch L2 access
 - **Switches L2 access** : distribution VLANs aux postes utilisateurs
 
 ---  
@@ -249,5 +250,6 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Protection infrastructure :**
 - VLAN Administration dédié pour la gestion
+
 
 
