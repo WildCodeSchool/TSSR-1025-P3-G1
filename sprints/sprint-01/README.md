@@ -3,9 +3,9 @@
 1. [Les objectifs pris par le groupe sur le sprint 1](#1-lesobjectifsprisparlegroupesurlesprint1)
 2. [La finalité de ces objectifs à la fin du sprint](#2-la-finalite-de-ces-objectifs-a-la-fin-du-sprint)
 3. [Membres du groupe du sprint 1](#3-membres-du-groupe-du-sprint-1)
-4. [Les problèmes rencontrés](#4-pr%C3%A9les-problemes-rencontres)
+4. [Les problèmes rencontrés](#4-les-problemes-rencontres)
 5. [Les décisions techniques](#5-les-decisions-techniques)
-6. [Ce qu'il reste à faire](#6-ce-quil-reste-a-faire)
+6. [Ce qu'il reste à faire](#6-ce-quil-reste-à-faire)
 
 
 # 1. Les objectifs pris par le groupe sur le sprint
@@ -30,7 +30,7 @@ L'objectif 3 est atteins à 50 %
 | Matthias  | Technicien |
 # 4. Les problèmes rencontrés
 
-Au cours de ce premier sprint, notre équipe a rencontré un point de blocage majeur concernant l'adressage IP du réseau de l'entreprise BillU. Des divergences d'interprétation sont apparues entre les trois membres du groupe sur la stratégie de découpage et d'attribution des plages d'adresses IP. Face à ce blocage technique, nous avons sollicité l'intervention de notre formateur qui nous a permis de clarifier les bonnes pratiques en matière de plan d'adressage IP et de débloquer la situation. Cette intervention nous a permis de progresser sur la rédaction du fichier IP_configuration.md et d'établir une topologie réseau cohérente.
+Au cours de ce premier sprint, notre équipe a rencontré un point de blocage majeur concernant l'adressage IP du réseau de l'entreprise BillU. Face à ce blocage technique, nous avons sollicité l'intervention de notre formateur qui nous a permis de clarifier les bonnes pratiques en matière de plan d'adressage IP et de débloquer la situation. Cette intervention nous a permis de progresser sur la rédaction du fichier IP_configuration.md et d'établir une topologie réseau cohérente.
 
 # 5. Les décisions techniques
 

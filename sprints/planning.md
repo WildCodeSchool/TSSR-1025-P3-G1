@@ -139,7 +139,8 @@ Ainsi que la topologie du réseau.
 
 ### 1.7 Synthèse
 
-![](sprints/Ressources/Synthese_sprint_1.png)
+![image synthese](Ressources/Synthese_sprint_1.png)
+
 
 ## 2. Sprint 2
 
