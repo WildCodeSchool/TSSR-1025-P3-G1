@@ -23,7 +23,7 @@ Le projet consiste en la refonte totale de l'infrastructure de la société **Bi
 
 ## 2. Schéma Global de l'infrastructure
 
-![image infra]()
+![image infra](ressources/topology.png)
 
 ---  
 
@@ -49,3 +49,4 @@ Le projet consiste en la refonte totale de l'infrastructure de la société **Bi
 [Lien vers document IP_Configuration.md](ip_configuration.md)  
 [Lien vers document Security.md](security.md)  
 [Lien vers document Services.md](services.md)
+
