@@ -25,7 +25,6 @@ Sommaire :
 
 **Nouvelle infrastructure :**
 - Réseau segmenté par VLANs (départements/services)
-- Plage réseau globale : 172.16.0.0/22
 - Équipements réseau professionnels
 - Architecture évolutive
 
@@ -251,4 +250,5 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Protection infrastructure :**
 - VLAN Administration dédié (150) pour la gestion
+
 
