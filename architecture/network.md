@@ -223,6 +223,7 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 **Équipements principaux nécessaires :**
 - Firewall périmétrique (routeur) : sécurité internet, NAT
 - Routeur cœur de réseau : routage inter-VLANs, distribution, agrégation
+- Switch L3 : Distribution
 - Switches d'accès (L2 manageables) : connexion postes utilisateurs, segmentation VLANs
 - Points d'accès WiFi : couverture wifi sécurisée
 
@@ -250,6 +251,7 @@ Segmentation du réseau par département pour améliorer la sécurité et facili
 
 **Protection infrastructure :**
 - VLAN Administration dédié pour la gestion
+
 
 
 
