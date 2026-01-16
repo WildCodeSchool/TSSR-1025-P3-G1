@@ -3,9 +3,9 @@
 1. [Les objectifs pris par le groupe sur le sprint 1](#1-lesobjectifsprisparlegroupesurlesprint1)
 2. [La finalité de ces objectifs à la fin du sprint](#2-la-finalite-de-ces-objectifs-a-la-fin-du-sprint)
 3. [Membres du groupe du sprint 1](#3-membres-du-groupe-du-sprint-1)
-4. [Les problèmes rencontrés](#4-pr%C3%A9les-problemes-rencontres)
+4. [Les problèmes rencontrés](#4-les-problèmes-rencontrés)
 5. [Les décisions techniques](#5-les-decisions-techniques)
-6. [Ce qu'il reste à faire](#6-ce-quil-reste-a-faire)
+6. [Ce qu'il reste à faire](#6-ce-quil-reste-à-faire)
 
 
 # 1. Les objectifs pris par le groupe sur le sprint
