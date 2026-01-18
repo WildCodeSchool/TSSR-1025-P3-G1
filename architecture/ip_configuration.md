@@ -261,7 +261,7 @@ Sommaire :
 |------------|-----------|------|------------|--------|------------|
 | **Firewall/Routeur** | LAN | 150 | 172.16.15.1 | /26 | - |
 | | WAN | - | IP Publique FAI | - | Box FAI |
-| **Switch L3 Core** | Management | 150 | 172.16.15.2 | /26 | 172.16.15.62 |
+| **Routeur Core** | Management | 150 | 172.16.15.2 | /26 | 172.16.15.62 |
 | | VLAN 10 | 10 | 172.16.1.254 | /24 | - |
 | | VLAN 20 | 20 | 172.16.2.62 | /26 | - |
 | | VLAN 30 | 30 | 172.16.3.62 | /26 | - |
@@ -351,4 +351,5 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
