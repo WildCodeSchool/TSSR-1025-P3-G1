@@ -39,7 +39,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.1.253 |
 | **Passerelle par défaut** | 172.16.1.254 |
 | **Adresse de broadcast** | 172.16.1.255 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 20 - Service Commercial (COMMER)
 
@@ -53,7 +53,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.2.61 |
 | **Passerelle par défaut** | 172.16.2.62 |
 | **Adresse de broadcast** | 172.16.2.63 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 30 - Communication et RP (COMMU)
 
@@ -67,7 +67,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.3.61 |
 | **Passerelle par défaut** | 172.16.3.62 |
 | **Adresse de broadcast** | 172.16.3.63 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 40 - Téléphonie IP (VOIP)
 
@@ -81,7 +81,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.4.253 |
 | **Passerelle par défaut** | 172.16.4.254 |
 | **Adresse de broadcast** | 172.16.4.255 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 50 - Département Juridique (JURI)
 
@@ -95,7 +95,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.5.29 |
 | **Passerelle par défaut** | 172.16.5.30 |
 | **Adresse de broadcast** | 172.16.5.31 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 60 - DSI
 
@@ -109,7 +109,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.6.29 |
 | **Passerelle par défaut** | 172.16.6.30 |
 | **Adresse de broadcast** | 172.16.6.31 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 70 - Comptabilité et Finance (COMPTA)
 
@@ -123,7 +123,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.7.29 |
 | **Passerelle par défaut** | 172.16.7.30 |
 | **Adresse de broadcast** | 172.16.7.31 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 80 - Direction (DIREC)
 
@@ -137,7 +137,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.8.13 |
 | **Passerelle par défaut** | 172.16.8.14 |
 | **Adresse de broadcast** | 172.16.8.15 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 90 - Services d'impression (IMPRESSION)
 
@@ -151,7 +151,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.9.13 |
 | **Passerelle par défaut** | 172.16.9.14 |
 | **Adresse de broadcast** | 172.16.9.15 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 100 - QHSE
 
@@ -165,7 +165,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.10.13 |
 | **Passerelle par défaut** | 172.16.10.14 |
 | **Adresse de broadcast** | 172.16.10.15 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 110 - Ressources Humaines (RH)
 
@@ -179,7 +179,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.11.5 |
 | **Passerelle par défaut** | 172.16.11.6 |
 | **Adresse de broadcast** | 172.16.11.7 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 ---
 
@@ -197,7 +197,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.12.5 |
 | **Passerelle par défaut** | 172.16.12.6 |
 | **Adresse de broadcast** | 172.16.12.7 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 
 
@@ -213,7 +213,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.13.5 |
 | **Passerelle par défaut** | 172.16.13.6 |
 | **Adresse de broadcast** | 172.16.13.7 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 
 ---
@@ -246,7 +246,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.15.61 |
 | **Passerelle par défaut** | 172.16.15.62 |
 | **Adresse de broadcast** | 172.16.15.63 |
-| **Serveur DNS** | 172.16.12.2 |
+| **Serveur DNS** | 172.16.12.1 |
 
 **Affectation des équipements d'infrastructure :**
 
@@ -351,6 +351,7 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
 
