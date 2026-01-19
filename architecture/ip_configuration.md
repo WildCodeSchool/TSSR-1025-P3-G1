@@ -39,7 +39,7 @@ Sommaire :
 | **Dernière adresse utilisable** | 172.16.1.253 |
 | **Passerelle par défaut** | 172.16.1.254 |
 | **Adresse de broadcast** | 172.16.1.255 |
-| **Serveur DNS** | À définir (serveurs AD) |
+| **Serveur DNS** | 172.16.12.2 |
 
 #### VLAN 20 - Service Commercial (COMMER)
 
@@ -351,6 +351,7 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
 
