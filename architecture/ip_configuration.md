@@ -248,7 +248,34 @@ Sommaire :
 | **Adresse de broadcast** | 172.16.15.63 |
 | **Serveur DNS** | 172.16.12.1 |
 
-**Affectation des équipements d'infrastructure :**
+**Affectation des équipements serveurs :**
+
+| Équipement | Interface | Adresse IP Fixe | Masque | Passerelle | 
+| --- | --- | --- | --- | --- |
+| ADDS | VLAN 120 | 172.16.12.1 | 255.255.255.248 | 172.16.12.6 |
+| DHCP | VLAN 120 | 172.16.12.2 | 255.255.255.248 | 172.16.12.6 |
+| Serveur | VLAN 130 | 172.16.13.1 | 255.255.255.248 | 172.16.13.6 |
+
+
+**Affectation des équipements impression :** 
+
+| Équipement | Interface | Département | Adresse IP Fixe | Masque | Passerelle | 
+| --- | --- | --- | --- | --- | --- |
+| Imprimante | VLAN 90 | DEV |172.16.9.1 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | COMMERCIAL |172.16.9.2 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | COMMUNICATION |172.16.9.3 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | JURIDIQUE |172.16.9.4 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | DSI |172.16.9.5 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | DIRECTION |172.16.9.6 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | COMPTABILITÉ |172.16.9.7 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | QHSE |172.16.9.8 | 255.255.255.240 | 172.16.9.14 |
+| Imprimante | VLAN 90 | RH |172.16.9.9 | 255.255.255.240 | 172.16.9.14 |
+
+**Affectation des équipements VoIP :** 
+| Équipement | Interface | Département | Adresse IP Fixe | Masque | Passerelle | 
+| --- | --- | --- | --- | --- | --- |
+
+
 
 
 ---
@@ -259,9 +286,11 @@ Sommaire :
 
 | Équipement | Interface | VLAN | Adresse IP | Masque | Passerelle |
 |------------|-----------|------|------------|--------|------------|
-| **Firewall/Routeur** | LAN | 150 | 172.16.15.1 | /26 | - |
-| | WAN | - | IP Publique FAI | - | Box FAI |
-| **Routeur Core** | Management | 150 | 172.16.15.2 | /26 | 172.16.15.62 |
+| pfSense1 | WAN | - | IP Publique FAI | - | Box FAI |
+| | LAN-DMZ | - | 10.10.10.7 | /29 |  |
+| pfSense2 | LAN-DMZ | - | 10.10.10.6 | /29 | |
+| | LAN | - | 172.16.0.254 | /24 |   |
+| Router Core | Management | 150 | 172.16.15.2 | /26 | 172.16.15.62 |
 | | VLAN 10 | 10 | 172.16.1.254 | /24 | - |
 | | VLAN 20 | 20 | 172.16.2.62 | /26 | - |
 | | VLAN 30 | 30 | 172.16.3.62 | /26 | - |
@@ -351,6 +380,7 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
 
