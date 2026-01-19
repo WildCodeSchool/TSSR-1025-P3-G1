@@ -53,23 +53,23 @@ Convention :
 
 | Éléments | Description |
 |-------|----------|
-| SRV | Machine serveur |
+| DOM | Machine serveur |
 | ROLE | Rôle principal du serveur |
 | ID | Numéro unique |
 
 #### Exemples 
-- SRV-AD-01
-- SRV-FILE-01
-- SRV-GLPI-01
-- SRV-BACKUP-01
+- DOM-AD-01
+- DOM-FILE-01
+- DOM-GLPI-01
+- DOM-BACKUP-01
 
 ### 4.2. Serveurs du projet
 | Nom | Rôle |
 |-------|------|
-| SRV-AD-01 | Contrôleur de domaine / DNS |
-| SRV-FILE-01 | Serveur de fichiers |
-| SRV-GLPI-01 | Serveur GLPI |
-| SRV-BACKUP-01 | Serveur de sauvegarde |
+| DOM-AD-01 | Contrôleur de domaine / DNS |
+| DOM-FILE-01 | Serveur de fichiers |
+| DOM-GLPI-01 | Serveur GLPI |
+| DOM-BACKUP-01 | Serveur de sauvegarde |
 
 ---
 
@@ -125,16 +125,16 @@ Les comptes utilisateurs sont personnels et non partagés.
 Les comptes administrateur sont distincts des comptes utilisateurs standards.
 Ils ne sont pas utilisés pour la messagerie ou la navigation.
 
-`admin.prenom.nom`
+`prenom.nom.admin`
 
 ##### Exemples
-- `admin.matthias.chicaud`
+- `matthias.chicaud.admin`
 
 ### 6.2. Comptes utilisateurs
 | Type | Nom |
 |-------|----------|
 | Utilisateur | matthias.chicaud |
-| Administrateur | admin.matthias.chicaud |
+| Administrateur | matthias.chicaud.admin |
 ---
 
 ## 7. Nommage des groupes Active Directory
@@ -183,14 +183,14 @@ Convention :
 ### 9.1. Convention générale
 
 Convention :
-`GPO-<CIBLE>-<ROLE>`
+`<ETAT>-<CIBLE>-<ROLE>`
 
 #### Exemples :
 
-- GPO-USERS-SECURITY
-- GPO-COMPUTERS-HARDENING
-- GPO-USERS-PROXY
-- GPO-COMPUTERS-UPDATES
+- TEST-USERS-SECURITY
+- TEST-COMPUTERS-HARDENING
+- PROD-USERS-PROXY
+- PROD-COMPUTERS-UPDATES
 
 ---
 
