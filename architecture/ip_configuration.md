@@ -290,7 +290,7 @@ Sommaire :
 | pfSense | LAN-DMZ | - | 10.10.11.1 | /29 | 
 | pfSense | LAN | - | 10.10.10.1 | /30 | 
 | Router Core | LAN | -| 10.10.10.2 | /30 | 
-| Router Core | LAN-INTERNE | - | 172.16.15.62 | /26 | 
+| Router Core | LAN-INTERNE | - | 172.16.0.254 | /24 | 
 | | VLAN 10 | 10 | 172.16.1.254 | /24 | 
 | | VLAN 20 | 20 | 172.16.2.62 | /26 | 
 | | VLAN 30 | 30 | 172.16.3.62 | /26 | 
@@ -380,6 +380,7 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
 
