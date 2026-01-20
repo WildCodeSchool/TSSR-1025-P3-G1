@@ -250,11 +250,11 @@ Sommaire :
 
 **Affectation des équipements serveurs :**
 
-| Équipement | Interface |  Adresse IP Fixe | Masque          | Passerelle  |     |
-| ---------- | --------- | ---------------- | --------------- | ----------- | --- |
-| ADDS       | VLAN 120  | 172.16.12.1      | 255.255.255.248 | 172.16.12.6 |     |
-| DHCP       | VLAN 120  | 172.16.12.2      | 255.255.255.248 | 172.16.12.6 |     |
-| Serveur    | VLAN 130  | 172.16.13.1      | 255.255.255.248 | 172.16.13.6 |     |
+| Équipement | Interface | Adresse IP Fixe | Masque | Passerelle | 
+| --- | --- | --- | --- | --- |
+| ADDS | VLAN 120 | 172.16.12.1 | 255.255.255.248 | 172.16.12.6 |
+| DHCP | VLAN 120 | 172.16.12.2 | 255.255.255.248 | 172.16.12.6 |
+| Serveur | VLAN 130 | 172.16.13.1 | 255.255.255.248 | 172.16.13.6 |
 
 
 **Affectation des équipements impression :** 
@@ -290,7 +290,7 @@ Sommaire :
 | pfSense | LAN-DMZ | - | 10.10.11.1 | /29 | 
 | pfSense | LAN | - | 10.10.10.1 | /30 | 
 | Router Core | LAN | -| 10.10.10.2 | /30 | 
-| Router Core | LAN-INTERNE | 150 | 172.16.15.62 | /26 | 
+| Router Core | LAN-INTERNE | - | 172.16.0.254 | /24 | 
 | | VLAN 10 | 10 | 172.16.1.254 | /24 | 
 | | VLAN 20 | 20 | 172.16.2.62 | /26 | 
 | | VLAN 30 | 30 | 172.16.3.62 | /26 | 
@@ -380,6 +380,8 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
+
 
 
 
