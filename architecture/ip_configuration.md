@@ -250,11 +250,11 @@ Sommaire :
 
 **Affectation des équipements serveurs :**
 
-| Équipement | Interface | Adresse IP Fixe | Masque | Passerelle | 
-| --- | --- | --- | --- | --- |
-| ADDS | VLAN 120 | 172.16.12.1 | 255.255.255.248 | 172.16.12.6 |
-| DHCP | VLAN 120 | 172.16.12.2 | 255.255.255.248 | 172.16.12.6 |
-| Serveur | VLAN 130 | 172.16.13.1 | 255.255.255.248 | 172.16.13.6 |
+| Équipement | Interface |  Adresse IP Fixe | Masque          | Passerelle  |     |
+| ---------- | --------- | ---------------- | --------------- | ----------- | --- |
+| ADDS       | VLAN 120  | 172.16.12.1      | 255.255.255.248 | 172.16.12.6 |     |
+| DHCP       | VLAN 120  | 172.16.12.2      | 255.255.255.248 | 172.16.12.6 |     |
+| Serveur    | VLAN 130  | 172.16.13.1      | 255.255.255.248 | 172.16.13.6 |     |
 
 
 **Affectation des équipements impression :** 
