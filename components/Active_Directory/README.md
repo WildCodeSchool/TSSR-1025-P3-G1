@@ -38,7 +38,7 @@ Brève description du rôle d'Active Directory dans l'infrastructure BillU.
  
 #### 3.2 Information du domaine
 
-- **Nom du domaine** : billu.local
+- **Nom du domaine** : billu.lan
 - **Nom NetBIOS** : BILLU
 - **Niveau fonctionnel** : Windows Server 2022
 - **Adresse IP AD** : 172.16.12.1/29
@@ -77,7 +77,7 @@ Brève description du rôle d'Active Directory dans l'infrastructure BillU.
 | 19/01/2026 | Franck | Création du README        |
 | 19/01/2026 | Franck | Création du installation  |
 | 19/01/2026 | Franck | Création du configuration |
-|            |        |                           |
+| 20/01/2026 | Franck | Doc installation terminer |
 |            |        |                           |
 
 ---
@@ -90,6 +90,6 @@ Brève description du rôle d'Active Directory dans l'infrastructure BillU.
 **Projet** : TSSR1025 Projet 3 - Build Your Infra
 **Entreprise** : BillU
 **Sprint** : 2
-**Dernière mise à jour** : 19/01/2026
+**Dernière mise à jour** : 20/01/2026
 
 ---
