@@ -73,7 +73,7 @@ L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été con�
 Dans le Server Manager ==> Dashboard :
 - Cliquer sur **"Tools"** et **"Active Directory Users and Computers"**
 
-![[Ressources/Screenshots-Installation/01_creation_ou.png]]
+!(01)[Ressources/Screenshots-Installation/01_creation_ou.png]
 
 
 - Dans le volet de gauche , clic droit sur **"billu.lan"**
