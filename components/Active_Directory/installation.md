@@ -52,14 +52,16 @@ Rename-Computer -NewName "DOM-AD-01" -Restart
 	- Cliquer sur **network & Internet settings**
 
  
-![[01_conf_ip_ad.png]]
+![image01](Ressources/Screenshots-Installation/01_conf_ip_ad.png)
+
 
  2. **Accéder aux propriétés de la carte réseau** :
 	 - Cliquer sur Change adapter options
 	 - Cliquer droit sur **"Ethernet2"** (ou le nom de votre carte réseau)
 	 - Sélectionner **"Properties"**
 
-![[02_conf_ip_ad.png]]
+![image02](Ressources/Screenshots-Installation/02_conf_ip_ad.png)
+
 
 3. **Configurer IPv4** :
 
@@ -70,7 +72,8 @@ Rename-Computer -NewName "DOM-AD-01" -Restart
 	- **"Default gateway"**: 172.16.12.6
 	- Cliquer sur **"OK"**
 
-![[03_conf_ip_ad.png]]
+![image03](Ressources/Screenshots-Installation/03_conf_ip_ad.png)
+
 
 4. Vérification de la configuration
 
@@ -80,26 +83,32 @@ Taper cette commande dans PowerShell pour vérifier notre configuration :
 ipconfig /all
 ```
 
-![[04_conf_ip_ad.png]]
+![image04](Ressources/Screenshots-Installation/04_conf_ip_ad.png)
+
 
 ## 3. Installation du rôle AD DS via GUI
 
 - Dans le **"Server Manager"**, aller dans le menu  **"Manage ==>Add Roles and Feautures"**:
 
-![[01_install_adds.png]]
+![image01](Ressources/Screenshots-Installation/01_install_adds.png)
+
 - Cliquer 3 fois sur la touche **"Next"**
 - Cocher les cases **"Active Directory Domain Service"** et **"DNS Server"**
 
-![[02_install_adds.png]]
+![image02](Ressources/Screenshots-Installation/02_install_adds.png)
+
 
 - Cliquer 4 fois sur **"Next"**
 - Cliquer sur **"Install"** et **"Close"**
 
-![[03_install_adds.png]]
-![[04_install_adds.png]]
+![image03](Ressources/Screenshots-Installation/03_install_adds.png)
+
+![image04](Ressources/Screenshots-Installation/04_install_adds.png)
+
 
 - Attendre la fin de la configuration et redémarrer le serveur.
-![[05_install_adds.png]]
+![image05](Ressources/Screenshots-Installation/05_install_adds.png)
+
 
 ## 4. Création du domaine Active Directory
 
@@ -107,11 +116,13 @@ ipconfig /all
 
 - Cliquer sur le drapeau de notification dans **"Server Manager"**
 - Cliquer sur **"Promote this server to a domain controller"**
-![[01_creation_foret_ad.png]]
+![image01](Ressources/Screenshots-Installation/01_creation_foret_ad.png)
+
 - Sélectionner **"Add a new forest"**
 - Nom du domaine racine : **"billu.lan"**
 
-![[02_creation_foret_ad.png]]
+![image02](Ressources/Screenshots-Installation/02_creation_foret_ad.png)
+
 
 - Clique sur **"Next"**
 #### 4.2 Options du contrôleur de domaine
@@ -121,12 +132,14 @@ ipconfig /all
 - Définir le mot de passe **"DSRM"** en cas de restauration.
 - Dans ce cas cela sera : **Azerty1****
 
-![[01_controleur_domaine_ad.png]]
+![image01](Ressources/Screenshots-Installation/01_controleur_domaine_ad.png)
+
 
 - Clique sur **"Next"** 4 fois.
 - Clique sur **"Install"**
 - Attendre la fin de l'installation et le serveur va redémarrer automatiquement.
-![[02_controleur_domaine_ad.png]]
+![image02](Ressources/Screenshots-Installation/02_controleur_domaine_ad.png)
+
 
 ## 5. Vérification de l'installation
 
@@ -136,14 +149,16 @@ ipconfig /all
 - Cliqué sur **"AD DS"** dans le menu de gauche
 - Vérifier que le serveur **"DOM-AD-01"** apparaît avec le statut **"Online"**
 
-![[01_verif_install_dns.png]]
+![image01](Ressources/Screenshots-Installation/01_verif_install_dns.png)
+
 
 #### 5.2 Service DNS
 
 - Ouvrir **"Server Manager"**
 - Cliqué sur **"DNS"** dans le menu de gauche
 - Vérifier que le serveur **"DOM-AD-01"** apparaît avec le statut **"Online"**
-![[02_verif_install_dns.png]]
+![image02](Ressources/Screenshots-Installation/02_verif_install_dns.png)
+
 
 #### 5.3 Rôles FSMO
 
@@ -153,12 +168,14 @@ ipconfig /all
 Get-ADDomain | Select-Object PDCEmulator, RIDMaster, InfrastructureMaster
 ```
 
-![[03_verif_install_FSMO.png]]
+![image03](Ressources/Screenshots-Installation/03_verif_install_FSMO.png)
+
 
 ```powershell
 Get-ADForest | Select-Object 
 ```
 
-![[04_verif_install_FSMO.png]]
+![image04](Ressources/Screenshots-Installation/04_verif_install_FSMO.png)
+
 
 Les 5 rôles pointent bien vers le serveur **"DOM-AD-01"** donc l'installation à bien été effectuer.
