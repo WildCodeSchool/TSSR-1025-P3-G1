@@ -34,25 +34,25 @@
 L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été conçue selon une approche fonctionnelle. La structure repose sur trois **OU** principales permettant une séparation claire des objets Active Directory par type et fonction.
 #### 1.1 Arborescence des OU
 
-| OU | Chemin DN | Objets contenus |
-|---|---|---|
-| **BilluComputers** | OU=BilluComputers,DC=billu,DC=lan | Comptes ordinateurs (workstations, laptops, serveurs membres) |
-| **BilluUsers** | OU=BilluUsers,DC=billu,DC=lan | Comptes utilisateurs (tous services confondus) |
-| **BilluSecurity** | OU=BilluSecurity,DC=billu,DC=lan | Groupes de sécurité, groupes de distribution, comptes de service |
+| OU                 | Chemin DN                         | Objets contenus                                                  |
+| ------------------ | --------------------------------- | ---------------------------------------------------------------- |
+| **BilluComputers** | OU=BilluComputers,DC=billu,DC=lan | Comptes ordinateurs (workstations, laptops, serveurs membres)    |
+| **BilluUsers**     | OU=BilluUsers,DC=billu,DC=lan     | Comptes utilisateurs (tous services confondus)                   |
+| **BilluSecurity**  | OU=BilluSecurity,DC=billu,DC=lan  | Groupes de sécurité, groupes de distribution, comptes de service |
 
 #### 1.1.1 Arborescense des sous-OU de BilluComputers
 
-| Sous-OU | Chemin DN | Service |
-|---------|-----------|---------|
-| **DEV** | OU=DEV,OU=BilluComputers,DC=billu,DC=lan | Développement |
-| **COMMERCIAL** | OU=COMMERCIAL,OU=BilluComputers,DC=billu,DC=lan | Commercial |
-| **COMMUNICATION** | OU=COMMUNICATION,OU=BilluComputers,DC=billu,DC=lan | Communication |
-| **JURIDIQUE** | OU=JURIDIQUE,OU=BilluComputers,DC=billu,DC=lan | Juridique |
-| **DIRECTION** | OU=DIRECTION,OU=BilluComputers,DC=billu,DC=lan | Direction |
-| **COMPTABILITE** | OU=COMPTABILITE,OU=BilluComputers,DC=billu,DC=lan | Comptabilité |
-| **QHSE** | OU=QHSE,OU=BilluComputers,DC=billu,DC=lan | Qualité Hygiène Sécurité Environnement |
-| **RH** | OU=RH,OU=BilluComputers,DC=billu,DC=lan | Ressources Humaines |
-| **DSI** | OU=DSI,OU=BilluComputers,DC=billu,DC=lan | Direction des Systèmes d'Information |
+| Sous-OU           | Chemin DN                                          | Service                                |
+| ----------------- | -------------------------------------------------- | -------------------------------------- |
+| **DEV**           | OU=DEV,OU=BilluComputers,DC=billu,DC=lan           | Développement                          |
+| **COMMERCIAL**    | OU=COMMERCIAL,OU=BilluComputers,DC=billu,DC=lan    | Commercial                             |
+| **COMMUNICATION** | OU=COMMUNICATION,OU=BilluComputers,DC=billu,DC=lan | Communication                          |
+| **JURIDIQUE**     | OU=JURIDIQUE,OU=BilluComputers,DC=billu,DC=lan     | Juridique                              |
+| **DIRECTION**     | OU=DIRECTION,OU=BilluComputers,DC=billu,DC=lan     | Direction                              |
+| **COMPTABILITE**  | OU=COMPTABILITE,OU=BilluComputers,DC=billu,DC=lan  | Comptabilité                           |
+| **QHSE**          | OU=QHSE,OU=BilluComputers,DC=billu,DC=lan          | Qualité Hygiène Sécurité Environnement |
+| **RH**            | OU=RH,OU=BilluComputers,DC=billu,DC=lan            | Ressources Humaines                    |
+| **DSI**           | OU=DSI,OU=BilluComputers,DC=billu,DC=lan           | Direction des Systèmes d'Information   |
 
 #### 1.1.2 Arborescence des sous-OU de BilluUsers
 
@@ -73,20 +73,23 @@ L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été con�
 Dans le Server Manager ==> Dashboard :
 - Cliquer sur **"Tools"** et **"Active Directory Users and Computers"**
 
-![[Ressources/Screenshots-Installation/01_creation_ou.png]]
+![image01](Ressources/Screenshots-Installation/01_creation_ou.png)
+
+
 
 
 - Dans le volet de gauche , clic droit sur **"billu.lan"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
-![[02_creation_ou.png]]
+![image02](Ressources/Screenshots-Installation/02_creation_ou.png)
+
 
 Dans la fênetre qui s'ouvre :
 - Case **"Name"** : **"BilluComputers"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
-![[03_creation_ou.png]]
+![image03](Ressources/Screenshots-Installation/03_creation_ou.png)
 
 **"OU"** BilluComputers à été créé.
 
@@ -94,7 +97,8 @@ Même procédure pour les autres **"OU"**
 - Case **"Name"** : **"BilluUsers"**
 - Case **"Name"** : **"BilluSecurity"**
 
-![[04_creation_ou.png]]
+![image04](Ressources/Screenshots-Installation/04_creation_ou.png)
+
 Voila nos **"OU"** de créés dans la forêt de **"billu.lan"**.
 
 #### 1.3 Création des sous-OU
@@ -103,14 +107,16 @@ Voila nos **"OU"** de créés dans la forêt de **"billu.lan"**.
 - Dans le volet de gauche , clic droit sur **"billuComputers"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
-![[01-sous_ou_billucomputers.png]]
+![image01](Ressources/Screenshots-Installation/01-sous_ou_billucomputers.png)
+
 
 Dans la fênetre qui s'ouvre :
 - Case **"Name"** : **"DEV"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
-![[2-sous_ou_billucomputers.png]]
+![image02](Ressources/Screenshots-Installation/2-sous_ou_billucomputers.png)
+
 La **"SOUS-OU"** **"DEV"** a été créé dans **"OU"** BilluComputers.
 
 Même procédure pour les autres **"SOUS-OU"**
@@ -123,7 +129,7 @@ Même procédure pour les autres **"SOUS-OU"**
 -  Case **"Name"** : **"RH"**
 -  Case **"Name"** : **"DSI"**
 
-![[03-sous_ou_billucomputers.png]]
+![image03](Ressources/Screenshots-Installation/03-sous_ou_billucomputers.png)
 Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluComputers"**.
 
 #### 1.3.2 Création des sous-OU de BilluUsers
@@ -131,14 +137,16 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluComputers"**.
 - Dans le volet de gauche , clic droit sur **"billuUsers"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
-![[01-sous_ou_billuUsers.png]]
+![image01](Ressources/Screenshots-Installation/01-sous_ou_billuUsers.png)
+
 
 Dans la fênetre qui s'ouvre :
 - Case **"Name"** : **"COMMERCIAL"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
-![[02-sous_ou_billuUsers.png]]
+![image02](Ressources/Screenshots-Installation/02-sous_ou_billuUsers.png)
+
 La **"SOUS-OU"** **"COMMERCIAL"** a été créé dans **"OU"** BilluUsers.
 
 Même procédure pour les autres **"SOUS-OU"**
@@ -151,7 +159,8 @@ Même procédure pour les autres **"SOUS-OU"**
 -  Case **"Name"** : **"QHSE"**
 -  Case **"Name"** : **"RH"**
 
-![[03-sous_ou_billuUsers.png]]
+![image03](Ressources/Screenshots-Installation/03-sous_ou_billuUsers.png)
+
 Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 ---
