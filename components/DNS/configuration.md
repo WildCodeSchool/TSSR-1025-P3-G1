@@ -30,7 +30,7 @@ La zone de recherche directe permet de résoudre :
 
 Dans notre cas, la zone `**billu.lan**` est créée **automatiquement**.
 
-![Zone DNS directe créée automatiquement](../Ressources/dns-forward-zone-existante.png)
+![Zone DNS directe créée automatiquement](Ressources/dns-forward-zone-existante.png)
 
 
 ### Pourquoi aucune action manuelle n’est nécessaire
@@ -63,14 +63,14 @@ Contrairement à la zone directe, **elle n’est pas créée automatiquement** e
 - Clic droit sur **Reverse Lookup Zones**
 - **New Zone**
 
-![Création d’une nouvelle zone DNS inverse](../Ressources/dns-reverse-zone-new.png)
+![Création d’une nouvelle zone DNS inverse](Ressources/dns-reverse-zone-new.png)
 
 ---
 
 ### Type de zone
 - Sélectionner **Primary Zone**
 
-![Sélection du type de zone DNS](../Ressources/dns-reverse-zone-type.png)
+![Sélection du type de zone DNS](Ressources/dns-reverse-zone-type.png)
 
 Cette option permet une intégration avec Active Directory.
 
@@ -81,7 +81,7 @@ Cette option permet une intégration avec Active Directory.
 Sélectionner :
 - **To all DNS servers running on domain controllers in this domain: billu.lan**
 
-![Réplication de la zone DNS via Active Directory](../Ressources/dns-reverse-zone-replication.png)
+![Réplication de la zone DNS via Active Directory](Ressources/dns-reverse-zone-replication.png)
 
 Cette configuration assure :
 - Réplication automatique
@@ -92,7 +92,7 @@ Cette configuration assure :
 ### Type de zone inverse
 - Sélectionner **IPv4 Reverse Lookup Zone**
 
-![Sélection du type IPv4 pour la zone inverse](../Ressources/dns-reverse-zone-ipv4.png)
+![Sélection du type IPv4 pour la zone inverse](Ressources/dns-reverse-zone-ipv4.png)
 
 ---
 ### Configuration du Network ID
@@ -100,7 +100,7 @@ Cette configuration assure :
 Renseigner :
 - **Network ID** : `172.16.12`
 
-![Configuration du Network ID de la zone inverse](../Ressources/dns-reverse-zone-network-id.png)
+![Configuration du Network ID de la zone inverse](Ressources/dns-reverse-zone-network-id.png)
 
 Cette valeur correspond au réseau utilisé par l’infrastructure.
 
@@ -110,7 +110,7 @@ Cette valeur correspond au réseau utilisé par l’infrastructure.
 Choisir :
 - **Allow only secure dynamic updates**
 
-![Activation des mises à jour dynamiques sécurisées](../Ressources/dns-reverse-zone-secure-updates.png)
+![Activation des mises à jour dynamiques sécurisées](Ressources/dns-reverse-zone-secure-updates.png)
 
 Cette configuration garantit que :
 - Seuls les objets **authentifiés du domaine** peuvent créer ou modifier des enregistrements
