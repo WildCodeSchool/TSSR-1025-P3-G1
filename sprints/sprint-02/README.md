@@ -10,11 +10,17 @@
 
 # 1. Les objectifs pris par le groupe sur le sprint
 
+- Installation et configuration de ADDS
+    - Création des OU
+    - Création des groupes
+    - Création des utilisateurs
+
+- Création et mise en place des GPO 
+- Installation et configuration du DNS
+- Installation et configuration du DHCP
+- Installation et configuration de pfSense
+- Mise en place d'un PC Administration
 - 
--
--
--
--
 
 # 2. La finalité de ces objectifs à la fin du sprint
 
@@ -41,3 +47,4 @@ Les tâches suivantes n'ont pas pu être finalisées durant ce Sprint 2 :
 
 - **Complétion de la documentation :**
     - 
+
