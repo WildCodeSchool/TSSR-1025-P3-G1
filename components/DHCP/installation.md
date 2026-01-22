@@ -18,14 +18,14 @@
 ### Accès aux paramètres réseau
 - Appuyer sur **8** puis **Entrée** pour accéder à la configuration réseau.
 
-![Accès au menu réseau SConfig](../Ressources/dhcp-sconfig-network-menu.png)
+![Accès au menu réseau SConfig](Ressources/dhcp-sconfig-network-menu.png)
 
 Vous arrivez dans le menu des paramètres réseau.
 
 ### Sélection de la carte réseau
 - Choisir la carte réseau à modifier
 
-![Sélection de la carte réseau](../Ressources/dhcp-sconfig-select-nic.png)
+![Sélection de la carte réseau](Ressources/dhcp-sconfig-select-nic.png)
 
 - Appuyer sur **Entrée**
 
@@ -40,11 +40,11 @@ Renseigner les champs suivants :
 - **Masque** : `255.255.255.248`
 - **Passerelle** : `172.16.12.6`
 
-![Configuration de l’adresse IP statique](../Ressources/dhcp-sconfig-ip-config.png)
+![Configuration de l’adresse IP statique](Ressources/dhcp-sconfig-ip-config.png)
 
 Valider avec **Entrée**.
 
-![Résultat de la configuration IP](../Ressources/dhcp-sconfig-ip-result.png)
+![Résultat de la configuration IP](Ressources/dhcp-sconfig-ip-result.png)
 
 Une fois la configuration appliquée, appuyer à nouveau sur **Entrée** pour revenir au menu précédent.
 
@@ -60,7 +60,7 @@ Toujours dans le menu de configuration de la carte réseau :
 Renseigner :
 - **Preferred DNS** : `172.16.12.1`
 
-![Configuration du serveur DNS](../Ressources/dhcp-sconfig-dns-config.png)
+![Configuration du serveur DNS](Ressources/dhcp-sconfig-dns-config.png)
 
 - **Alternate DNS** : laisser vide (Entrée)
 
@@ -77,15 +77,15 @@ Retourner au menu principal de **SConfig** puis :
 Dans la console PowerShell, exécuter la commande suivante :
 Install-WindowsFeature DHCP -IncludeManagementTools
 
-![Commande d’installation du rôle DHCP](../Ressources/dhcp-role-install-command.png)
+![Commande d’installation du rôle DHCP](Ressources/dhcp-role-install-command.png)
 
 L’installation démarre.
 
-![Progression de l’installation DHCP](../Ressources/dhcp-role-install-progress.png)
+![Progression de l’installation DHCP](Ressources/dhcp-role-install-progress.png)
 
 Une fois la barre de progression terminée, le rôle DHCP est installé sur le serveur Core.
 
-![Installation du rôle DHCP terminée](../Ressources/dhcp-role-install-success.png)
+![Installation du rôle DHCP terminée](Ressources/dhcp-role-install-success.png)
 
 ---
 
@@ -96,7 +96,7 @@ Dans l’attente de la mise en place du pare-feu **pfSense**, le pare-feu Window
 Commande PowerShell :
 `Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False`
 
-![Désactivation temporaire du pare-feu Windows](../Ressources/dhcp-firewall-disable.png)
+![Désactivation temporaire du pare-feu Windows](Ressources/dhcp-firewall-disable.png)
 
 Cette désactivation est **temporaire** et doit être revue en production.
 
@@ -109,7 +109,7 @@ Le serveur DHCP doit être joint au domaine `billu.lan`.
 Dans PowerShell :
 Add-Computer -DomainName "billu.lan" -Credential (Get-Credential)
 
-![Jonction du serveur DHCP au domaine](../Ressources/dhcp-join-domain-command.png)
+![Jonction du serveur DHCP au domaine](Ressources/dhcp-join-domain-command.png)
 
 Renseigner les identifiants d’un compte autorisé à joindre des machines au domaine.
 
@@ -117,7 +117,7 @@ Après validation :
 - Se connecter avec le compte **Administrator du domaine**
 - Utiliser le mot de passe défini précédemment
 
-![Connexion avec le compte domaine](../Ressources/dhcp-domain-login.png)
+![Connexion avec le compte domaine](Ressources/dhcp-domain-login.png)
 
 Un redémarrage est nécessaire.
 
@@ -132,7 +132,7 @@ Depuis le **serveur GLI**, ouvrir **Server Manager**.
 ### Ajout du serveur DHCP Core
 - Dans **Manage** → **Add Servers**
 
-![Ajout du serveur DHCP dans Server Manager](../Ressources/dhcp-gli-add-server.png)
+![Ajout du serveur DHCP dans Server Manager](Ressources/dhcp-gli-add-server.png)
 
 - Rechercher le serveur DHCP par son nom
 - Le sélectionner et l’ajouter
@@ -143,7 +143,7 @@ Lors de la configuration du déploiement DHCP :
 - Choisir **Use the following user's credentials**
 - Cliquer sur **Commit**
 
-![Autorisation du serveur DHCP dans Active Directory](../Ressources/dhcp-gli-authorization.png)
+![Autorisation du serveur DHCP dans Active Directory](Ressources/dhcp-gli-authorization.png)
 
 Le serveur DHCP est maintenant autorisé dans Active Directory.
 
@@ -175,7 +175,7 @@ Sur le **serveur GLI** :
 - Clic droit sur **DHCP**
 - **Add Server…**
 
-![Ajout du serveur DHCP dans la console DHCP](../Ressources/dhcp-gli-console-add-server.png)
+![Ajout du serveur DHCP dans la console DHCP](Ressources/dhcp-gli-console-add-server.png)
 
 - Choisir :
     - **This authorized DHCP server**
