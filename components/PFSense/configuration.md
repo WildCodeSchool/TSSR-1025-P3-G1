@@ -279,7 +279,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 2) Sélectionner l'onglet `Ports`
 3) Cliquer sur `Add`
 
-![img](06_configuration_aliases_ports/01_alias_ports.png)
+![img](Ressources/06_configuration_aliases_ports/01_alias_ports.png)
 
 
 ### 4.2 Création des alias
@@ -382,7 +382,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 ### 5.5 Affichage des règles créées
 
-![img](07_nat_configuration/04_firewall_configuration_NAT.png)
+![img](Ressources/07_nat_configuration/04_firewall_configuration_NAT.png)
 
 
 ---  
@@ -650,7 +650,7 @@ Pour chaque règle ci-dessous :
 Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 1. Bloque la DMZ vers les Réseaux internes
 2. Bloque la DMZ vers l'interface LAN pfSense
-3. Bloquer DMZ vers pfSense (WebGUI)
+3. Bloquer DMZ → pfSense (WebGUI)
 4. Autoriser HTTP/HTTPS vers serveur Web
 5. Autoriser SMTP entrant vers serveur Mail
 6. Autoriser POP/IMAP vers serveur Mail
@@ -720,5 +720,4 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 
 ![img](Ressources/09_route_static/07_static_route.png)
 ![img](Ressources/09_route_static/08_static_route.png)
-
 
