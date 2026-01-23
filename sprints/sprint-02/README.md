@@ -41,8 +41,8 @@
 - DHCP avant le DNS avec Active Directory
 
 # 5. Les décisions techniques
-Création de la VM AD, DHCP, PC Admin, Routeur Vyos
-On a décidé de mettre le serveur DNS sur le serveur AD
+Création de la VM AD, DHCP, PC Admin, Routeur Vyos.  
+On a décidé de mettre le serveur DNS sur le serveur AD au lieu d'un serveur Core.
 
 
 # 6. Ce qu'il reste à faire 
@@ -51,6 +51,7 @@ Les tâches suivantes n'ont pas pu être finalisées durant ce Sprint 2 :
 
 - **Complétion de la documentation :**
     - 
+
 
 
 
