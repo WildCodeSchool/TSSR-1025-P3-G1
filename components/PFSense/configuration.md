@@ -76,17 +76,17 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
     - **Nom d'utilisateur** : `admin`
     - **Mot de passe** : `pfsense`
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/01_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/01_configuration_web.png)
 
 ### 1.2 Assistant de configuration initiale
 
 - Cliquer sur **Next** pour démarrer l'assistant
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/02_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/02_configuration_web.png)
 
 - Cliquer sur **Next** pour continuer
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/03_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/03_configuration_web.png)
 
 ### 1.3 Configuration générale du système
 
@@ -94,21 +94,21 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 2. Saisir le **Domain** : `billu.pfsense`
 3. Cliquer sur **Next**
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/04_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/04_configuration_web.png)
 
 ### 1.4 Configuration du fuseau horaire
 
 1. Sélectionner la **Timezone** : `Europe/Paris`
 2. Cliquer sur **Next**
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/05_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/05_configuration_web.png)
 
 ### 1.5 Configuration de l'interface WAN
 
 - Laisser la configuration en **DHCP** par défaut
 - Cliquer sur **Next** en bas de la page
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/06_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/06_configuration_web.png)
 
 ### 1.6 Configuration de l'interface LAN
 
@@ -116,24 +116,24 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 2. **Masque sous-réseau** : `30`
 3. Cliquer sur **Next**
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/08_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/08_configuration_web.png)
 
 ### 1.7 Changement du mot de passe administrateur
 
 - Entrer un nouveau mot de passe : `Azerty1*`
 
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/09_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/09_configuration_web.png)
 
 ### 1.8 Application de la configuration
 
 - Cliquer sur `Reload` pour appliquer les modifications
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/10_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/10_configuration_web.png)
 
 - Attendre la fin du rechargement, puis cliquer sur `Finish`
 
-![img](Ressources/pfsense_img/03_configuration_interface_web/12_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/12_configuration_web.png)
 
 ---  
 
@@ -141,22 +141,22 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 ### 2.1 Accès aux paramètres d'interfaces
 - Cliquer sur `Interfaces` et sur `Assignments`
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/01_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/01_configuration_interface_dmz.png)
 
 ### 2.2 Ajout de l'interface DMZ
 - Cliquer sur `Add` dans `Available network ports`
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/02_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/02_configuration_interface_dmz.png)
 
 ### 2.3 Confirmation de l'ajout
 - Un message confirmant l'ajout de l'interface apparait
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/03_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/03_configuration_interface_dmz.png)
 
 ### 2.4 Accès à la configuration OPT1
 - Cliquer sur `Interfaces` et sélectionner `OPT1`
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/04_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/04_configuration_interface_dmz.png)
 
 ### 2.5 Configuration de l'interface DMZ
 - Dans General Configuration :
@@ -167,19 +167,19 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 5) Sélectionner le CIDR `29`
 6) Cliquer sur `Save`
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/05_configuration_interface_dmz.png)
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/06_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/05_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/06_configuration_interface_dmz.png)
 
 ### 2.6 Application des changements
 - Cliquer sur `Apply Changes` 
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/07_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/07_configuration_interface_dmz.png)
 
 ### 2.7 Confirmation des modifications
 
 - Confirmation des modifications
 
-![img](Ressources/pfsense_img/04_configuration_interface_dmz/08_configuration_interface_dmz.png)
+![img](Ressources/04_configuration_interface_dmz/08_configuration_interface_dmz.png)
 
 ---  
 
@@ -188,17 +188,17 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 ### 3.1 Menu Aliases
 - Cliquer sur l'onglet `Firewall` et choisir `Aliases`
 
-![img](Ressources/pfsense_img/05_configuration_aliases_network/01_alias_configuration.png)
+![img](Ressources/05_configuration_aliases_network/01_alias_configuration.png)
 
 ### 3.2 Ajouter un alias IP
 1) Choisir `IP`
 2) Cliquer sur `Add`
 
-![img](Ressources/pfsense_img/05_configuration_aliases_network/02_alias_configuration.png)
+![img](Ressources/05_configuration_aliases_network/02_alias_configuration.png)
 
 ### 3.3 Réseaux privé VLANs **Internal_Network**
 
-![img](Ressources/pfsense_img/05_configuration_aliases_network/03_alias_configuration.png)
+![img](Ressources/05_configuration_aliases_network/03_alias_configuration.png)
 
 1) Entrer un nom : `Internal_Networks`
 2) Entrer une description : `LAN et VLANS de l'entreprise`
@@ -279,7 +279,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 2) Sélectionner l'onglet `Ports`
 3) Cliquer sur `Add`
 
-![img](pfsense_img/06_configuration_aliases_ports/01_alias_ports.png)
+![img](06_configuration_aliases_ports/01_alias_ports.png)
 
 
 ### 4.2 Création des alias
@@ -318,17 +318,17 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 - Cliquer sur l'onglet `Firewall` et choisir `NAT` pour configurer le WAN
 
-![img](Ressources/pfsense_img/07_nat_configuration/01_firewall_configuration_NAT.png)
+![img](Ressources/07_nat_configuration/01_firewall_configuration_NAT.png)
 
 ### 5.2 Création des règles de redirection de port
 1) Sélectionner `Port Forward`
 2) Cliquer sur `Add` avec la flèche vers le bas
 
-![img](Ressources/pfsense_img/07_nat_configuration/02_firewall_configuration_NAT.png)
+![img](Ressources/07_nat_configuration/02_firewall_configuration_NAT.png)
 
 ### 5.3 Configurer les règles NAT
 
-![img](Ressources/pfsense_img/07_nat_configuration/03_firewall_configuration_NAT.png)
+![img](Ressources/07_nat_configuration/03_firewall_configuration_NAT.png)
 
 
 - Pour chaque règle ci-dessous, cliquer sur `Add`, configurer les paramètres indiqués, puis cliquer sur `Save`.
@@ -382,7 +382,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 ### 5.5 Affichage des règles créées
 
-![img](pfsense_img/07_nat_configuration/04_firewall_configuration_NAT.png)
+![img](07_nat_configuration/04_firewall_configuration_NAT.png)
 
 
 ---  
@@ -394,14 +394,14 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 - Cliquer sur l'onglet `Firewall` et choisir `Rules`
 - Sélectionner l'onglet `LAN`
 
-![img](Ressources/pfsense_img/08_firewall_lan/01_firewall_lan.png)
+![img](Ressources/08_firewall_lan/01_firewall_lan.png)
 
 ### 6.2 Suppression de la règle par défaut
 
 - Supprimer les règles par défaut "Default allow LAN to any rule" si elles existent
 - Cliquer sur l'icône poubelle puis confirmer la suppression
 
-![img](Ressources/pfsense_img/08_firewall_lan/02_firewall_lan.png)
+![img](Ressources/08_firewall_lan/02_firewall_lan.png)
 
 ### 6.3 Création des règles LAN
 
@@ -419,7 +419,7 @@ Pour chaque règle ci-dessous :
 2) Configurer les paramètres indiqués
 3) Cliquer sur `Save`
 
-![img](Ressources/pfsense_img/08_firewall_lan/03_firewall_lan.png)
+![img](Ressources/08_firewall_lan/03_firewall_lan.png)
 
  **Règle 1 : Bloque l'accès LAN vers DMZ**
 
@@ -669,7 +669,7 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 - Sélectionner l'onglet `Gateways`
 - Cliquer sur `Add`
 
-![img](Ressources/pfsense_img/09_route_static/01_static_route.png)
+![img](Ressources/09_route_static/01_static_route.png)
 
 ### 8.2 Configuration de la Gateway
 
@@ -681,13 +681,13 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
    - **Description** : `Gateway vers Routeur Core`
 2) Cliquer sur `Save`
 
-![img](Ressources/pfsense_img/09_route_static/02_static_route.png)
+![img](Ressources/09_route_static/02_static_route.png)
 
 ### 8.3 Application des changements
 
 - Cliquer sur `Apply Changes`
 
-![img](Ressources/pfsense_img/09_route_static/03_static_route.png)
+![img](Ressources/09_route_static/03_static_route.png)
 
 ### 8.4 Accès aux routes statiques
 
@@ -695,7 +695,7 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 - Sélectionner l'onglet `Static Routes`
 - Cliquer sur `Add`
 
-![img](Ressources/pfsense_img/09_route_static/04_static_route.png)
+![img](Ressources/09_route_static/04_static_route.png)
 
 ### 8.5 Configuration de la route vers les VLANs internes
 
@@ -705,19 +705,19 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
    - **Description** : `Route vers tous les VLANs internes via Routeur Core`
 2) Cliquer sur `Save`
 
-![img](Ressources/pfsense_img/09_route_static/05_static_route.png)
+![img](Ressources/09_route_static/05_static_route.png)
 
 ### 8.6 Application des changements
 
 - Cliquer sur `Apply Changes`
 
-![img](Ressources/pfsense_img/09_route_static/06_static_route.png)
+![img](Ressources/09_route_static/06_static_route.png)
 
 ### 8.7 Vérification de la route
 
 - Aller dans `Diagnostics` puis `Routes`
 - Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
 
-![img](Ressources/pfsense_img/09_route_static/07_static_route.png)
-![img](Ressources/pfsense_img/09_route_static/08_static_route.png)
+![img](Ressources/09_route_static/07_static_route.png)
+![img](Ressources/09_route_static/08_static_route.png)
 
