@@ -650,7 +650,7 @@ Pour chaque règle ci-dessous :
 Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 1. Bloque la DMZ vers les Réseaux internes
 2. Bloque la DMZ vers l'interface LAN pfSense
-3. Bloquer DMZ → pfSense (WebGUI)
+3. Bloquer DMZ vers pfSense (WebGUI)
 4. Autoriser HTTP/HTTPS vers serveur Web
 5. Autoriser SMTP entrant vers serveur Mail
 6. Autoriser POP/IMAP vers serveur Mail
@@ -720,4 +720,5 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 
 ![img](Ressources/09_route_static/07_static_route.png)
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
