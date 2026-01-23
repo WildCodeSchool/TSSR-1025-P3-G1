@@ -2,6 +2,8 @@
 
 ## Sommaire
 
+[1. Installation de pfSense](#1-installation-de-pfsense)
+[2. Première configuration CLI de pfSense](#2-première-configuration-cli-de-pfsense)
 
 
 ### 1. Installation de pfSense
@@ -146,3 +148,4 @@ Dans ce chapitre nous allons effectuer les premières configuration à partir de
 - Configuration de l'interface LAN terminé
 
 ![img](Ressources/02_configuration_cli/13_configuration.png)
+
