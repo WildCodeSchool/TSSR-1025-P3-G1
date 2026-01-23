@@ -715,11 +715,14 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 
 ### 8.7 Vérification de la route
 
-- Aller dans `Diagnostics` puis `Routes`
-- Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
+- Cliquer sur `Diagnostics` puis `Routes`
 
 ![img](Ressources/09_route_static/07_static_route.png)
+
+- Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
+
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
 
 
