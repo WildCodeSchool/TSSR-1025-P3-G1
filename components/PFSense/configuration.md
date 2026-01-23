@@ -432,7 +432,7 @@ Pour chaque règle ci-dessous :
 |Source|`Internal_Networks`|
 |Destination|`DMZ_Network` (10.10.11.0/29)|
 |Log|`☑ Log packets that are handled by this rule`|
-|Description|`Bloque accès LAN vers DMZ`|
+|Description|`Bloquer accès LAN vers DMZ`|
 
  **Règle 2 : Bloque l'accès vers réseaux privés WAN**
 
@@ -445,7 +445,7 @@ Pour chaque règle ci-dessous :
 |Source|`Internal_Networks`|
 |Destination|`RFC1918`|
 |Log|`☑ Log packets that are handled by this rule`|
-|Description|`SECURITE - Bloquer accès vers réseaux privés sur WAN`|
+|Description|`Bloquer accès vers réseaux privés sur WAN`|
 
  **Règle 3 : Autorise le DNS vers pfSense**
 
@@ -521,7 +521,7 @@ Pour chaque règle ci-dessous :
 |Source|`DMZ net` ou `DMZ_Network`|
 |Destination|`Internal_Networks` |
 |Log|`☑ Log packets that are handled by this rule`|
-|Description|`Bloque la DMZ vers les Réseaux internes`|
+|Description|`Bloquer la DMZ vers les Réseaux internes`|
 
 **Règle 2 : Bloquer la DMZ vers l'interface LAN pfSense**
 
@@ -534,7 +534,7 @@ Pour chaque règle ci-dessous :
 |Source|`DMZ_Network` (10.10.11.0/29) |
 |Destination|`LAN address` (10.10.10.1)|
 |Log|`☑ Log packets that are handled by this rule`|
-|Description|`Bloque la DMZ vers l'interface LAN pfSense`|
+|Description|`Bloquer la DMZ vers l'interface LAN pfSense`|
 
 **Règle 3 : Bloquer DMZ vers pfSense (WebGUI)**
 
@@ -548,7 +548,7 @@ Pour chaque règle ci-dessous :
 |Destination|`DMZ address` (10.10.11.1)|
 |Destination port range|`Web_Ports` (HTTP et HTTPS)|
 |Log|`☑ Log packets that are handled by this rule`|
-|Description|`Bloque l'accès WebGUI pfSense depuis DMZ`|
+|Description|`Bloquer l'accès WebGUI pfSense depuis DMZ`|
 
 **Règle 4 : Autoriser HTTP/HTTPS vers serveur Web**
 
@@ -561,7 +561,7 @@ Pour chaque règle ci-dessous :
 |Source|`any`|
 |Destination|`DMZ_WebServer` (10.10.11.2)|
 |Destination port range|`WEB_PORTS` (80, 443)|
-|Description|`Autorise le trafic web public vers serveur Web`|
+|Description|`Autoriser le trafic web public vers serveur Web`|
 
 **Règle 5 : Autoriser SMTP entrant vers serveur Mail**
 
@@ -720,5 +720,6 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 
 ![img](Ressources/09_route_static/07_static_route.png)
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
 
