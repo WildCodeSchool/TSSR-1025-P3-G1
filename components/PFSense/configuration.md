@@ -396,7 +396,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 ![img](Ressources/08_firewall_lan/01_firewall_lan.png)
 
-### 6.2 Suppression de la règle par défaut
+### 6.2 Suppression des règles par défaut
 
 - Supprimer les règles par défaut "Default allow LAN to any rule" si elles existent
 - Cliquer sur l'icône poubelle puis confirmer la suppression
@@ -720,4 +720,5 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 
 ![img](Ressources/09_route_static/07_static_route.png)
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
