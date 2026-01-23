@@ -90,7 +90,7 @@ Dans ce premier chapitre nous allons effectuer l'installation complète de pfSen
 
 - Sélectionner `Reboot`
 
-####### WARNING : Enlever l'iso ou le CD pour éviter que l'installation ne se relance #######
+**####### WARNING : Enlever l'iso ou le CD pour éviter que l'installation ne se relance #######**
 
 ![img](Ressources/01_installation/17_pfsense.png)
 
@@ -150,6 +150,7 @@ Dans ce chapitre nous allons effectuer les premières configuration à partir de
 - Configuration de l'interface LAN terminé
 
 ![img](Ressources/02_configuration_cli/13_configuration.png)
+
 
 
 
