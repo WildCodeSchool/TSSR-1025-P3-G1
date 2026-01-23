@@ -36,6 +36,9 @@
 
 # 4. Les problèmes rencontrés
 
+- pfSense caché
+- Configuration pfSense
+- DHCP avant le DNS avec Active Directory
 
 # 5. Les décisions techniques
 
@@ -47,4 +50,5 @@ Les tâches suivantes n'ont pas pu être finalisées durant ce Sprint 2 :
 
 - **Complétion de la documentation :**
     - 
+
 
