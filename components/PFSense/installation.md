@@ -2,50 +2,50 @@
 
 ## Sommaire
 
-[1. Installation de pfSense](#1-installation-de-pfsense)  
-[2. Première configuration CLI de pfSense](#2-première-configuration-cli-de-pfsense)  
+[1. Installation de pfSense](#1-installation-de-pfsense)
+[2. Première configuration CLI de pfSense](#2-première-configuration-cli-de-pfsense)
 
 
 ### 1. Installation de pfSense
 
 Dans ce premier chapitre nous allons effectuer l'installation complète de pfSense. 
 
-- Cliquer sur `Accept`
+- Sélectionner et appuyer sur `Accept`
 
 ![img](Ressources/01_installation/01_pfsense.png)
 
-1) Cliquer sur `Install` 
-2) Cliquer sur `OK`
+1) Sélectionner et appuyer sur `Install` 
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/02_pfsense.png)
 
-- Cliquer sur `OK`
+- Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/03_pfsense.png)
 
 1) Sélectionner l'interface réseau `WAN`
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/04_pfsense.png)
 
 1) Sélectionner `Continue`
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/05_pfsense.png)
 
 
 1) Sélectionner l'interface réseau `LAN`
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/06_pfsense.png)
 
 1) Sélectionner `Continue`
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/07_pfsense.png)
 
 1) Sélectionner l'interface `WAN`
-2) Cliquer sur `Continuer`
+2) Sélectionner et appuyer sur `Continuer`
 
 ![img](Ressources/01_installation/08_pfsense.png)
 
@@ -53,21 +53,21 @@ Dans ce premier chapitre nous allons effectuer l'installation complète de pfSen
 
 ![img](Ressources/01_installation/09_pfsense.png)
 
-- Cliquer sur `Install CE`
+- Sélectionner et appuyer sur `Install CE`
 
 ![img](Ressources/01_installation/10_pfsense.png)
 
 1) Sélectioner sur `Continue`
-2) Cliquer `OK`
+2) Sélectionner et appuyer `OK`
 
 ![img](Ressources/01_installation/11_pfsense.png)
 
-- Cliquer sur `OK`
+- Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/12_pfsense.png)
 
 1) Sélectionner le disque pour l'installation
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/13_pfsense.png)
 
@@ -76,7 +76,7 @@ Dans ce premier chapitre nous allons effectuer l'installation complète de pfSen
 ![img](Ressources/01_installation/14_pfsense.png)
 
 1) Sélectionner la version a installer (`Current Stable` de préférence)
-2) Cliquer sur `OK`
+2) Sélectionner et appuyer sur `OK`
 
 ![img](Ressources/01_installation/15_pfsense.png)
 
@@ -89,8 +89,6 @@ Dans ce premier chapitre nous allons effectuer l'installation complète de pfSen
 ![img](Ressources/01_installation/16_pfsense.png)
 
 - Sélectionner `Reboot`
-
-**####### WARNING : Enlever l'iso ou le CD pour éviter que l'installation ne se relance #######**
 
 ![img](Ressources/01_installation/17_pfsense.png)
 
@@ -150,7 +148,3 @@ Dans ce chapitre nous allons effectuer les premières configuration à partir de
 - Configuration de l'interface LAN terminé
 
 ![img](Ressources/02_configuration_cli/13_configuration.png)
-
-
-
-
