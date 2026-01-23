@@ -3,6 +3,7 @@
 ## Sommaire
 
 
+---  
 
 ### 1. Installation de pfSense
 
@@ -146,3 +147,4 @@ Dans ce chapitre nous allons effectuer les premières configuration à partir de
 - Configuration de l'interface LAN terminé
 
 ![img](/Ressources/02_configuration_cli/13_configuration.png)
+
