@@ -105,8 +105,10 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 ### 1.5 Configuration de l'interface WAN
 
-- Laisser la configuration en **DHCP** par défaut
-- Cliquer sur **Next** en bas de la page
+- Changer la configuration *IPv4 Configuration Type* en **Static IPv4**
+- Ajouter l'adresse IP **10.0.0.2/29**
+- Choisir **WANGW - 10.0.0.1** dans **IPv4 Upstream gateway**
+- Cliquer sur **Save**
 
 ![img](Ressources/03_configuration_interface_web/06_configuration_web.png)
 
@@ -722,6 +724,7 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 - Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
 
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
 
 
