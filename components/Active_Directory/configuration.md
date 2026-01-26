@@ -476,7 +476,7 @@ Clic droit > **Properties** > **Add**
 
 #### 4.3.1 Fond d'écran
 
-#### `PROD_USERS_Wallpaper`
+##### GPO : `PROD_USERS_Wallpaper`
 
 **Portée :**
 - **Cible :** Users
@@ -498,7 +498,7 @@ Clic droit > **Properties** > **Add**
 
 #### 4.3.2 Mappage de lecteurs réseau
 
-#### `PROD_USERS_Drives`
+##### GPO : `PROD_USERS_Drives`
 
 **Portée :**
 - **Cible :** Users
@@ -527,7 +527,7 @@ Clic droit > **New** > **Mapped Drive**
 
 #### 4.3.3 Gestion de l'alimentation
 
-#### `PROD_COMPUTERS_PowerSaving`
+##### GPO : `PROD_COMPUTERS_PowerSaving`
 
 **Portée :**
 - **Cible :** Computers
@@ -558,7 +558,7 @@ Clic droit > **New** > **Mapped Drive**
 
 #### 4.3.4 Déploiement de logiciels
 
-#### `PROD_USERS_Software_7zip`
+##### GPO : `PROD_USERS_Software_7zip`
 
 **Portée :**
 - **Cible :** Users
@@ -582,7 +582,7 @@ Clic droit > **New** > **Package**
 
 #### 4.3.5 Redirection de dossiers
 
-#### `PROD_USERS_FolderRedirection`
+##### GPO : `PROD_USERS_FolderRedirection`
 
 **Portée :**
 - **Cible :** Users
@@ -630,7 +630,7 @@ Clic droit > **Properties**
 4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
 
 
-### `PROD-USERS-Firefox`
+##### GPO : `PROD-USERS-Firefox`
 
 **Portée :**
 - **Cible :** Users
@@ -654,6 +654,7 @@ Clic droit > **Properties**
 |-----------|--------|------|
 | Disable Private Browsing | `Enabled` > `Disable Private Browsing Mode` | Désactive la navigation privée |
 | Password Manager | `Disabled` | Désactive le gestionnaire de mots de passe |
+
 
 
 ---
