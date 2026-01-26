@@ -324,7 +324,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.6 Blocage du panneau de configuration
 
-##### GPO : `PROD_USERS_BlockUserControlPanel`
+##### GPO : `PROD_USERS_RestrictionControlPanel`
 
 **Portée :**
 - **Cible :** Users
@@ -344,7 +344,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.7 Restriction des périphériques amovibles
 
-##### GPO : `PROD_COMPUTERS_RemoveDevices`
+##### GPO : `PROD_COMPUTERS_RestrictionRemoveDevices`
 
 **Portée :**
 - **Cible :** Computers
@@ -366,7 +366,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.8 Gestion du pare-feu
 
-##### GPO : `PROD-COMPUTERS-FIREWALL`
+##### GPO : `PROD-COMPUTERS-Firewall`
 
 **Portée :**
 - **Cible :** Computers
