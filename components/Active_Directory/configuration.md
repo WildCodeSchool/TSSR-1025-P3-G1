@@ -655,8 +655,6 @@ Clic droit > **Properties**
 | Disable Private Browsing | `Enabled` > `Disable Private Browsing Mode` | Désactive la navigation privée |
 | Password Manager | `Disabled` | Désactive le gestionnaire de mots de passe |
 
-
-
 ---
 ## 5. Délégation d'administration
 
