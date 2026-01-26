@@ -196,6 +196,8 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 ![img](Ressources/06_gpo/04_GPO.png)
 
+---  
+
 ### 4.2 GPO de sécurité
 
 #### 4.2.1 Politique de mot de passe
