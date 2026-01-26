@@ -366,7 +366,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.8 Gestion du pare-feu
 
-##### GPO : `PROD-COMPUTERS-Firewall`
+##### GPO : `PROD_COMPUTERS_Firewall`
 
 **Portée :**
 - **Cible :** Computers
@@ -630,10 +630,10 @@ Clic droit > **Properties**
 4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
 
 
-##### GPO : `PROD-USERS-Firefox`
+##### GPO : `PROD_USERS_Firefox`
 
 **Portée :**
-- **Cible :** Users
+_ **Cible :** Users
 - **Liaison :** `BillU > BilluUsers`
 - **Filtrage :** 
 - **GPO Status :** Computer configuration settings disabled

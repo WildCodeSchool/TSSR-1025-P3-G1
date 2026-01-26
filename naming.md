@@ -141,7 +141,7 @@ Ils ne sont pas utilisés pour la messagerie ou la navigation.
 ### 7.1. Convention générale
 
 Convention :
-`GRP-<TYPE>-<CIBLE>-<ROLE>`
+`GRP_<TYPE>_<CIBLE>_<ROLE>`
 
 | Élément | Description |
 |-------|------------|
@@ -152,9 +152,9 @@ Convention :
 
 
 #### Exemples 
-- GRP-SEC-DEV-USERS
-- GRP-SEC-FILE-ACCESS
-- GRP-SEC-DSI-ADMINS
+- GRP_SEC_DEV_USERS
+- GRP_SEC_FILE_ACCESS
+- GRP_SEC_DSI_ADMINS
 
 ---
 
@@ -166,16 +166,12 @@ Elles servent à l’application des GPO et à l’organisation logique de l’A
 ## 8.1. Convention générale
 
 Convention :
-`OU-<TYPE>-<NOM>`
+`OU_<TYPE>_<NOM>`
 
 #### Exemples :
 
-- OU-USERS
-- OU-COMPUTERS
-- OU-SERVERS
-- OU-GROUPES
-- OU-DEV
-- OU-DSI
+- OU_USERS
+- OU_COMPUTERS
 
 ---
 
@@ -183,14 +179,14 @@ Convention :
 ### 9.1. Convention générale
 
 Convention :
-`<ETAT>-<CIBLE>-<ROLE>`
+`<ETAT>_<CIBLE>_<ROLE>`
 
 #### Exemples :
 
-- TEST-USERS-SECURITY
-- TEST-COMPUTERS-HARDENING
-- PROD-USERS-PROXY
-- PROD-COMPUTERS-UPDATES
+- TEST_USERS_SECURITY
+- TEST_COMPUTERS_HARDENING
+- PROD_USERS_PROXY
+- PROD_COMPUTERS_UPDATES
 
 ---
 
