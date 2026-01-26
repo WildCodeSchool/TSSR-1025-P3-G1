@@ -468,6 +468,8 @@ Clic droit > **Properties** > **Add**
 |-----------|--------|------|
 | Script Name | `\\DOM-AD-01\share\scripts\startup.bat` | Chemin du script |
 
+---  
+
 ### 4.3 GPO standard
 
 #### 4.3.1 Fond d'écran
