@@ -202,7 +202,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.1 Politique de mot de passe
 
-##### GPO : `PROD_DOMAIN_Password`
+##### GPO : `PROD_COMPUTERS_Password`
 
 **Portée :**
 - **Cible :** Computers
@@ -228,7 +228,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.2 Verrouillage de compte
 
-##### GPO : `PROD_DOMAIN_LockoutAccount`
+##### GPO : `PROD_COMPUTERS_LockoutAccount`
 
 **Portée :**
 - **Cible :** Computers
@@ -250,7 +250,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.3 Restriction d'installation de logiciels
 
-##### GPO : `PROD_USERS_SoftwareInstall`
+##### GPO : `PROD_COMPUTERS_RestrictionSoftwareInstall`
 
 **Portée :**
 - **Cible :** Computers
@@ -272,7 +272,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.4 Gestion de Windows Update
 
-##### GPO : `PROD_COMPUTERS_Updates`
+##### GPO : `PROD_COMPUTERS_ConfigurationUpdates`
 
 **Portée :**
 - **Cible :** Computers
@@ -303,7 +303,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.5 Blocage de l'accès à la base de registre
 
-##### GPO : `PROD_USERS_Registry`
+##### GPO : `PROD_USERS_BlockBaseRegistry`
 
 **Portée :**
 - **Cible :** Users
@@ -324,7 +324,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.6 Blocage du panneau de configuration
 
-##### GPO : `PROD_USERS_ControlPanel`
+##### GPO : `PROD_USERS_BlockUserControlPanel`
 
 **Portée :**
 - **Cible :** Users
