@@ -650,6 +650,7 @@ Clic droit > **Properties**
 | Homepage URL | `Lock Homepage` > `Enabled` | Empêche la modification de la page d'accueil |
 
 > **User Configuration** > **Policies** > **Administrative Templates** > **Mozilla** > **Firefox** (Cliquer seulement sur le dossier Firefox et naviguer dans le menu à droite)
+
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Disable Private Browsing | `Enabled` > `Disable Private Browsing Mode` | Désactive la navigation privée |
