@@ -124,18 +124,18 @@ Tous les VLANs de l'entreprise sont accessibles via le routeur core (172.16.0.0/
 **Principe appliqué** : Deny first, allow after (tout est bloqué par défaut, seul le trafic explicitement autorisé passe)
 
 **Règles LAN** (4 règles)
-1. ❌ Bloquer LAN → DMZ
-2. ❌ Bloquer LAN → Réseaux privés WAN (RFC1918)
-3. ✅ Autoriser DNS vers pfSense (port 53)
-4. ✅ Autoriser accès Internet depuis réseaux internes
+1. Bloquer LAN → DMZ
+2. Bloquer LAN → Réseaux privés WAN (RFC1918)
+3. Autoriser DNS vers pfSense (port 53)
+4. Autoriser accès Internet depuis réseaux internes
 
 **Règles DMZ** (6 règles)
-1. ❌ Bloquer DMZ → Réseaux internes
-2. ❌ Bloquer DMZ → Interface LAN pfSense
-3. ❌ Bloquer DMZ → WebGUI pfSense (ports 80, 443)
-4. ✅ Autoriser HTTP/HTTPS → Serveur Web (10.10.11.2)
-5. ✅ Autoriser DNS sortant depuis DMZ (port 53)
-6. ✅ Autoriser HTTP/HTTPS sortant depuis DMZ (mises à jour)
+1. Bloquer DMZ → Réseaux internes
+2. Bloquer DMZ → Interface LAN pfSense
+3. Bloquer DMZ → WebGUI pfSense (ports 80, 443)
+4. Autoriser HTTP/HTTPS → Serveur Web (10.10.11.2)
+5. Autoriser DNS sortant depuis DMZ (port 53)
+6. Autoriser HTTP/HTTPS sortant depuis DMZ (mises à jour)
 
 #### 6.2 NAT et redirection de ports
 
