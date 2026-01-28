@@ -22,13 +22,13 @@
 
 ## 1. Vue d'ensemble
 
-Ce document présente la configuration complète du pare-feu pfSense pour l'entreprise BillU. Le pare-feu assure la sécurité du réseau en filtrant le trafic entre Internet (WAN), le réseau interne (LAN) et la zone démilitarisée (DMZ) qui héberge les serveurs publics (web et mail).
+Ce document présente la configuration complète du pare-feu pfSense pour l'entreprise BillU. Le pare-feu assure la sécurité du réseau en filtrant le trafic entre Internet (WAN), le réseau interne (LAN) et la zone démilitarisée (DMZ) qui héberge les serveurs publics (web).
 
 pfSense agit comme passerelle de sécurité principale et permet :
 - La protection du réseau interne contre les menaces externes
 - L'hébergement sécurisé de services publics en DMZ
 - Le routage entre les différents segments réseau
-- La mise en place de règles de filtrage granulaires
+- La mise en place de règles de filtrage
 
 ---
 ## 2. Objectifs
@@ -36,7 +36,7 @@ pfSense agit comme passerelle de sécurité principale et permet :
 - **Sécuriser le périmètre réseau** : Protéger le réseau interne de BillU contre les accès non autorisés depuis Internet
 - **Isoler la DMZ** : Empêcher tout accès direct entre la DMZ et le réseau interne tout en permettant les services publics
 - **Contrôler les flux** : Implémenter des règles de pare-feu strictes basées sur le principe du moindre privilège
-- **Permettre les services publics** : Exposer de manière sécurisée le serveur web et le serveur mail vers Internet
+- **Permettre les services publics** : Exposer de manière sécurisée le serveur web vers Internet
 - **Router le trafic interne** : Assurer la connectivité entre pfSense et les VLANs via le routeur core
 
 ---
@@ -160,9 +160,7 @@ Tous les VLANs de l'entreprise sont accessibles via le routeur core (172.16.0.0/
 
 #### 7.1 Sauvegardes
 
-- **Configuration pfSense** : Sauvegardes régulières via Diagnostics > Backup & Restore
-- **Fichier de configuration** : Exportation XML à conserver hors site
-- **Fréquence recommandée** : Avant chaque modification majeure et hebdomadairement
+
 
 #### 7.2 Monitoring
 
