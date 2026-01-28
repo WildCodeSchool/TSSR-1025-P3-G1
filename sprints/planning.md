@@ -144,20 +144,153 @@ Ainsi que la topologie du réseau.
 
 ## 2. Sprint 2
 
+Ce sprint se concentre sur la mise en place des services coeur de l'infrastructure de BillU et sur la centralisation de la gestion des postes et des utilisateurs.
+
+L'objectif principal est de disposer, en fin de sprint, d'une infrastructure Active DIrectory fonctionnelle, intégrant kes services essentiels (AD DS, DNS, DHCP) ainsi qu'une première couche de sécurité via un firewall dédié.
+
 ### 2.1 Liste des objectifs principaux
+
+- ACTIVE DIRECTORY - Création d'un domaine AD DS
+- GPO - Mise en place de GPO
+- DNS - Mise en place d'un serveur DNS
+- DHCP - Mise en place d'un serveur DHCP
+- SÉCURITÉ - Gestion d'un firewall pfSense
 
 ### 2.2 Liste des tâches de chaque objectifs
 
+**Objectif 1 – Active Directory (7,5 JH – Prioritaire)**
+Tâches :
+- Préparation et planification du domaine Active Directory
+- Installation du rôle AD DS
+- Création de la structure des OU
+- Création des groupes de sécurité
+- Tests de fonctionnement et validation
+- Rédaction de la documentation (LLD + DEX)
+
+**Objectif 2 – GPO : Mise en place des stratégies de groupe (3 JH – Prioritaire)**
+
+Tâches :
+- Configuration des GPO (sécurité, utilisateurs, postes)
+- Tests d’application des stratégies
+- Documentation associée
+
+**Objectif 3 – DNS : Mise en place du service DNS (2,5 JH – Prioritaire)**
+
+Tâches :
+- Configuration des zones DNS directes
+- Configuration des zones DNS inversées
+- Vérification de la résolution de noms
+
+**Objectif 4 – DHCP : Mise en place du service DHCP (4,5 JH – Prioritaire)**
+
+Tâches :
+- Installation du rôle DHCP
+- Configuration des étendues DHCP par VLAN
+- Configuration des réservations
+- Tests et validation du service
+
+**Objectif 5 – Sécurité : Firewall pfSense (6 JH – Prioritaire)**
+
+Tâches :
+- Installation du firewall pfSense
+- Configuration réseau de base
+- Mise en place des règles de filtrage initiales
+- Validation de la sécurité
+
 ### 2.3 Organisation chronologique
 
+Jour 1 :
+Prise de conscience des objectifs du sprint
+Priorisation des taches
+Organisation complète du sprint
+
+Jour 2 :
+Fin organisation du sprint
+Mise en place de l'arborescence du domaine Active Directory
+
+Jour 3 :
+Préparation du domaine Active Directory
+Installation AD DS
+Début configuration DNS
+
+Jour 4 :
+Création des OU
+Configuration DNS (zones directes / inversées)
+Début configuration DHCP
+Installation et configuration pfSense
+
+Jour 5 :
+Création présentation intermédiaire
+Entrainement présentation intermédiaire
+Présentation intermédiaire
+
+Jour 6 :
+Finalisation DHCP
+Tests réseau (résolution, attribution IP)
+Configuration GPO
+Mise en place du routeur
+
+Jour 7 :
+Finalisation du routeur
+Configuration IP helper sur routeur
+
+Jour 8 :
+Installation PC ADMIN
+Installation PC CLIENT
+Début configuration service GLPI
+
+Jour 9 :
+Tests globaux (AD, DNS, DHCP, GPO, firewall)
+Mise à jour de la documentation
+Revue de sprint et démonstration
+
+Jour 10 :
+Création présentation
+Entrainement présentation
+Présentation
+
 ### 2.4 Prérequis
+Sprint 1 validé (documentation et topologie réseau)
+
+Accès aux VM serveurs et clients
+
+Plan d’adressage réseau validé
+
+Outils :
+- Hyperviseur
+- pfSense
+- Windows Server
+- Linux ubuntu
+- Windows 10
+- GLPI
+- GitHub
+- Obsidian / Markdown
 
 ### 2.5 Estimation du temps par objectifs
+
+| Objectif              | Charge estimée |
+| --------------------- | -------------- |
+| Active Directory      | 7,5 JH         |
+| GPO                   | 3 JH           |
+| DNS                   | 2,5 JH         |
+| DHCP                  | 4,5 JH         |
+| Firewall pfSense      | 6 JH           |
+| **Total prioritaire** | **23,5 JH**    |
+
 
 ### 2.6 Estimation du temps par tâches
 
 ### 2.7 Synthèse
-
+À l’issue du Sprint 2, l’infrastructure BillU dispose :
+- D’un domaine Active Directory opérationnel
+- D’une gestion centralisée des utilisateurs et des postes
+- De services réseau fonctionnels (DNS, DHCP)
+- D’une première couche de sécurité périmétrique
+- D'un routage fonctionnels
+- D'un service GLPI en cours de configuration
+- De machine cliente Windows, Linux
+- D'un PC d'administration
+- D’une documentation technique alignée avec les standards DAT / HLD / LLD / DEX
 
 ## 3. Sprint 3
 
