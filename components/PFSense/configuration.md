@@ -239,15 +239,6 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 5) Ajouter la description `Serveur Mail DMZ`
 6) Cliquer sur `Save`
 
-### 3.4 Serveur mail dans la DMZ
-
-1) Entrer un nom : `DMZ_MailServer`
-2) Entrer une description : `Serveur MAIL DMZ`
-3) Choisir le type : `Hosts`
-4) Ajouter l'adresse IP `10.10.11.3` 
-5) Ajouter la description `Serveur Mail DMZ`
-6) Cliquer sur `Save`
-
 ### 3.5 Serveur Web dans la DMZ
 
 1) Entrer un nom : `DMZ_WebServer`
@@ -565,33 +556,7 @@ Pour chaque règle ci-dessous :
 |Destination port range|`WEB_PORTS` (80, 443)|
 |Description|`Autoriser le trafic web public vers serveur Web`|
 
-**Règle 5 : Autoriser SMTP entrant vers serveur Mail**
-
-|Paramètre|Valeur|
-|---|---|
-|Action|`Pass`|
-|Interface|`DMZ`|
-|Address Family|`IPv4`|
-|Protocol|`TCP`|
-|Source|`any`|
-|Destination|`DMZ_MailServer` (10.10.11.3)|
-|Destination port range|`MAIL_SMTP` (25, 465, 587)|
-|Description|`Autoriser SMTP entrant vers serveur Mail`|
-
-**Règle 6 : Autoriser POP/IMAP vers serveur Mail**
-
-|Paramètre|Valeur|
-|---|---|
-|Action|`Pass`|
-|Interface|`DMZ`|
-|Address Family|`IPv4`|
-|Protocol|`TCP`|
-|Source|`any`|
-|Destination|`DMZ_MailServer` (10.10.11.3)|
-|Destination port range|`Mail_POP_IMAP` (110, 143, 993, 995)|
-|Description|`Autoriser l'accès messagerie POP/IMAP`|
-
-**Règle 7 : Autoriser DNS sortant depuis DMZ**
+**Règle 5 : Autoriser DNS sortant depuis DMZ**
 
 |Paramètre|Valeur|
 |---|---|
@@ -604,7 +569,7 @@ Pour chaque règle ci-dessous :
 |Destination port range|`DNS_Ports` (53)|
 |Description|`Autoriser le DNS sortant depuis DMZ`|
 
-**Règle 8 : Autoriser HTTP/HTTPS sortant depuis DMZ**
+**Règle 6 : Autoriser HTTP/HTTPS sortant depuis DMZ**
 
 |Paramètre|Valeur|
 |---|---|
@@ -617,20 +582,7 @@ Pour chaque règle ci-dessous :
 |Destination port range|`Web_Ports` (80, 443)|
 |Description|`Autoriser HTTP/HTTPS sortant pour mises à jour DMZ`|
 
-**Règle 9 : Autoriser SMTP sortant depuis serveur Mail**
-
-|Paramètre|Valeur|
-|---|---|
-|Action|`Pass`|
-|Interface|`DMZ`|
-|Address Family|`IPv4`|
-|Protocol|`TCP`|
-|Source|`DMZ_MailServer` (10.10.11.3)|
-|Destination|`any`|
-|Destination port range|`Mail_SMTP` (25, 465, 587)|
-|Description|`Autoriser envoi emails sortants depuis serveur Mail`|
-
-**Règle 10 : Bloquer tout le reste**
+**Règle 7 : Bloquer tout le reste**
 
 |Paramètre|Valeur|
 |---|---|
@@ -654,12 +606,10 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 2. Bloque la DMZ vers l'interface LAN pfSense
 3. Bloquer DMZ vers pfSense (WebGUI)
 4. Autoriser HTTP/HTTPS vers serveur Web
-5. Autoriser SMTP entrant vers serveur Mail
-6. Autoriser POP/IMAP vers serveur Mail
-7. Autoriser DNS sortant depuis DMZ
-8. Autoriser HTTP/HTTPS sortant depuis DMZ
-9. Autoriser SMTP sortant depuis serveur Mail
-10. Bloquer tout le reste
+5. Autoriser DNS sortant depuis DMZ
+6. Autoriser HTTP/HTTPS sortant depuis DMZ
+7. Autoriser SMTP sortant depuis serveur Mail
+8. Bloquer tout le reste
 
 ---
 
@@ -724,6 +674,7 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 - Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
 
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
 
 
