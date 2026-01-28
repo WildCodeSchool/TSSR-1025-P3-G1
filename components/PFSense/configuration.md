@@ -92,7 +92,9 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 1. Saisir le **Hostname** : `Firewall`
 2. Saisir le **Domain** : `billu.pfsense`
-3. Cliquer sur **Next**
+3. Entrer le **Primary DNS Server** : `8.8.8.8`
+4. Entrer le **Secondary DNS Server** : `8.8.4.4`
+5. Cliquer sur **Next**
 
 ![img](Ressources/03_configuration_interface_web/04_configuration_web.png)
 
@@ -105,12 +107,14 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 
 ### 1.5 Configuration de l'interface WAN
 
-- Changer la configuration **IPv4 Configuration Type** en **Static IPv4**
-- Ajouter l'adresse IP **10.0.0.2/29**
-- Choisir **WANGW - 10.0.0.1** dans **IPv4 Upstream gateway**
-- Cliquer sur **Save**
+1. Changer la configuration **IPv4 Configuration Type** en **Static IPv4**
+2. Ajouter l'adresse IP **10.0.0.2/29**
+3. Choisir **WANGW - 10.0.0.1** dans **IPv4 Upstream gateway** (si disponible)
+4. Décocher `Block Private networks from entering via WAN`
+5. Cliquer sur **Save**
 
 ![img](Ressources/03_configuration_interface_web/06_configuration_web.png)
+![img](Ressources/03_configuration_interface_web/06_01_configuration_web.png)
 
 ### 1.6 Configuration de l'interface LAN
 
@@ -674,6 +678,7 @@ Vérifier que les règles apparaissent dans cet ordre (du haut vers le bas) :
 - Vérifier la présence de la route `172.16.0.0/16` avec comme gateway `10.10.10.2`
 
 ![img](Ressources/09_route_static/08_static_route.png)
+
 
 
 
