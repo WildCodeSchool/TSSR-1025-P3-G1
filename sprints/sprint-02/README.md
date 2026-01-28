@@ -10,6 +10,7 @@
 
 # 1. Les objectifs pris par le groupe sur le sprint
 
+## 1.1 Prioritaire :
 - Installation et configuration de ADDS
     - Création des OU
     - Création des groupes
@@ -19,7 +20,14 @@
 - Installation et configuration du DNS
 - Installation et configuration du DHCP
 - Installation et configuration de pfSense
-- Mise en place d'un PC Administration
+
+## 1.2 Secondaire :
+- SÉCURITÉ - Mise en place d'un PC d'administration - 
+- SÉCURITÉ DE LA GESTION DE PARC - Restriction d'accès - 
+- GESTION DE PARC - Logiciel de gestion de parc et de ticketing (ITSM)
+- GESTION DE PARC - Synchronisation des objets avec AD
+- RÉSEAU - Mise en place du réseau de l'infrastructure en lien avec schéma réseau initial
+
 
 
 # 2. La finalité de ces objectifs à la fin du sprint
@@ -28,11 +36,21 @@
 
 # 3. Membres du groupe du sprint 2
 
+## Semaine 1
+
 | Membre    | Rôle       |
 | --------- | ---------- |
 | Christian | SM        |
 | Franck    | Technicien       |
 | Matthias  | PO |
+
+## Semaine 2
+
+| Membre    | Rôle       |
+| --------- | ---------- |
+| Christian | Technicien        |
+| Franck    | PO       |
+| Matthias  | SM |
 
 # 4. Les problèmes rencontrés
 
