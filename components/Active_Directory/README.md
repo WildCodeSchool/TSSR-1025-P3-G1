@@ -47,8 +47,8 @@ Brève description du rôle d'Active Directory dans l'infrastructure BillU.
 ## 4. Structure de la documentation
 
 -  **README.md** - Ce fichier.
--  **[installation.md](installation.md)** - Procédure d'installation complète.
--  **[configuration.md](configuration.md)** - Configuration des OU, utilisateurs, GPO.
+-  **[installation.md](components/Active_Directory/installation.md)** - Procédure d'installation complète.
+-  **[configuration.md](components/Active_Directory/configuration.md)** - Configuration des OU, utilisateurs, GPO.
 -  **Ressources/**
 -  Screenshots/ - Captures d'écran.
 -  Scripts/ - Scripts PowerShell. 
