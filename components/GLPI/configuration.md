@@ -259,33 +259,33 @@ Renseignez les informations suivantes :
 - Sélectionner **glpidb**
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/07_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/07_glpi_installation_web.png)
 
 #### Écran 7 : Initialisation de la base
 
 - Attendre la fin du processus
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/08_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/08_glpi_installation_web.png)
 
 #### Écran 8 : Récolte des données
 
 - Décocher **Envoyer statistiques d'usage**
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/09_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/09_glpi_installation_web.png)
 
 #### Écran 9 : Dernière étape installation
 
 - Décocher **Envoyer statistiques d'usage**
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/10_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/10_glpi_installation_web.png)
 
 #### Écran 10 : Fin de l'installation
 - L'installation est terminée !
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/11_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/11_glpi_installation_web.png)
 
 #### 11 : Première connexion 
 
@@ -298,13 +298,13 @@ Renseignez les informations suivantes :
 - Sélectionner **Base interne GLPI**
 - Cliquer sur **Se connecter**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/12_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/12_glpi_installation_web.png)
 
 #### 12 : Interface WEB
 
 - Cliquer sur **Désactiver les données de démonstration**  
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/13_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/13_glpi_installation_web.png)
 
 ---
 
@@ -313,7 +313,7 @@ Renseignez les informations suivantes :
 #### 7.1 Créer un compte Super-Admin
 - Cliquer sur `Administration > Utilisateurs > +`  
 
-![img](/Ressources/glpi_img/02_glpi_configuration/01_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/01_glpi_configuration.png)
 
 #### 7.2 Création de l'utilisateur Super-Adm
 - **Identifiant** : `administrator_glpi`
@@ -327,7 +327,7 @@ Renseignez les informations suivantes :
 4) Cliquer sur `Ajouter`
 5) Vérification de l'apparition de l'entité
 
-![img](/Ressources/glpi_img/02_glpi_configuration/02_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/02_glpi_configuration.png)
 
 
 #### 7.4 Suppression de l'entité Self-Service du compte Super-Admin
@@ -337,11 +337,11 @@ Renseignez les informations suivantes :
 3) Cliquer sur **Actions** dans le pop-up
 4) Cliquer sur **Supprimer définitivement**
 
-![img](/Ressources/glpi_img/02_glpi_configuration/03_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/03_glpi_configuration.png)
 
 5) Cliquer sur **Envoyer**
 
-![img](/Ressources/glpi_img/02_glpi_configuration/04_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/04_glpi_configuration.png)
 
 
 #### 7.5 Connexion avec le compte Super-Admin
@@ -349,19 +349,19 @@ Renseignez les informations suivantes :
 1) Cliquer sur l'icone de votre compte en haut à droite
 2) Cliquer sur **Déconnexion**
 
-![img](/Ressources/glpi_img/02_glpi_configuration/05_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/05_glpi_configuration.png)
 
 
 #### 7.6 Désactivation des comptes par défaut
 
 - Connexion avec le nouveau compte **Super-Admin**
 
-![img](/Ressources/glpi_img/02_glpi_configuration/06_01_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/06_01_glpi_configuration.png)
 
 - Cliquer sur **Administration**
 - Cliquer sur **Utilisateurs**
 
-![img](/Ressources/glpi_img/02_glpi_configuration/06_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/06_glpi_configuration.png)
 
 - Pour les 4 utilisateurs :
     - **glpi**
@@ -372,12 +372,12 @@ Renseignez les informations suivantes :
 - Mettre `Non` dans l'option **Activé**
 - Cliquer sur **Sauvegarder** (tout en bas)
 
-![img](/Ressources/glpi_img/02_glpi_configuration/07_glpi_configuration.png)
-![img](/Ressources/glpi_img/02_glpi_configuration/08_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/07_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/08_glpi_configuration.png)
 
 - Résultat final 
 
-![img](/Ressources/glpi_img/02_glpi_configuration/09_glpi_configuration.png)
+![img](Ressources/glpi_img/02_glpi_configuration/09_glpi_configuration.png)
 
 ---
 
@@ -400,7 +400,7 @@ systemctl restart apache2
 2) Cliquer sur **Authentification**
 3) Cliquer sur **Annuaire LDAP**
 
-![img](/Ressources/glpi_img/03_glpi_ad/01_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/01_glpi_ad.png)
 
 1) Entrer le nom de l'annuaire Àctive Directory BillU`
 2) Sélectionner **Oui** pour **Serveur par défaut**
@@ -414,14 +414,14 @@ systemctl restart apache2
 10) Entrer `objectguid` dans **Champ de synchronisation**
 11) Cliquer sur **Ajouter**
 
-![img](/Ressources/glpi_img/03_glpi_ad/02_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/02_glpi_ad.png)
 
 
 #### 8.4 Test de la connexion
 
 - Aller dans l'onglet **Tester** pour vérifier la connexion 
 
-![img](/Ressources/glpi_img/03_glpi_ad/03_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/03_glpi_ad.png)
 
 #### 8.5 Synchronisation des utilisateurs
 
@@ -433,30 +433,30 @@ systemctl restart apache2
 3) Cliquer sur le profil **Super-Admin**
 4) Liaison annuaire LDAP (4) apparaitra et cliquer dessus
 
-![img](/Ressources/glpi_img/03_glpi_ad/04_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/04_glpi_ad.png)
 
 - Cliquer sur **Importation de nouveaux utilisateurs**
 
-![img](/Ressources/glpi_img/03_glpi_ad/05_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/05_glpi_ad.png)
 
 - Cliquer sur **Rechercher**
 
-![img](/Ressources/glpi_img/03_glpi_ad/06_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/06_glpi_ad.png)
 
 1) Modifier le nombre de **lignes/pages** à `1000`
 2) Cocher la cache à gauche du **Champ de synchronisation** pour sélectionner tous les utilisateurs
 3) Cliquer sur **Actions**
 
-![img](/Ressources/glpi_img/03_glpi_ad/07_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/07_glpi_ad.png)
 
 1) Sélectionner **Importer**
 2) Cliquer sur **Envoyer**
 
-![img](/Ressources/glpi_img/03_glpi_ad/08_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/08_glpi_ad.png)
 
 - La liste des utilisateurs apparaitra dans l'onglet **Administration > Utilisateurs**
 
-![img](/Ressources/glpi_img/03_glpi_ad/09_glpi_ad.png)
+![img](Ressources/glpi_img/03_glpi_ad/09_glpi_ad.png)
 
 
 ---
@@ -469,7 +469,7 @@ systemctl restart apache2
 - Cocher la case **Activer l'inventaire**
 - Cliquer sur **Sauvegarder**
 
-![img](/Ressources/glpi_img/04_glpi_agent/01_glpi_agent.png)
+![img](Ressources/glpi_img/04_glpi_agent/01_glpi_agent.png)
 
 #### 9.2 Installation par GPO 
 
@@ -484,4 +484,5 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
