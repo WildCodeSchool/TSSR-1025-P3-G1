@@ -227,24 +227,24 @@ http://ADRESSE_IP_DU_SERVEUR_GLPI/  (172.16.13.1)
 - Sélectionner **Français**
 - Cliquer sur **OK**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/02_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/02_glpi_installation_web.png)
 
 #### Écran 2 : Licence
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/03_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/03_glpi_installation_web.png)
 
 #### Écran 3 : Choix du type d'installation
 - Sélectionner **Installer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/04_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/04_glpi_installation_web.png)
 
 #### Écran 4 : Vérification de la compatibilité
 - Vérifier que tous les prérequis sont ok
 - Si certains éléments sont en orange ou rouge, corrigez-les avant de continuer
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/05_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/05_glpi_installation_web.png)
 
 #### Écran 5 : Configuration de la base de données
 Renseignez les informations suivantes :
@@ -253,7 +253,7 @@ Renseignez les informations suivantes :
 - **Mot de passe SQL** : `Azerty1*` (Le mot de passe définit à l'étape 2.4)
 - Cliquer sur **Continuer**
 
-![img](/Ressources/glpi_img/01_glpi_installation_web/06_glpi_installation_web.png)
+![img](Ressources/glpi_img/01_glpi_installation_web/06_glpi_installation_web.png)
 
 #### Écran 6 : Sélection de la base de données
 - Sélectionner **glpidb**
@@ -484,3 +484,4 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
