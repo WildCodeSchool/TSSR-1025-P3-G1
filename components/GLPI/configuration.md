@@ -38,7 +38,7 @@ http://ADRESSE_IP_DU_SERVEUR_GLPI/  (172.16.13.1)
 
 ![img](Ressources/glpi_img/02_glpi_configuration/01_glpi_configuration.png)
 
-#### 2.2 Création de l'utilisateur Super-Adm
+#### 2.2 Création de l'utilisateur Super-Admin
 - **Identifiant** : `administrator_glpi`
 - **Mot de passe** : `Azerty1*`
 - Cliquer sur `Ajouter`
@@ -206,5 +206,6 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
 
