@@ -1,10 +1,10 @@
 ## Sommaire - Guide de configuration GLPI sur Debian
 
-1. [Installation via l'interface web](#6-installation-via-linterface-web)
-2. [Sécurisation post-installation](#7-sécurisation-post-installation)
-3. [Synchronisation Active Directory avec GLPI](#8-synchronisation-glpi-avec-active-directory)
-4. [Installation de l'agent GLPI sur les postes clients](#9-installation-et-configuration-de-glpi-agent)
-5. [Ressources complémentaires](#10-ressources-complémentaires)
+1. [Connexion à l'interface web](#1-connexion-à-linterface-web)
+2. [Sécurisation post-installation](#2-sécurisation-post-installation)
+3. [Synchronisation Active Directory avec GLPI](#3-synchronisation-glpi-avec-active-directory)
+4. [Installation de l'agent GLPI sur les postes clients](#4-installation-et-configuration-de-glpi-agent)
+5. [Ressources complémentaires](#5-ressources-complémentaires)
 
 ---
 
@@ -206,4 +206,5 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
