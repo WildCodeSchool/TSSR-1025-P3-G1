@@ -180,7 +180,12 @@ show service ssh
 
 ### Test de connexion SSH
 
-Depuis un poste d'administration :
+Avant de tester la connxeion SSH, n'oubliez pas de configurer les interfaces de la carte réseau.
+Vous pouvez vous référez a la documentation documentation.md au chapitre :
+
+**1. Configuration des interfaces réseau**
+
+Une fois cela fais, vous pouvez donc, depuis un poste d'administration :
 
 Connexion SSH au routeur Vyos :
 
