@@ -80,7 +80,7 @@ Exemple VLAN 10 - DEV
 ```bash
 configure
 set interfaces ethernet eth0 vif 10 address 172.16.1.254/24
-set interfaces ethernet eth0 vif 10 description VLAN 10 - DEV
+set interfaces ethernet eth0 vif 10 description "VLAN 10 - DEV"
 ```
 
 Effectuer la même procédure pour tous les VLANs suivant le plan d'adressage :
