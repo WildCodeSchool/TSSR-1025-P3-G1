@@ -194,18 +194,18 @@ set service dhcp-relay server 172.16.12.2
 Définir les interfaces d'écoute (VLANs clients) :
 
 ```bash
-set service dhcp-relay interface eth0.10
-set service dhcp-relay interface eth0.20
-set service dhcp-relay interface eth0.30
-set service dhcp-relay interface eth0.40
-set service dhcp-relay interface eth0.50
-set service dhcp-relay interface eth0.60
-set service dhcp-relay interface eth0.70
-set service dhcp-relay interface eth0.80
-set service dhcp-relay interface eth0.100
-set service dhcp-relay interface eth0.110
-set service dhcp-relay interface eth0.120
-set service dhcp-relay interface eth0.130
+set service dhcp-relay listen-interface eth0.10
+set service dhcp-relay listen-interface eth0.20
+set service dhcp-relay listen-interface eth0.30
+set service dhcp-relay listen-interface eth0.40
+set service dhcp-relay listen-interface eth0.50
+set service dhcp-relay listen-interface eth0.60
+set service dhcp-relay listen-interface eth0.70
+set service dhcp-relay listen-interface eth0.80
+set service dhcp-relay listen-interface eth0.100
+set service dhcp-relay listen-interface eth0.110
+set service dhcp-relay listen-interface eth0.120
+set service dhcp-relay listen-interface eth0.130
 ```
 
 Spécifier l'interface de sortie (vers le serveur DHCP) :
