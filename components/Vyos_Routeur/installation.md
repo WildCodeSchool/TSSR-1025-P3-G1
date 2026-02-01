@@ -183,7 +183,7 @@ show service ssh
 Avant de tester la connxeion SSH, n'oubliez pas de configurer les interfaces de la carte réseau.
 Vous pouvez vous référez a la documentation documentation.md au chapitre :
 
-**1. Configuration des interfaces réseau**
+**[1. Configuration des interfaces réseau](https://github.com/WildCodeSchool/TSSR-1025-P3-G1/blob/main/components/Vyos_Routeur/configuration.md#1-configuration-des-interfaces-r%C3%A9seau)**
 
 Une fois cela fais, vous pouvez donc, depuis un poste d'administration :
 
