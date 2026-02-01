@@ -86,16 +86,27 @@ set interfaces ethernet eth0 vif 10 description "VLAN 10 - DEV"
 Effectuer la même procédure pour tous les VLANs suivant le plan d'adressage :
 
 VLAN 20 - COMMER
+
 VLAN 30 - COMMU
+
 VLAN 40 - VOIP
+
 VLAN 50 - JURI
+
 VLAN 60 - DSI
+
 VLAN 70 - COMPTA
+
 VLAN 80 - DIREC
+
 VLAN 100 - QHSE
+
 VLAN 110 - RH
+
 VLAN 120 - AD/DHCP/DNS
+
 VLAN 130 - SERVEUR
+
 VLAN 150 - ADMIN
 
 Pour valider et sauvegarder :
