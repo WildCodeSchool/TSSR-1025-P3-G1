@@ -1,9 +1,24 @@
+
 ## Sommaire - Guide de configuration GLPI sur Debian
 
 1. [Connexion à l'interface web](#1-connexion-à-linterface-web)
+	- 1.1 [Accès à l'interface web](#11-accès-à-linterface-web)
 2. [Sécurisation post-installation](#2-sécurisation-post-installation)
-3. [Synchronisation Active Directory avec GLPI](#3-synchronisation-glpi-avec-active-directory)
-4. [Installation de l'agent GLPI sur les postes clients](#4-installation-et-configuration-de-glpi-agent)
+	- 2.1 [Créer un compte Super-Admin](#21-créer-un-compte-super-admin)
+	- 2.2 [Création de l'utilisateur Super-Admin](#22-création-de-lutilisateur-super-admin)
+	- 2.3 [Configuration du compte Super-Admin](#23-configuration-du-compte-super-admin)
+	- 2.4 [Suppression de l'entité Self-Service](#24-suppression-de-lentité-self-service-du-compte-super-admin)
+	- 2.5 [Connexion avec le compte Super-Admin](#25-connexion-avec-le-compte-super-admin)
+	- 2.6 [Désactivation des comptes par défaut](#26-désactivation-des-comptes-par-défaut)
+3. [Synchronisation GLPI avec Active Directory](#3-synchronisation-glpi-avec-active-directory)
+	- 3.1 [Création d'un compte GLPI dans AD](#31-création-dun-compte-glpi-dans-active-directory--serveur-ad)
+	- 3.2 [Installation du module PHP](#32-installation-du-module-php-si-nécessaire)
+	- 3.3 [Configuration de l'annuaire LDAP](#33-configuration-de-lannuaire-ldap-dans-glpi)
+	- 3.4 [Test de la connexion](#34-test-de-la-connexion)
+	- 3.5 [Synchronisation des utilisateurs](#35-synchronisation-des-utilisateurs)
+4. [Installation et configuration de GLPI Agent](#4-installation-et-configuration-de-glpi-agent)
+	- 4.1 [Activation de l'inventaire GLPI](#41-activation-de-linventaire-glpi)
+	- 4.2 [Installation par GPO](#42-installation-par-gpo)
 5. [Ressources complémentaires](#5-ressources-complémentaires)
 
 ---
@@ -206,6 +221,7 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
 
 
