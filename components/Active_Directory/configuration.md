@@ -171,23 +171,70 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 ### 4.1 Création de GPO
 
+ **Cette partie de création de GPO est à titre d'exemple, suivre l'exemple pour créer chaque GPO du chapitre 4.2 et 4.3**
+
+#### 4.1.1 Accès au menu des GPO
 - Dans `Server Manager` cliquer sur `Tools` et `Group Policy Management`
 
 ![img](Ressources/06_gpo/01_GPO.png)
 
+#### 4.1.2 Création d'une GPO
 1) Faire `Clic droit` sur `Domain Controllers`
 2) Sélectionner `Create a GPO in this domain, and Link it here...`
 
 ![img](Ressources/06_gpo/02_GPO.png)
 
+#### 4.1.3 Nommage de la GPO
 - Entrer le nom de la GPO en suivant la convention de nommage
 
 ![img](Ressources/06_gpo/03_GPO.png)
 
+#### 4.1.4 Accès à l'éditeur de GPO
 1) Faire `Clic droit` sur la GPO créée
 2) Sélectionner `Edit...` pour faire apparaitre la console `Group Policy Management Editor`
 
 ![img](Ressources/06_gpo/04_GPO.png)
+
+#### 4.1.5 Navigation dans les paramètres de la GPO
+
+1) Naviguer dans le menu pour trouver l'emplacement du paramètre
+2) Double-cliquer pour ouvrir un paramètre et l'éditer
+
+![img](Ressources/06_gpo/05_GPO.png)
+
+#### 4.1.6 Portée de la GPO
+
+1) Sélectionner l'onglet **Scope**
+2) Choisir l'OU de **Liaison** (Links)
+3) Choisir le ou les groupes/Utilisateurs/Ordinateurs pour le filtrage de la GPO.
+
+- La GPO sera appliquée à l'OU de liaison ainsi qu'au filtrage ajouté. 
+
+![img](Ressources/06_gpo/06_GPO.png)
+
+#### 4.1.7 Statut de la GPO
+
+1) Sélectionner l'onglet **Détails**
+2) Ajuster le statut de la GPO
+
+![img](Ressources/06_gpo/07_GPO.png)
+
+#### 4.1.8 Vérification de l'application des GPO
+
+**Forcer la mise à jour des GPO sur un ordinateur :**
+```cmd
+gpupdate /force
+```
+
+**Vérifier les GPO appliquées à l'ordinateur :**
+```cmd
+gpresult /r
+```
+
+**Générer un rapport HTML détaillé des GPO appliquées :**
+```cmd
+gpresult /h rapport_gpo.html
+```
 
 ---  
 
@@ -195,17 +242,12 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 #### 4.2.1 Politique de mot de passe
 
-##### GPO : `PROD_COMPUTERS_Password`
+**Nom :** `PROD_COMPUTERS_Password`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU`
-- **Filtrage :** Authenticated Users
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy
 
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Windows Settings** > **Security Settings** > **Account Policies** > **Password Policy**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -213,25 +255,29 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 | Maximum password age | `90 days` | Renouvellement obligatoire tous les 90 jours |
 | Minimum password age | `1 day` | Empêche le changement immédiat du mot de passe |
 | Minimum password length | `12 characters` | Longueur minimale requise |
-| Minimum password lenght audit | `12 characters` | Audit de longueur minimale des mots de passe | 
+| Minimum password length audit | `12 characters` | Audit de longueur minimale des mots de passe | 
 | Password must meet complexity requirements | `Enabled` | Doit contenir : majuscules, minuscules, chiffres et caractères spéciaux |
 | Store passwords using reversible encryption | `Disabled` | Stockage sécurisé des mots de passe |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU` |
+| Filtrage | Authenticated Users |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
 
 ---
 
 #### 4.2.2 Verrouillage de compte
 
-##### GPO : `PROD_COMPUTERS_LockoutAccount`
+**Nom :** `PROD_COMPUTERS_LockoutAccount`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU`
-- **Filtrage :** Authenticated Users
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy
 
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Windows Settings** > **Security Settings** > **Account Policies** > **Account Lockout Policy**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -239,50 +285,56 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 | Account lockout threshold | `3 invalid attempts` | Nombre de tentatives avant verrouillage |
 | Reset account lockout counter after | `15 minutes` | Réinitialisation du compteur d'échecs |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU` |
+| Filtrage | Authenticated Users |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
+
 ---
 
 #### 4.2.3 Restriction d'installation de logiciels
 
-##### GPO : `PROD_COMPUTERS_RestrictionSoftwareInstall`
+**Nom :** `PROD_COMPUTERS_RestrictionSoftwareInstall`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** 
-- **Filtrage :** Authenticated Users (sauf la DSI)
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Installer
 
-
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **Windows Components** > **Windows Installer**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Turn off Windows Installer | `Enabled` > `For non-managed applications only` | Autorise seulement les programmes approuvés | 
-| Prohibit User Installs | `Enabled` > `Hide User Installs` | Empêche les installations per-user |  
+| Prohibit User Installs | `Enabled` > `Hide User Installs` | Empêche les installations per-user |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | |
+| Filtrage | Authenticated Users (sauf la DSI) |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
 
 ---
 
 #### 4.2.4 Gestion de Windows Update
 
-##### GPO : `PROD_COMPUTERS_ConfigurationUpdates`
+**Nom :** `PROD_COMPUTERS_ConfigurationUpdates`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers`
-- **Filtrage :** 
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Update
 
-
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **Windows Components** > **Windows Update** 
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Turn off auto-restart for updates during active hours | `Enabled` > `8 AM` et `6 PM` | Empêche les redémarrages automatique après une MAJ pendant les heures actives |
 
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **Windows Components** > **Windows Update** > (Paramètre) **Configure Automatic Updates**
+> Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Update > Configure Automatic Updates
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -290,88 +342,101 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 | Configure automatic updating | `4 - Auto download and schedule the install` | Téléchargement auto et installation planifiée |
 | Scheduled install day | `4 - Every Wednesday` | Jour d'installation |
 | Scheduled install time | `06:00` | Heure d'installation planifiée |
-| | `Second week on the month` | Deuxième semaine du mois | 
+| | `Second week on the month` | Deuxième semaine du mois |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
 
 ---
 
 #### 4.2.5 Blocage de l'accès à la base de registre
 
-##### GPO : `PROD_USERS_BlockBaseRegistry`
+**Nom :** `PROD_USERS_BlockBaseRegistry`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers`
-- **Filtrage :** Authenticated Users (exclure `Domain Admins`)
-- **GPO Status :** Computer configuration settings disabled
+**Chemin de configuration :**
+> User Configuration > Policies > Administrative Templates > System
 
-#### Paramètres
-
-> **User Configuration** > **Policies** > **Administrative Templates** > **System** > 
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Prevent access to registry editing tools | `Enabled` > `Yes` | Bloque l'accès à regedit.exe et reg.exe sans message d'avertissement |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | Authenticated Users (exclure `Domain Admins`) |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
 
 ---
 
 #### 4.2.6 Blocage du panneau de configuration
 
-##### GPO : `PROD_USERS_RestrictionControlPanel`
+**Nom :** `PROD_USERS_RestrictionControlPanel`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers`
-- **Filtrage :** Authenticated Users (exclure les Admins)
-- **GPO Status :** Computer configuration settings disabled
+**Chemin de configuration :**
+> User Configuration > Policies > Administrative Templates > Control Panel
 
-#### Paramètres - Blocage complet
-
-> **User Configuration** > **Policies** > **Administrative Templates** > **Control Panel**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Prohibit access to Control Panel and PC settings | `Enabled` | Bloque complètement l'accès au panneau de configuration |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | Authenticated Users (exclure les Admins) |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
 #### 4.2.7 Restriction des périphériques amovibles
 
-##### GPO : `PROD_COMPUTERS_RestrictionRemoveDevices`
+**Nom :** `PROD_COMPUTERS_RestrictionRemoveDevices`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers`
-- **Filtrage :** 
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Administrative Templates > System > Removable Storage Access
 
-
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **System** > **Removable Storage Access**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | All Removable Storage classes: Deny all access | `Enabled` | Bloque tous les périphériques amovibles |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
 
 ---
 
 #### 4.2.8 Gestion du pare-feu
 
-##### GPO : `PROD_COMPUTERS_Firewall`
+**Nom :** `PROD_COMPUTERS_Firewall`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers`
-- **Filtrage :** 
-- **GPO Status :** User configuration settings disabled
-
-#### Paramètres - Profils
-
-> **Computer Configuration** > **Policies** > **Windows Settings** > **Security Settings** > **Windows Defender Firewall with Advanced Security** > **Windows Defender Firewall with Advanced Security**
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security > Windows Defender Firewall with Advanced Security
 
 Clic droit > **Properties**
+
+**Paramètres :**
 
 **Domain Profile :**
 
@@ -397,21 +462,25 @@ Clic droit > **Properties**
 | Inbound connections | `Block (default)` | Bloque par défaut |
 | Outbound connections | `Allow (default)` | Autorise par défaut |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
+
 ---
 
 #### 4.2.9 Écran de veille avec mot de passe
 
-##### GPO : `PROD_USERS_ScreenSaver`
+**Nom :** `PROD_USERS_ScreenSaver`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers`
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
+**Chemin de configuration :**
+> User Configuration > Policies > Administrative Templates > Control Panel > Personalization
 
-#### Paramètres
-
-> **User Configuration** > **Policies** > **Administrative Templates** > **Control Panel** > **Personalization**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -420,48 +489,64 @@ Clic droit > **Properties**
 | Screen saver timeout | `Enabled` > `900` | Définit le délai d'activation |
 | Prevent changing screen saver | `Enabled` | Empêche la modification des paramètres |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
 #### 4.2.10 Bureau à distance sécurisé
 
-##### GPO : `PROD_COMPUTERS_RDP`
+**Nom :** `PROD_COMPUTERS_RDP`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers`
-- **Filtrage :** Authenticated Users
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Connections
 
-#### Paramètres
-
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **Windows Components** > **Remote Desktop Services** > **Remote Desktop Session Host** > **Connections**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Allow users to connect remotely by using Remote Desktop Services | `Enabled` | Active le bureau à distance |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | Authenticated Users |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
+
 ---
 
 #### 4.2.11 Scripts de démarrage
 
-##### GPO : `PROD_COMPUTERS_StartupScripts`
+**Nom :** `PROD_COMPUTERS_StartupScripts`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers`
-- **Filtrage :** 
-- **GPO Status :** User configuration settings disabled
-
-#### Paramètres - Scripts ordinateur
-
-> **Computer Configuration** > **Policies** > **Windows Settings** > **Scripts (Startup/Shutdown)** > **Startup**
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Scripts (Startup/Shutdown) > Startup
 
 Clic droit > **Properties** > **Add**
+
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Script Name | `\\DOM-AD-01\share\scripts\startup.bat` | Chemin du script |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
 
 ---  
 
@@ -469,42 +554,39 @@ Clic droit > **Properties** > **Add**
 
 #### 4.3.1 Fond d'écran
 
-##### GPO : `PROD_USERS_Wallpaper`
+**Nom :** `PROD_USERS_Wallpaper`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers > `
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
+**Chemin de configuration :**
+> User Configuration > Policies > Administrative Templates > Desktop > Desktop
 
-
-#### Paramètres
-
-> **User Configuration** > **Policies** > **Administrative Templates** > **Desktop** > **Desktop**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Desktop Wallpaper | `\\DOM-AD-01\share\wallpaper.jpg` | Chemin du fichier image |
 | Wallpaper Style | `Fill` |  |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
 #### 4.3.2 Mappage de lecteurs réseau
 
-##### GPO : `PROD_USERS_Drives`
+**Nom :** `PROD_USERS_Drives`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers > `
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
-
-
-#### Paramètres
-
-> **User Configuration** > **Preferences** > **Windows Settings** > **Drive Maps**
+**Chemin de configuration :**
+> User Configuration > Preferences > Windows Settings > Drive Maps
 
 Clic droit > **New** > **Mapped Drive**
+
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -516,29 +598,31 @@ Clic droit > **New** > **Mapped Drive**
 | Hide/Show this drive | `No change` | Visibilité du lecteur |
 | Hide/Show all drives | `No change` | Visibilité de tous les lecteurs |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
 #### 4.3.3 Gestion de l'alimentation
 
-##### GPO : `PROD_COMPUTERS_PowerSaving`
+**Nom :** `PROD_COMPUTERS_PowerSaving`
 
-**Portée :**
-- **Cible :** Computers
-- **Liaison :** `BillU > BilluComputers > `
-- **Filtrage :** 
-- **GPO Status :** User configuration settings disabled
+**Chemin de configuration :**
+> Computer Configuration > Policies > Administrative Templates > System > Power Management > Video and Display Settings
 
-
-#### Paramètres
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **System** > **Power Management** > **Video and Display Settings**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Turn off the display (on battery) | `Enabled` > `300` | Active le paramètre sur secteur et éteint l'écran après 5 minutes |
 
-
-> **Computer Configuration** > **Policies** > **Administrative Templates** > **System** > **Power Management** > **Sleep Settings**
+> Computer Configuration > Policies > Administrative Templates > System > Power Management > Sleep Settings
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -547,23 +631,27 @@ Clic droit > **New** > **Mapped Drive**
 | Specify the system sleep timeout (on battery) | `Enabled` > `900` | Active la mise en veille sur secteur |
 | Require a password when a computer wakes (on battery) | `Enabled` | Demande le mot de passe au réveil |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
+
 ---
 
 #### 4.3.4 Déploiement de logiciels
 
-##### GPO : `PROD_USERS_Software_7zip`
+**Nom :** `PROD_USERS_Software_7zip`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers > `
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
-
-#### Paramètres
-
-> **Users Configuration** > **Policies** > **Software Settings** > **Software installation**
+**Chemin de configuration :**
+> User Configuration > Policies > Software Settings > Software installation
 
 Clic droit > **New** > **Package**
+
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -571,24 +659,27 @@ Clic droit > **New** > **Package**
 | Deployment method | `Published` |  |
 | Installation user interface options | `Basic` | |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
 #### 4.3.5 Redirection de dossiers
 
-##### GPO : `PROD_USERS_FolderRedirection`
+**Nom :** `PROD_USERS_FolderRedirection`
 
-**Portée :**
-- **Cible :** Users
-- **Liaison :** `BillU > BilluUsers > `
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
-
-
-#### Paramètres - Documents
-
-> **User Configuration** > **Policies** > **Windows Settings** > **Folder Redirection** > **Documents**
+**Chemin de configuration :**
+> User Configuration > Policies > Windows Settings > Folder Redirection > Documents
 
 Clic droit > **Properties**
+
+**Paramètres - Documents :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -598,10 +689,9 @@ Clic droit > **Properties**
 | Grant the user exclusive rights to Documents | `Enabled` | Droits NTFS exclusifs |
 | Move the contents of Documents to the new location | `Enabled` | Déplace les fichiers existants |
 
+**Paramètres - Desktop :**
 
-#### 4.3.6 Paramètres - Desktop
-
-> **User Configuration** > **Policies** > **Windows Settings** > **Folder Redirection** > **Desktop**
+> User Configuration > Policies > Windows Settings > Folder Redirection > Desktop
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -610,45 +700,54 @@ Clic droit > **Properties**
 | Grant the user exclusive rights to Desktop | `Enabled` | Droits NTFS exclusifs |
 | Move the contents of Desktop to the new location | `Enabled` | Déplace les fichiers existants |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
 ---
 
-#### 4.3.7 Configuration du navigateur
+#### 4.3.6 Configuration du navigateur
 
-
-### Fichier requis pour la configuration de la GPO
+**Fichier requis pour la configuration de la GPO :**
 
 1) Aller sur le lien github : https://github.com/mozilla/policy-templates/releases
-2) Télécharger la dernière version des policy_templates.
+2) Télécharger la dernière version des policy_templates
 3) Copier les fichiers `firefox.admx` et `mozilla.admx` dans le dossier `C:\Windows\PolicyDefinitions`
 4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
 
+**Nom :** `PROD_USERS_Firefox`
 
-##### GPO : `PROD_USERS_Firefox`
+**Chemin de configuration :**
+> User Configuration > Policies > Administrative Templates > Mozilla > Firefox > Homepage
 
-**Portée :**
-_ **Cible :** Users
-- **Liaison :** `BillU > BilluUsers`
-- **Filtrage :** 
-- **GPO Status :** Computer configuration settings disabled
-
-#### Paramètres
-
-
-> **User Configuration** > **Policies** > **Administrative Templates** > **Mozilla** > **Firefox** > **Homepage**
+**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Homepage | `Enabled` | Configure la page d'accueil |
 | Homepage URL | `https://youtube.com` | URL de la page d'accueil |
-| Homepage URL | `Lock Homepage` > `Enabled` | Empêche la modification de la page d'accueil |
+| Lock Homepage | `Enabled` | Empêche la modification de la page d'accueil |
 
-> **User Configuration** > **Policies** > **Administrative Templates** > **Mozilla** > **Firefox** (Cliquer seulement sur le dossier Firefox et naviguer dans le menu à droite)
+> User Configuration > Policies > Administrative Templates > Mozilla > Firefox
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Disable Private Browsing | `Enabled` > `Disable Private Browsing Mode` | Désactive la navigation privée |
 | Password Manager | `Disabled` | Désactive le gestionnaire de mots de passe |
 
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
 ---
 ## 5. Délégation d'administration
 
