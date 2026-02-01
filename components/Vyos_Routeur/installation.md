@@ -52,11 +52,12 @@ Password: vyos
 Par défaut, le clavier est configuré en **"QWERTY"**.
 Pour passer en **'AZERTY"** :
 
-pour ouvrir la configuration :
+Pour entrer dans le mode configuration nous devons exécuter cette commande :
 
 ```bash
 configure
 ```
+Pour changer la configuration clavier :
 
 ```bash
 set system option keyboard-layout fr
