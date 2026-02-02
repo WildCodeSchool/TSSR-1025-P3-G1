@@ -115,7 +115,9 @@ GLPI permet :
 
 **Méthodes d'authentification configurées :**
 - **Base interne GLPI** : Compte Super-Admin local
+- **Annuaire LDAP ADMIN** : Compte Administrateur T1
 - **Annuaire LDAP** : Synchronisation avec Active Directory BillU
+
 
 **Configuration LDAP :**
 - Serveur : 172.16.12.1
@@ -171,3 +173,4 @@ GLPI permet :
 **Dernière mise à jour** : 01/02/2026  
 
 ---
+
