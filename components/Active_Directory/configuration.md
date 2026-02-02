@@ -550,6 +550,62 @@ Clic droit > **Properties** > **Add**
 
 ---  
 
+### 4.2.12 Accès aux postes d’administration – utilisateurs autorisés
+
+**Nom :** `PROD_USERS_ConnectPCAdministration`
+
+**Objectif :**  
+Restreindre l’accès local aux postes d’administration afin que seuls les administrateurs autorisés puissent s’y connecter.
+
+**Chemin de configuration :**
+
+> Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+
+**Paramètres :**
+
+|Paramètre|Valeur|Note|
+|---|---|---|
+|Allow log on locally|`BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators`|Autorise uniquement les administrateurs à ouvrir une session locale|
+
+**Portée :**
+
+|Propriété|Valeur|
+|---|---|
+|Liaison|OU `BilluComputers`|
+|Filtrage de sécurité|Groupes administrateurs uniquement|
+|Cible|Ordinateurs|
+|Statut|User configuration settings disabled|
+
+---
+
+### 4.2.13 Accès local au VLAN DSI – utilisateurs autorisés
+
+**Nom :** `PROD_USERS_ConnectVLANDSI`
+
+**Objectif :**  
+Autoriser l’accès local aux postes du VLAN DSI uniquement aux équipes habilitées et aux administrateurs.
+
+**Chemin de configuration :**
+
+> Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+
+**Paramètres :**
+
+|Paramètre|Valeur|Note|
+|---|---|---|
+|Allow log on locally|`BILLU\GRP_DEP_DSI`, `BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators`|Accès limité aux équipes DSI et administrateurs|
+
+**Portée :**
+
+|Propriété|Valeur|
+|---|---|
+|Liaison|OU `DSI`|
+|Filtrage de sécurité|Groupes DSI et sécurité|
+|Cible|Ordinateurs|
+|Statut|User configuration settings disabled|
+
+---
+
 ### 4.3 GPO standard
 
 #### 4.3.1 Fond d'écran
