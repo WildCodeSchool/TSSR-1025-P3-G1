@@ -656,7 +656,7 @@ Clic droit > **New** > **Package**
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Package path | `\\DOM-AD-01\share\software\7z2501-x64.msi` | Chemin de fichier MSI 7zip |
-| Deployment method | `Published` | L'application apparaît dans "Programmes et fonctionnalités" - l'utilisateur doit l'installer manuellement |
+| Deployment method | `Published` | L'application apparaît dans "Programmes et fonctionnalités" > "Installer un programme à partir du réseau" - l'utilisateur doit l'installer manuellement |
 | Installation user interface options | `Basic` | |
 
 **Portée :**
