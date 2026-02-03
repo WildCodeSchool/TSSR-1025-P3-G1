@@ -29,7 +29,7 @@ Afficher toutes les interfaces :
 show interface
 ```
 
-image screenshot a faire 
+
 
 
 ### Configuration des adresses IP
@@ -67,7 +67,7 @@ Verifier la configuration des interfaces "eth0" et "eth1"
 show interfaces
 ```
 
-Screenshots a faire 
+![interfaces](Ressources/07_interfaces_vyos.png)
 
 ---
 
