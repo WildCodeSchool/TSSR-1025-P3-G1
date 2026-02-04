@@ -321,6 +321,8 @@ elasticsearch_hosts = http://127.0.0.1:9200
 systemctl enable --now graylog-server
 ```
 
+---  
+
 ### 5. Première connexion
 
 1) Ouvrir un navigateur Web
