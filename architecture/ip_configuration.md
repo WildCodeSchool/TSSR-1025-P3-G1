@@ -252,11 +252,13 @@ Sommaire :
 
 **Affectation des équipements serveurs :**
 
-| Équipement | Interface |  Adresse IP Fixe | Masque          | Passerelle  |     |
-| ---------- | --------- | ---------------- | --------------- | ----------- | --- |
-| ADDS       | VLAN 120  | 172.16.12.1      | 255.255.255.248 | 172.16.12.6 |     |
-| DHCP       | VLAN 120  | 172.16.12.2      | 255.255.255.248 | 172.16.12.6 |     |
-| GLPI  | VLAN 130  | 172.16.13.1      | 255.255.255.248 | 172.16.13.6 |     |
+| Équipement | Interface |  Adresse IP Fixe | Masque          | Passerelle  | 
+| ---------- | --------- | ---------------- | --------------- | ----------- | 
+| ADDS       | VLAN 120  | 172.16.12.1      | 255.255.255.248 | 172.16.12.6 | 
+| DHCP       | VLAN 120  | 172.16.12.2      | 255.255.255.248 | 172.16.12.6 | 
+| GLPI  | VLAN 130  | 172.16.13.1      | 255.255.255.248 | 172.16.13.6 |
+| Graylog  | VLAN 130  | 172.16.13.2      | 255.255.255.248 | 172.16.13.6 |
+| Zabbix  | VLAN 130  | 172.16.13.3      | 255.255.255.248 | 172.16.13.6 |
 
 
 **Affectation des équipements impression :** 
@@ -1176,3 +1178,4 @@ Sommaire :
 
 
 >>>>>>> 4ce5e6d1a59e101def2dbc4fa29c9ed7f2b7dd73
+
