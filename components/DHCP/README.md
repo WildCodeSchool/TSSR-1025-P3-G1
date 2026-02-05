@@ -53,8 +53,8 @@ Les objectifs de cette mise en place sont les suivants :
 ## 4. Structure de la documentation
 
 -  **README.md**
--  **[installation.md](installation.md)** - Procédure d'installation complète.
--  **[configuration.md](configuration.md)** - Configuration des OU, utilisateurs, GPO.
+-  **[installation.md](components/DHCP/installation.md)** - Procédure d'installation complète.
+-  **[configuration.md](components/DHCP/configuration.md)** - Configuration des OU, utilisateurs, GPO.
 -  **Ressources/**
 
 ---

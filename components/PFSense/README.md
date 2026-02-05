@@ -93,8 +93,8 @@ Tous les VLANs de l'entreprise sont accessibles via le routeur core (172.16.0.0/
 ## 4. Structure de la documentation
 
 -  **README.md** - Ce fichier - Vue d'ensemble du projet
--  **[installation.md](installation.md)** - Procédure d'installation complète de pfSense
--  **[configuration.md](configuration.md)** - Guide détaillé de configuration :
+-  **[installation.md](components/PFSense/installation.md)** - Procédure d'installation complète de pfSense
+-  **[configuration.md](components/PFSense/configuration.md)** - Guide détaillé de configuration :
     - Configuration initiale (interfaces, fuseau horaire, hostname)
     - Ajout de l'interface DMZ
     - Création des aliases (réseaux et ports)

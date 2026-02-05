@@ -29,9 +29,6 @@ Afficher toutes les interfaces :
 show interface
 ```
 
-
-
-
 ### Configuration des adresses IP
 
 #### Configuration de base des interfaces

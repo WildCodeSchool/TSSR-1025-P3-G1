@@ -73,14 +73,14 @@ GLPI permet :
 ## 4. Structure de la documentation
 
 - **README.md** - Ce fichier - Vue d'ensemble du projet
-- **[installation.md](installation.md)** - Procédure d'installation complète de GLPI :
+- **[installation.md](components/GLPI/installation.md)** - Procédure d'installation complète de GLPI :
   - Préparation du système Debian
   - Installation de MariaDB et création de la base de données
   - Installation d'Apache et PHP avec modules requis
   - Téléchargement et installation de GLPI
   - Configuration d'Apache (VirtualHost)
   - Installation via l'interface web
-- **[configuration.md](configuration.md)** - Guide détaillé de configuration :
+- **[configuration.md](components/GLPI/configuration.md)** - Guide détaillé de configuration :
   - Connexion et sécurisation post-installation
   - Création du compte Super-Admin
   - Désactivation des comptes par défaut
