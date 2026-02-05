@@ -55,6 +55,18 @@ apt install curl wget gnupg2 apt-transport-https pwgen -y
 #### 1.4 Configuration du nom d'hôte
 ```bash
 hostnamectl set-hostname DOM-LOGS-01
+
+nano /etc/hosts
+```
+
+- Modifier le nom de la machine  dans le fichier `/etc/hosts`
+```bash
+nano /etc/hosts
+
+# Ne pas toucher à "127.0.0.1  localhost"
+# Modifier la deuxième ligne par le nouveau nom de la machine 
+
+127.0.0.1   DOM-LOGS-01
 ```
 
 ---  
@@ -159,23 +171,23 @@ nano /etc/opensearch/opensearch.yml
 ```bash
 cluster.name: graylog
 ```
-![img](Ressources/graylog_img/01_graylog_installation.png)
+![img](Ressources/graylog_img/installation/01_graylog_installation.png)
 
 ```bash
 node.name: ${HOSTNAME}
 ```
-![img](Ressources/graylog_img/02_graylog_installation.png)
+![img](Ressources/graylog_img/installation/02_graylog_installation.png)
 
 ```bash
 path.data: /var/lib/opensearch
 path.logs: /var/log/opensearch
 ```
-![img](Ressources/graylog_img/03_graylog_installation.png)
+![img](Ressources/graylog_img/installation/03_graylog_installation.png)
 
 ```bash
 network.host: 127.0.0.1
 ```
-![img](Ressources/graylog_img/04_graylog_installation.png)
+![img](Ressources/graylog_img/installation/04_graylog_installation.png)
 
 - Ajouter à la fin du fichier : 
 
@@ -183,7 +195,7 @@ network.host: 127.0.0.1
 action.auto_create_index: false
 plugins.security.disabled: true
 ```
-![img](Ressources/graylog_img/05_graylog_installation.png)
+![img](Ressources/graylog_img/installation/05_graylog_installation.png)
 
 #### 3.4 Configuration Java (JVM)
 
@@ -199,7 +211,7 @@ nano /etc/opensearch/jvm.options
 -Xms4g
 -Xmx4g
 ```
-![img](Ressources/graylog_img/06_graylog_installation.png)
+![img](Ressources/graylog_img/installation/06_graylog_installation.png)
 
 - Vérifier la valeur de la mémoire configuré
 
@@ -228,7 +240,7 @@ systemctl restart opensearch
 
 **Si `Btop` n'est pas installé, utiliser la commande `apt install btop` et lancer ensuite avec la commande `btop`**
 
-![img](Ressources/graylog_img/07_graylog_installation.png)
+![img](Ressources/graylog_img/installation/07_graylog_installation.png)
 
 ---  
 
@@ -239,8 +251,8 @@ systemctl restart opensearch
 - Télécharger Graylog
 
 ```bash
-wget https://packages.graylog2.org/repo/packages/graylog-6.1-repository_latest.deb
-dpkg -i graylog-6.1-repository_latest.deb
+wget https://packages.graylog2.org/repo/packages/graylog-7.0-repository_latest.deb
+dpkg -i graylog-7.0-repository_latest.deb
 ```
 
 - Mettre à jour les paquets
@@ -273,7 +285,7 @@ yjWWr1RApZQNWBBEYPrqtsQB5ycZFGz6Wqs08njWaH4SDICAP6JDmkKO5nbp6GRvCHYkOIn5DFpKFCW6
 3) Copier la clé dans le fichier
 4) Sauvegarder et fermer le fichier
 
-![img](Ressources/graylog_img/08_graylog_installation.png)
+![img](Ressources/graylog_img/installation/08_graylog_installation.png)
 
 ##### 4.3.2 Definir le mot de passe Admin
 - Définir le mot de passe du compte **Admin**
@@ -293,7 +305,7 @@ echo -n "Azerty1*" | shasum -a 256
 3) Copier la clé dans le fichier
 4) 4) Sauvegarder et fermer le fichier
 
-![img](Ressources/graylog_img/09_graylog_installation.png)
+![img](Ressources/graylog_img/installation/09_graylog_installation.png)
 
 ##### 4.3.3 Configuration des adresse IP d'accès WEB au serveur
 
@@ -301,15 +313,15 @@ echo -n "Azerty1*" | shasum -a 256
 2) Faire `CTRL + W` et rechercher `http_bind_address`
 3) Décommenter la ligne et entrer l'adresse du serveur `172.16.13.2:9000`
 
-![img](Ressources/graylog_img/10_graylog_installation.png)
+![img](Ressources/graylog_img/installation/10_graylog_installation.png)
 
-4) Faire `CTRL + W` et rechercher `Elastricsearch`
-5) Descendre à la ligne `#elasticsearch_hosts = http://node1:9200,http://user:password@node2:9200` et ajouter
+4) Faire `CTRL + W` et rechercher `elasticsearch_hosts`
+5) Descendre à la ligne et ajouter :
 
 ```bash
 elasticsearch_hosts = http://127.0.0.1:9200
 ```
-![img](Ressources/graylog_img/11_graylog_installation.png)
+![img](Ressources/graylog_img/installation/11_graylog_installation.png)
 
 6) Sauvegarder et fermer le fichier
 
@@ -321,12 +333,10 @@ elasticsearch_hosts = http://127.0.0.1:9200
 systemctl enable --now graylog-server
 ```
 
----  
-
 ### 5. Première connexion
 
 1) Ouvrir un navigateur Web
 2) Entrer l'adresse du serveur `172.16.13.1`
 3) Entrer l'utilisateur **Admin** et le mot de passe définit pendant l'installation (`Azerty1*`)
 
-![img](Ressources/graylog_img/12_graylog_installation.png)
+![img](Ressources/graylog_img/installation/12_graylog_installation.png)
