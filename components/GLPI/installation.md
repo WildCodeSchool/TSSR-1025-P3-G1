@@ -113,11 +113,11 @@ php -v
 #### 3.5 Configuration de PHP pour GLPI
 Éditez le fichier php.ini :
 ```bash
-nano /etc/php/8.2/apache2/php.ini
+nano /etc/php/8.4/apache2/php.ini
 ```
 
-Modifiez les paramètres suivants (utilisez `ctrl + f` pour rechercher dans nano) :
-Par exemple : `ctrl + f` > memory_limit > `Entrée`
+Modifiez les paramètres suivants (utilisez `ctrl + w` pour rechercher dans nano) :
+Par exemple : `ctrl + w` > memory_limit > `Entrée`
 ```ini
 memory_limit = 256M
 upload_max_filesize = 100M
@@ -149,7 +149,7 @@ wget https://github.com/glpi-project/glpi/releases/download/11.0.5/glpi-11.0.5.t
 
 #### 4.2 Extraction dans le répertoire web
 ```bash
-tar -xzf glpi-10.0.16.tgz
+tar -xzf glpi-11.0.5.tgz
 mv glpi /var/www/html/
 ```
 
@@ -311,4 +311,5 @@ Renseignez les informations suivantes :
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
