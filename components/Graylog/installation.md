@@ -331,7 +331,7 @@ systemctl enable --now graylog-server
 ### 5. Première connexion
 
 1) Ouvrir un navigateur Web
-2) Entrer l'adresse du serveur `172.16.13.1`
+2) Entrer l'adresse du serveur `172.16.13.2`
 3) Entrer l'utilisateur **Admin** et le mot de passe définit pendant l'installation (`Azerty1*`)
 
 ![img](Ressources/graylog_img/installation/12_graylog_installation.png)
