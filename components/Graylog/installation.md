@@ -55,8 +55,6 @@ apt install curl wget gnupg2 apt-transport-https pwgen -y
 #### 1.4 Configuration du nom d'hôte
 ```bash
 hostnamectl set-hostname DOM-LOGS-01
-
-nano /etc/hosts
 ```
 
 - Modifier le nom de la machine  dans le fichier `/etc/hosts`
