@@ -269,15 +269,14 @@ apt install graylog-server -y
 #### 4.3 Configuration de Graylog
 
 ##### 4.3.1 Génération du secret password
-- Générer une clé pour le paramètre **password_secret**
+- Générer une clé pour le paramètre **password_secret** avec `pwgen -N 1 -s 96`
 
 ```bash
-pwgen -N 1 -s 96
-
-# Résultat attendu 
-
+# Exemple de résultat attendu 
 yjWWr1RApZQNWBBEYPrqtsQB5ycZFGz6Wqs08njWaH4SDICAP6JDmkKO5nbp6GRvCHYkOIn5DFpKFCW6IL79XkfBX9WarZJc
 ```
+- Copier la clé généré dans le fichier server.conf
+
 1) Ouvrir le fichier `nano /etc/graylog/server/server.conf`
 2) Faire `CTRL + W` et rechercher `password_secret`
 3) Copier la clé dans le fichier
@@ -286,17 +285,15 @@ yjWWr1RApZQNWBBEYPrqtsQB5ycZFGz6Wqs08njWaH4SDICAP6JDmkKO5nbp6GRvCHYkOIn5DFpKFCW6
 ![img](Ressources/graylog_img/installation/08_graylog_installation.png)
 
 ##### 4.3.2 Definir le mot de passe Admin
-- Définir le mot de passe du compte **Admin**
+- Définir le mot de passe du compte **Admin** et générer son hashage avec la commande `echo -n "Azerty1*" | shasum -a 256`
 
 ```bash
-echo -n "Azerty1*" | shasum -a 256
-
 # Résultat attendu 
-
 341124fa0200aa936f241fd515fffa792718ec8a8deba082ff5ace14f30164b6
 
 - Attention ne pas copier les espaces et le tiret à la fin
 ```
+- Copier la clé généré dans le fichier server.conf
 
 1) Ouvrir le fichier `nano /etc/graylog/server/server.conf`
 2) Faire `CTRL + W` et rechercher `root_password_sha2`
