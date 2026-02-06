@@ -246,7 +246,7 @@ systemctl restart opensearch
 
 #### 4.1 Téléchargement de Graylog
 
-- Télécharger Graylog
+- Ajouter le dépôt Graylog
 
 ```bash
 wget https://packages.graylog2.org/repo/packages/graylog-7.0-repository_latest.deb
