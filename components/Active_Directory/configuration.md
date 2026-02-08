@@ -10,9 +10,7 @@
 2. [Création des utilisateurs](#2-création-des-utilisateurs)
 	- [2.1 Utilisateurs administrateurs](#21-utilisateurs-administrateurs) 
 	- [2.2 Utilisateurs par service](#22-utilisateurs-par-service) 
-3. [Création des groupes](#3-création-des-groupes) 
-	- [3.1 Groupes de sécurité](#31-groupes-de-sécurité) 
-	- [3.2 Groupes de distribution](#32-groupes-de-distributions) 
+3. [Création des groupes](#3-création-des-groupes)  
 4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
 	- [4.1 Création de GPO](#41-création-de-gpo) 
 	- [4.2 GPO de sécurité](#42-gpo-de-sécurité) 
@@ -161,9 +159,35 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 ---
 ## 3. Création des groupes
 
-#### 3.1 Groupes de sécurité
+Se rendre dans la fenêtre `Active Directory Users and Computers`
 
-#### 3.2 Groupes de distributions
+Pour créé un groupe 
+ - Clique Droit sur `BilluSecurity`
+ - Cliquer sur `New`
+ - Cliquer sur `Group`
+ 
+Une nouvelle fenêtre s'ouvre : `New Object - Group`
+
+Dans la case `Group name` :
+
+Entrer les noms des différents groupes à créés (1 seule groupe à la fois)
+- `GRP-DEP-COMMERCIAL_USERS`
+- `GRP-DEP-COMMUNICATION_USERS`
+- `GRP-DEP-COMPTABILITE_USERS`
+-  `GRP-DEP-DEV_USERS`
+-  `GRP-DEP-DIRECTION_USERS`
+-  `GRP-DEP-DSI_USERS`
+- `GRP-DEP-DSI_COMPUTERS
+- `GRP-DEP-JURIDIQUE_USERS`
+-  `GRP-DEP-QHSE_USERS`
+-  `GRP-DEP-RH_USERS`
+-  `GRP-SEC_ADMIN_USERS`
+
+Cliquer sur `OK`
+
+![image08][Ressources/08_grp_ad.png]
+
+Ensuite dans chaque groupe ajouter les membres de chaque services dans le bon groupe.
 
 ---
 

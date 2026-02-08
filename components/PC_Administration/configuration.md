@@ -1,11 +1,10 @@
 
-
-
-
-
-
-
-
+1. [Création d'une paire de clés Windows-Client (PC-ADMIN)](#1-création-dune-paire-de-clés-windows-client-pc-admin) 
+	- [Installation et activation de AGENT-SSH](#11-installation-et-activation-de-agent-ssh) 
+2. [Copie de la clé Publique sur DOM-AD-01](#2-copie-de-la-clé-publique-sur-dom-ad-01) 
+	- [Modification du fichier de configuration SSH](#21-modification-du-fichier-de-configuration-ssh) 
+3. [Copie de la clé Publique sur DOM-LOGS-01 et DOM-GLPI-01](#3-copie-de-la-clé-publique-sur-dom-logs-01-et-dom-glpi-01) 
+4. [Copie de la clé Publique sur DOM-DHCP-01](#4-copie-de-la-clé-publique-sur-dom-dhcp-01)
 
 ---
 ### 1. Création d'une paire de clés Windows-Client (PC-ADMIN)
@@ -225,11 +224,47 @@ Même procédure pour le serveur `GLPI`
 ---
 ### 4 .Copie de la clé Publique sur DOM-DHCP-01
 
+On se connecte sur `DOM-DHCP-01`
 
+ - Créer le dossier SSH :
+```Powershell
+New-Item -ItemType Directory -Force -Path C:\ProgramData\ssh
+```
 
+- Créer le fichier authorized_keys 
+```powershell
+New-Item -ItemType File -Force -Path C:\ProgramData\ssh\administrators_authorized_keys
+```
 
+Depuis le `PC-ADMIN`:
 
+- Copier la clé publique vers le serveur Windows:
+```powershell
+ssh administrator@172.16.12.2 "echo $(Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub) >> C:\ProgramData\ssh\administrators_authorized_keys"
+```
 
+ - Configuration du fichier `sshd_config` :
+```powershell
+ Add-Content -Path C:\ProgramData\ssh\sshd_config -Value ""
+```
 
+```powershell
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value "PubkeyAuthentication yes"
+```
 
+```powershell
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value "PasswordAuthentication no"
+```
 
+```powershell
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value "Match Group administrators"
+ Add-Content -Path C:\ProgramData\ssh\sshd_config -Value " AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys"
+```
+
+Démarrage du service :
+
+```powershell
+Start-Service sshd
+```
+
+---
