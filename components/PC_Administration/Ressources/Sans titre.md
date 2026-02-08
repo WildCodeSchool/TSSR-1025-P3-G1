@@ -20,3 +20,27 @@ $acl.SetAccessRule($adminRule)
 # Appliquer
 Set-Acl -Path C:\ProgramData\ssh\administrators_authorized_keys -AclObject $acl
 ```
+
+## Configuration SSH sur DOM-DHCP
+```powershell
+# Ajouter une ligne vide
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value ""
+
+# Ajouter PubkeyAuthentication
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value "PubkeyAuthentication yes"
+
+# Ajouter PasswordAuthentication
+Add-Content -Path C:\ProgramData\ssh\sshd_config -Value "PasswordAuthentication no"
+
+# Redémarrer SSH
+Restart-Service sshd
+```
+
+## Test de connexion
+```powershell
+# Déconnexion
+exit
+
+# Test depuis PC Admin
+ssh administrateur@172.16.12.2
+```
