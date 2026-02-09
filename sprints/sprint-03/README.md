@@ -65,14 +65,15 @@
     > Solution : Création de 2 GPO   
 
 # 5. Les décisions techniques
-Création des conteneurs : 
-    - DOM-LOGS-01 - Graylog
-    - DOM-WEBINT-01 - Site web interne
+Création des conteneurs :   
+    - DOM-LOGS-01 - Graylog  
+    - DOM-WEBINT-01 - Site web interne  
     
-Création des VM : 
-    - G1-DOM-ZABBIX-01
+Création des VM :   
+    - G1-DOM-ZABBIX-01  
 
 # 6. Ce qu'il reste à faire 
+
 
 
 
