@@ -257,6 +257,8 @@ Sommaire :
 | GLPI  | VLAN 130  | 172.16.13.1      | 255.255.255.248 | 172.16.13.6 |
 | Graylog  | VLAN 130  | 172.16.13.2      | 255.255.255.248 | 172.16.13.6 |
 | Zabbix  | VLAN 130  | 172.16.13.3      | 255.255.255.248 | 172.16.13.6 |
+| Serveur de fichiers  | VLAN 130  | 172.16.13.4      | 255.255.255.248 | 172.16.13.6 |
+| Web Interne  | VLAN 130  | 172.16.13.5      | 255.255.255.248 | 172.16.13.6 |
 
 
 **Affectation des équipements impression :** 
@@ -382,5 +384,6 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
