@@ -1,3 +1,4 @@
+# Sommaire
 1. [Structure organisationnelle (OU)](#1-structure-organisationnelle-ou) 
 	- [1.1 Arborescence des OU](#11-arborescence-des-ou) 
 		- [1.1.1 Arborescence des sous- OU de BilluComputers](#111-arborescense-des-sous-ou-de-billucomputers) 
@@ -6,10 +7,11 @@
 	- [1.3 Création des sous-OU](#13-création-des-sous-ou) 
 		- [1.3.1 Création des sous-OU-BilluComputers](#131-création-des-sous-ou-de-billucomputers)
 		- [1.3.2 Création des sous-OU-BilluUsers](#132-création-des-sous-ou-de-billuusers)
-
 2. [Création des utilisateurs](#2-création-des-utilisateurs)
-	- [2.1 Utilisateurs administrateurs](#21-utilisateurs-administrateurs) 
-	- [2.2 Utilisateurs par service](#22-utilisateurs-par-service) 
+	- [2.1 Préparation du fichier CSV](#21-préparation-du-fichier-csv) 
+	- [2.2 Configuration du script](#22-configuration-du-script) 
+	- [2.3 Exécution du script](#23-exécution-du-script)
+	- [2.4 Vérification](#24-vérification)
 3. [Création des groupes](#3-création-des-groupes) 
 	- [3.1 Groupes de sécurité](#31-groupes-de-sécurité) 
 	- [3.2 Groupes de distribution](#32-groupes-de-distributions) 
