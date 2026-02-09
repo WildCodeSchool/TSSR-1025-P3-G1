@@ -1,5 +1,3 @@
-Parfait, ça confirme le problème : les fichiers sources ne sont pas trouvés localement à cause de votre GPO qui bloque Windows Update.
-
 **Solution : Installation manuelle depuis GitHub**
 
 Voici les étapes précises à suivre :
