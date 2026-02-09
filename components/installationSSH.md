@@ -38,6 +38,3 @@ New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled Tru
 Get-Service sshd
 ```
 
-Vous devriez voir le service "Running".
-
-Essayez ces commandes et dites-moi si vous rencontrez un problème !
