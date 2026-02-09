@@ -1,280 +1,196 @@
-# Installation du serveur de fichiers Windows Server Core
-
 ## Sommaire
 
-1. [Pré-requis](#1-pre-requis)
-2. [Installation de Windows Server Core](#2-installation-de-windows-server-core)
-3. [Première configuration via SConfig](#3-premiere-configuration-via-sconfig)
-4. [Configuration réseau (IP statique)](#4-configuration-reseau-ip-statique)
-5. [Configuration DNS](#5-configuration-dns)
-6. [Réglage de la date et de l’heure](#6-reglage-de-la-date-et-de-lheure)
-7. [Jonction au domaine Active Directory](#7-jonction-au-domaine-active-directory)
-8. [Installation du rôle File Server](#8-installation-du-role-file-server)
-9. [Préparation du disque DATA (E:)](#9-preparation-du-disque-data-e)
-10. [Création de l’arborescence de base](#10-creation-de-larborescence-de-base)
-11. [Conclusion](#11-conclusion)
+1. [Configuration réseau du serveur DHCP (Server Core)](#1-configuration-reseau-du-serveur-dhcp-server-core)
+2. [Configuration DNS sur le serveur DHCP](#2-configuration-dns-sur-le-serveur-dhcp)
+3. [Installation du rôle DHCP (Windows Server Core)](#3-installation-du-role-dhcp-windows-server-core)
+4. [Désactivation temporaire du pare-feu Windows](#4-desactivation-temporaire-du-pare-feu-windows)
+5. [Jonction du serveur DHCP au domaine Active Directory](#5-jonction-du-serveur-dhcp-au-domaine-active-directory)
+6. [Post-installation du rôle DHCP et autorisation dans Active Directory](#6-post-installation-du-role-dhcp-et-autorisation-dans-active-directory)
+7. [Installation des outils d’administration DHCP sur le serveur GLI](#7-installation-des-outils-dadministration-dhcp-sur-le-serveur-gli)
+8. [Administration du serveur DHCP depuis le serveur GLI](#8-administration-du-serveur-dhcp-depuis-le-serveur-gli)
+9. [Conclusion](#9-conclusion)
 
----
 
-## 1. Pré-requis
+## 1. Configuration réseau du serveur DHCP (Server Core)
 
-Avant de commencer, assurez-vous d'avoir :
-
-| Élément               | Description                            |
-| --------------------- | -------------------------------------- |
-| Contrôleur de domaine | AD DS / DNS opérationnel (serveur GLI) |
-| Réseau                | Connexion au VLAN serveurs             |
-| Compte administrateur | Droits d'administration du domaine     |
-| Disques               | • Disque OS (C:)<br>• Disque DATA (E:) |
-
----
-
-## 2. Installation de Windows Server Core
-
-### Étapes d'installation
-
-1. Démarrer sur l'ISO Windows Server
-2. Sélectionner l'édition :
-    - `Windows Server Standard (Server Core Installation)`
-    - ou Datacenter Core selon le cas
-3. Installer Windows sur le disque système
-4. Définir le mot de passe du compte Administrator (local)
-
-> Le serveur redémarre automatiquement et affiche l'outil SConfig
-
----
-
-## 3. Première configuration via SConfig
-
-Au premier démarrage, nous allons :
-
-- Renommer le serveur
-- Configurer le réseau + DNS
-- Régler l'heure
-- Joindre le domaine
-
----
-
-## 4. Configuration réseau (IP statique)
+À l’arrivée sur l’interface **SConfig**, l’objectif est de configurer une **adresse IP statique** afin d’intégrer correctement le serveur au réseau et au domaine.
 
 ### Accès aux paramètres réseau
+- Appuyer sur **8** puis **Entrée** pour accéder à la configuration réseau.
 
-Dans SConfig :
+![Accès au menu réseau SConfig](Ressources/01_installation/dhcp-sconfig-network-menu.png)
 
-
-Appuyer sur `8` puis `Entrée` > Network Settings
-
+Vous arrivez dans le menu des paramètres réseau.
 
 ### Sélection de la carte réseau
+- Choisir la carte réseau à modifier
 
-- Sélectionner l'interface à configurer (généralement `1`)
-- Appuyer sur Entrée
+![Sélection de la carte réseau](Ressources/01_installation/dhcp-sconfig-select-nic.png)
 
-### Configuration de l'adresse IP
+- Appuyer sur **Entrée**
 
-Dans Network Adapter Settings :
+### Configuration de l’adresse IP
+Dans le menu **Network Adapter Settings** :
 
-1. Appuyer sur `1` > Set Network Adapter Address
-2. Choisir `S` > Static
+- Appuyer sur **1** pour accéder aux paramètres IP
 
-**Paramètres réseau :**
+Renseigner les champs suivants :
+- **S** (Static)
+- **Adresse IP** : `172.16.12.2`
+- **Masque** : `255.255.255.248`
+- **Passerelle** : `172.16.12.6`
 
-| Paramètre       | Valeur exemple    |
-| --------------- | ----------------- |
-| IP Address      | `172.16.13.4`     |
-| Subnet Mask     | `255.255.255.248` |
-| Default Gateway | `172.16.13.6`     |
+![Configuration de l’adresse IP statique](Ressources/01_installation/dhcp-sconfig-ip-config.png)
 
-3. Valider avec Entrée
+Valider avec **Entrée**.
 
-### Vérification
+![Résultat de la configuration IP](Ressources/01_installation/dhcp-sconfig-ip-result.png)
 
-Sortir vers la console (option 15), exécuter :
-
-```powershell
-ipconfig /all
-ping 172.16.12.1
-```
-
-> Cible du ping : l'adresse IP du contrôleur de domaine
+Une fois la configuration appliquée, appuyer à nouveau sur **Entrée** pour revenir au menu précédent.
 
 ---
 
-## 5. Configuration DNS
+## 2. Configuration DNS sur le serveur DHCP
 
-### Configuration DNS dans SConfig
+Toujours dans le menu de configuration de la carte réseau :
+### Paramétrage du serveur DNS
 
-Toujours dans Network Adapter Settings :
+- Appuyer sur **2** pour accéder à **Set DNS Server**
 
-1. Appuyer sur `2` > Set DNS Servers
+Renseigner :
+- **Preferred DNS** : `172.16.12.1`
 
-**Paramètres DNS :**
+![Configuration du serveur DNS](Ressources/01_installation/dhcp-sconfig-dns-config.png)
 
-| Serveur DNS          | Valeur                    |
-| -------------------- | ------------------------- |
-| Preferred DNS Server | `172.16.12.10` (IP du DC) |
-| Alternate DNS Server | Laisser vide ou second DC |
+- **Alternate DNS** : laisser vide (Entrée)
 
-2. Valider
-
-### Vérification DNS
-
-Tester la résolution de noms :
-
-```powershell
-nslookup billu.lan
-```
+Ce DNS correspond au **serveur AD DS / DNS**.
 
 ---
 
-## 6. Réglage de la date et de l'heure
+## 3. Installation du rôle DHCP (Server Core)
 
-Dans SConfig :
+Retourner au menu principal de **SConfig** puis :
 
-1. Appuyer sur `9` > Date and Time
-2. Vérifier le fuseau horaire
-3. Corriger l'heure si nécessaire
+- Choisir **15 – Exit to command line**
 
-> Critique : Kerberos est sensible au décalage horaire. Une heure incorrecte empêchera possiblement la jonction au domaine !
+Dans la console PowerShell, exécuter la commande suivante :
+Install-WindowsFeature DHCP -IncludeManagementTools
 
----
+![Commande d’installation du rôle DHCP](Ressources/01_installation/dhcp-role-install-command.png)
 
-## 7. Jonction au domaine Active Directory
+L’installation démarre.
 
-### Renommage du serveur (avant jonction)
+![Progression de l’installation DHCP](Ressources/01_installation/dhcp-role-install-progress.png)
 
-Dans SConfig :
+Une fois la barre de progression terminée, le rôle DHCP est installé sur le serveur Core.
 
-1. Appuyer sur `2` > Computer Name
-2. Renseigner un nom conforme :
-
-```
-DOM-FS-01
-```
-
-3. Redémarrage demandé > `Yes`
-
-### Jonction au domaine
-
-Après redémarrage, retourner dans SConfig :
-
-1. Appuyer sur `1` > Domain/Workgroup
-2. Choisir `D` > Domain
-3. Renseigner le domaine :
-
-```
-billu.lan
-```
-
-4. Saisir les identifiants d'un compte administrateur du domaine
-5. Redémarrage demandé > `Yes`
+![Installation du rôle DHCP terminée](Ressources/01_installation/dhcp-role-install-success.png)
 
 ---
 
-## 8. Installation du rôle File Server
+## 4. Désactivation temporaire du pare-feu Windows
 
-### Sortie vers PowerShell
+Dans l’attente de la mise en place du pare-feu **pfSense**, le pare-feu Windows est désactivé temporairement afin d’assurer la communication réseau.
 
-Dans SConfig :
+Commande PowerShell :
+`Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False`
 
-```
-Appuyer sur [15] > Exit to command line
-```
+![Désactivation temporaire du pare-feu Windows](Ressources/01_installation/dhcp-firewall-disable.png)
 
-### Installation du rôle
-
-```powershell
-Install-WindowsFeature FS-FileServer
-```
-
-### Vérification de l'installation
-
-```powershell
-Get-WindowsFeature FS-FileServer
-```
-
-Résultat attendu :
-
-```
-InstallState : Installed
-```
+Cette désactivation est **temporaire** et doit être revue en production.
 
 ---
 
-## 9. Préparation du disque DATA (E:)
+## 5. Jonction du serveur DHCP au domaine Active Directory
 
-> **Objectif** : Préparer un volume dédié aux données, séparé du disque système
+Le serveur DHCP doit être joint au domaine `billu.lan`.
 
-### Identifier le disque DATA
+Dans PowerShell :
+Add-Computer -DomainName "billu.lan" -Credential (Get-Credential)
 
-Lister les disques disponibles :
+![Jonction du serveur DHCP au domaine](Ressources/01_installation/dhcp-join-domain-command.png)
 
-```powershell
-Get-Disk
-```
+Renseigner les identifiants d’un compte autorisé à joindre des machines au domaine.
 
-> Repérer le disque non initialisé (généralement Disk 1)
+Après validation :
+- Se connecter avec le compte **Administrator du domaine**
+- Utiliser le mot de passe défini précédemment
 
-### Initialiser le disque
+![Connexion avec le compte domaine](Ressources/01_installation/dhcp-domain-login.png)
 
-```powershell
-Initialize-Disk -Number 1 -PartitionStyle GPT
-```
+Un redémarrage est nécessaire.
 
-### Créer une partition et assigner la lettre E:
-
-```powershell
-New-Partition -DiskNumber 1 -UseMaximumSize -DriveLetter E
-```
-
-### Formater en NTFS
-
-```powershell
-Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel DATA
-```
-
-### Vérifier le volume
-
-```powershell
-Get-Volume
-```
-
-Résultat attendu :
-
-|Lettre|FileSystem|Label|Taille|État|
-|---|---|---|---|---|
-|E:|NTFS|DATA|> 0|Healthy|
+Une fois redémarré, le serveur DHCP est **membre du domaine**.
 
 ---
 
-## 10. Création de l'arborescence de base
+## 6. Post-installation DHCP et autorisation dans l’AD
 
-### Création des dossiers racines
+Depuis le **serveur GLI**, ouvrir **Server Manager**.
 
-Sur le volume DATA, créer la structure de base :
+### Ajout du serveur DHCP Core
+- Dans **Manage** → **Add Servers**
 
-```powershell
-mkdir E:\DATA
-mkdir E:\DATA\HOME
-mkdir E:\DATA\SERVICES
-mkdir E:\DATA\DEPARTEMENTS
-```
+![Ajout du serveur DHCP dans Server Manager](Ressources/01_installation/dhcp-gli-add-server.png)
 
-### Vérification de l'arborescence
+- Rechercher le serveur DHCP par son nom
+- Le sélectionner et l’ajouter
 
-```powershell
-tree E:\DATA
-```
+### Autorisation du serveur DHCP
+Lors de la configuration du déploiement DHCP :
+- Dans la section **Authorization**
+- Choisir **Use the following user's credentials**
+- Cliquer sur **Commit**
 
-**Résultat attendu :**
+![Autorisation du serveur DHCP dans Active Directory](Ressources/01_installation/dhcp-gli-authorization.png)
 
-```
-E:\DATA
-├── HOME
-├── SERVICES
-└── DEPARTEMENTS
-```
-
-> **Note** : À ce stade, aucune permission spécifique n'est encore appliquée
+Le serveur DHCP est maintenant autorisé dans Active Directory.
 
 ---
+## 7. Installation des outils DHCP sur le serveur GLI
+
+Afin d’administrer le serveur DHCP Core, les outils DHCP doivent être installés sur le serveur GLI.
+
+Sur le **serveur GLI** :
+1. **Server Manager**
+2. **Add Roles and Features**
+3. **Features**
+4. Cocher :
+    - Remote Server Administration Tools (RSAT)
+    - Role Administration Tools
+    - DHCP Server Tools
+        - DHCP Management Tools
+5. Installer
+
+---
+
+## 8. Ajout et administration du serveur DHCP depuis le GLI
+
+### Ouverture de la console DHCP
+
+- Menu Windows → **Tools** → **DHCP**
+### Ajout du serveur DHCP
+
+- Clic droit sur **DHCP**
+- **Add Server…**
+
+![Ajout du serveur DHCP dans la console DHCP](Ressources/01_installation/dhcp-gli-console-add-server.png)
+
+- Choisir :
+    - **This authorized DHCP server**
+- Sélectionner le serveur DHCP souhaité
+
+Validation.
+
+---
+
+## Conclusion
+
+Le serveur DHCP est désormais :
+- Installé sur **Windows Server Core**
+- Joint au domaine Active Directory
+- Autorisé dans l’AD
+- Administrable à distance depuis le serveur GLI
+
+L’infrastructure est prête pour la création des **scopes DHCP**, options réseau et réservations.
