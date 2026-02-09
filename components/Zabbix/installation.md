@@ -30,7 +30,7 @@ Le Serveur **"ZABBIX"** est positionné sur le **VLAN 130 SERVEUR**.
 **Configuration réseau** :
 - **Nom de la machine** : `G1-DOM-ZABBIX-01`
 - **VLAN** : `130`
-- **Adresse IP** : `172.16.13.3/24`
+- **Adresse IP** : `172.16.13.3/29`
 - **Passerelle** : `172.16.13.6`
 - **DNS :** `172.16.12.1` 
 - **Nom de domaine** : `billu.lan`

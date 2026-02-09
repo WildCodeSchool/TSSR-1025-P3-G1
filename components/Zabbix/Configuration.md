@@ -107,7 +107,7 @@ idem pour l'utilisateur : `guest`
 ---
 ## 4. Installation des agents
 
-#### 4.1 Serveur ADDS/DNS
+#### 4.1 Installation sur DOM-AD-01
 
 `G1-DOM-AD-01` sous Windows server 2016 +
 
@@ -158,5 +158,44 @@ Après Actualisation
 
 ![image_22](Ressources/22_config_zabbix.png)
 
+Pour tout ajout de Zabbix-agent sous Windows graphique suivre cette procédure.
 
+---
+#### 4.1 Installation sur DOM-GLPI-01
 
+Depuis le PC `ADMIN` se connecter en "SSH" sur `DOM-GLPI-01`
+
+```powershell
+ssh wilder@DOM-GLPI-01
+```
+
+- Télécharger directement le paquet agent :
+```bash
+wget https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix/zabbix-agent2_7.0.6-1+debian12_amd64.deb
+```
+
+- Installer :
+```bash
+sudo dpkg -i zabbix-agent2_7.0.6-1+debian12_amd64.deb
+```
+
+- Si ils manquent des dépendances :
+```bash
+sudo apt --fix-broken install
+```
+
+Depuis le `PC-ADMIN` se connecter sur l'interface du serveur **"ZABBIX"** : `G1-DOM-ZABBIX-01` :
+
+- Dans l'onglet `Collecte de données`
+- Cliquer sur `Hôtes`
+- Cliquer sur `Créér un hôte`
+- Compléter la fenêtre `Nouvel hôte`
+- Cliquer sur `Ajouter`
+
+Après Actualisation 
+
+![image_23](Ressources/23_config_zabbix.png)
+
+Pour tout ajout de Zabbix-agent sous `DEBIAN` suivre cette procédure.
+
+---
