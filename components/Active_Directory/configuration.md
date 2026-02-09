@@ -238,7 +238,7 @@ Le script effectue automatiquement les actions suivantes :
 ---
 ## 3. Création des groupes
 
-#### 3.1 Groupes de sécurité
+### 3.1. Groupes de sécurité
 
 Tous les groupes doivent être créés dans l'arborescence suivante :
 
@@ -248,7 +248,7 @@ OU=BilluSecurity
       └── Groupes GRP_SVC_*
 ```
 
-## 3.1.1. Comment créer un groupe ?
+#### 3.1.1. Comment créer un groupe ?
 
 Suivez ces étapes dans Active Directory Users and Computers :
 
@@ -262,7 +262,7 @@ Suivez ces étapes dans Active Directory Users and Computers :
 | **Type de groupe** | **Sécurité** |
 | **Étendue du groupe** | **Globale** |
 
-## 3.1.2. Nomenclature
+#### 3.1.2. Nomenclature
 
 | Préfixe | Description |
 |---------|-------------|
@@ -271,9 +271,9 @@ Suivez ces étapes dans Active Directory Users and Computers :
 
 ---
 
-## 3.1.3. Liste des groupes à créer
+#### 3.1.3. Liste des groupes à créer
 
-### 3.1.3.1 Groupes de départements (OU=Departments)
+##### Groupes de départements (OU=Departments)
 
 ```
 GRP_DEP_COMMERCIAL_USERS
@@ -287,7 +287,7 @@ GRP_DEP_QHSE_USERS
 GRP_DEP_RH_USERS
 ```
 
-### 3.1.3.2 Services COMMERCIAL (OU=Services)
+##### Services COMMERCIAL (OU=Services)
 
 ```
 GRP_SVC_ADMINISTRATION_DES_VENTES_USERS
@@ -296,7 +296,7 @@ GRP_SVC_SERVICE_ACHAT_USERS
 GRP_SVC_SERVICE_CLIENT_USERS
 ```
 
-### 3.1.3.3 Services COMMUNICATION (OU=Services)
+##### Services COMMUNICATION (OU=Services)
 
 ```
 GRP_SVC_COMMUNICATION_INTERNE_USERS
@@ -304,7 +304,7 @@ GRP_SVC_GESTION_DES_MARQUES_USERS
 GRP_SVC_RELATIONS_MEDIA_USERS
 ```
 
-### 3.1.3.4 Services COMPTABILITÉ (OU=Services)
+##### Services COMPTABILITÉ (OU=Services)
 
 ```
 GRP_SVC_FINANCE_USERS
@@ -312,7 +312,7 @@ GRP_SVC_FISCALITE_USERS
 GRP_SVC_SERVICE_COMPTABILITE_USERS
 ```
 
-### 3.1.3.5 Services DÉVELOPPEMENT (OU=Services)
+##### Services DÉVELOPPEMENT (OU=Services)
 
 ```
 GRP_SVC_ANALYSE_CONCEPTION_USERS
@@ -321,13 +321,13 @@ GRP_SVC_RECHERCHE_PROTOTYPAGE_USERS
 GRP_SVC_TESTS_QUALITE_USERS
 ```
 
-### 3.1.3.6 Services DIRECTION (OU=Services)
+##### Services DIRECTION (OU=Services)
 
 ```
 GRP_SVC_DIRECTION_USERS
 ```
 
-### 3.1.3.7 Services DSI (OU=Services)
+##### Services DSI (OU=Services)
 
 ```
 GRP_SVC_ADMIN_USERS
@@ -337,7 +337,7 @@ GRP_SVC_EXPLOITATION_USERS
 GRP_SVC_SUPPORT_USERS
 ```
 
-### 3.1.3.8 Services JURIDIQUE (OU=Services)
+##### Services JURIDIQUE (OU=Services)
 
 ```
 GRP_SVC_DROITS_DES_SOCIETES_USERS
@@ -353,7 +353,7 @@ GRP_SVC_CONTROLE_QUALITE_USERS
 GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
 ```
 
-### 3.1.3.10 Services RESSOURCES HUMAINES (OU=Services)
+##### Services RESSOURCES HUMAINES (OU=Services)
 
 ```
 GRP_SVC_RH_USERS
