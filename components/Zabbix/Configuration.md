@@ -1,9 +1,11 @@
-
-
-
-
-
-
+1. [Configuration Interface de Zabbix](#1-configuration-interface-de-zabbix) 
+2. [Création des compte utilisateurs](#2-création-des-compte-utilisateurs) 
+3. [Désactivation du profil GUEST et ADMIN](#3-désactivation-du-profil-guest-et-admin) 
+4. [Installation des agents](#4-installation-des-agents) 
+	- 4.1 [Installation sur DOM-AD-01](#41-installation-sur-dom-ad-01) 
+	- 4.2 [Installation sur DOM-GLPI-01](#42-installation-sur-dom-glpi-01) 
+	- 4.3 [Installation sur DOM-DHCP-01](#43-installation-sur-dom-dhcp-01) 
+	- 4.4 [Installation sur PFSENSE](#44-installation-sur-pfsense)
 
 ---
 ## 1. Configuration Interface de Zabbix
@@ -54,7 +56,7 @@ Cliquer sur **"Terminer"**
 
 ![image_9](Ressources/09_config_zabbix.png)
 Nom d'utilisateur : `Admin`
-Mot de passe : `zabbix`
+Mot de passe : `zabb#### 4.3 Installation sur DOM-DHCP-01ix`
 
 Cliquer sur **"S'enregistrer"**
 
@@ -161,7 +163,7 @@ Après Actualisation
 Pour tout ajout de Zabbix-agent sous Windows graphique suivre cette procédure.
 
 ---
-#### 4.1 Installation sur DOM-GLPI-01
+#### 4.2 Installation sur DOM-GLPI-01
 
 Depuis le PC `ADMIN` se connecter en "SSH" sur `DOM-GLPI-01`
 
@@ -197,5 +199,62 @@ Après Actualisation
 ![image_23](Ressources/23_config_zabbix.png)
 
 Pour tout ajout de Zabbix-agent sous `DEBIAN` suivre cette procédure.
+Oubliez pas d'adapter vos commandes.
+`G1-R1`
+`DOM-LOGS-01`
+`DOM-WEBINT-01`
+
 
 ---
+#### 4.3 Installation sur DOM-DHCP-01
+
+Version "Windows Server" core .
+
+Depuis le PC `ADMIN` se connecter en "SSH" sur `DOM-DHCP-01`
+```powershell
+ssh wilder@DOM-DHCP-01
+```
+
+- Se placer dans le bon répertoire avant le téléchargement :
+```powershell
+cd C:\Users\Administrator
+```
+
+- Télécharger Zabbix Agent 2 :
+```powershell
+Invoke-WebRequest -Uri "https://cdn.zabbix.com/zabbix/binaries/stable/7.0/7.0.5/zabbix_agent2-7.0.5-windows-amd64-openssl.msi" -OutFile "zabbix_agent2.msi"
+```
+
+- Lancer l'installation et attendre quel se termine :
+```powershell
+Start-Process msiexec.exe -ArgumentList '/i', 'C:\Users\Administrator\Downloads\zabbix_agent2.msi', '/qn', 'SERVER=192.168.1.43', 'SERVERACTIVE=192.168.1.43', 'HOSTNAME=DOM-DHCP-01' -Wait
+```
+
+- Vérifier le service :
+```powershell
+Get-Service "Zabbix Agent 2" | Select-Object Name, Status, StartType
+```
+
+- Configurer le démarrage Automatique :
+```powershell
+Set-Service -Name "Zabbix Agent 2" -StartupType Automatic
+```
+
+Depuis le `PC-ADMIN` se connecter sur l'interface du serveur **"ZABBIX"** : `DOM-ZABBIX-01` :
+
+- Dans l'onglet `Collecte de données`
+- Cliquer sur `Hôtes`
+- Cliquer sur `Créér un hôte`
+- Compléter la fenêtre `Nouvel hôte`
+- Cliquer sur `Ajouter`
+
+Après Actualisation 
+![image_24](Ressources/24_config_zabbix.png)
+
+Pour tout ajout de Zabbix-agent sous `Windows Core` suivre cette procédure.
+Oubliez pas d'adapter vos commandes.
+`DOM-FS-01`
+
+---
+#### 4.4 Installation sur PFSENSE
+

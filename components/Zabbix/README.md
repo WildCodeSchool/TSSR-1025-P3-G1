@@ -122,6 +122,8 @@ Zabbix assure la supervision centralisée de l'infrastructure BillU, incluant :
 - DOM-DHCP-01 (Serveur DHCP)
 - DOM-LOGS-01 (Serveur Graylog)
 - DOM-GLPI-01 (Serveur GLPI)
+- DOM-FS-01 (Serveur de fichiers)
+- DOM-WEBINT-01 (Serveur WEB Interne)
 
 **Métriques collectées :**
 - Utilisation CPU, RAM, disque
