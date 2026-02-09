@@ -152,11 +152,87 @@ Même procédure pour les autres **"SOUS-OU"**
 Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 ---
+
 ## 2. Création des utilisateurs
 
-#### 2.1 Utilisateurs administrateurs
+La création des utilisateurs est automatisée via un script PowerShell qui importe les données depuis un fichier CSV.
 
-#### 2.2 Utilisateurs par service
+#### 2.1 Préparation du fichier CSV
+
+Le fichier CSV doit respecter le format suivant :
+- **Délimiteur** : point-virgule ( ; )
+- **Encodage** : UTF-8
+
+**Exemple de structure :**
+
+```csv
+Prenom;Nom;Departement;Service;fonction;Societe;Telephone fixe;Telephone portable;Manager-Prenom;Manager-Nom
+Jean;Dupont;Service Commercial;ADV;Responsable ADV;BillU;01 23 45 67 89;06 12 34 56 78;Marie;Martin
+Sophie;Lefebvre;DSI;Support;Technicien Support;BillU;01 23 45 67 90;;Jean;Dupont
+```
+
+**Colonnes du fichier CSV :**
+
+| Colonne | Description | Obligatoire |
+|---------|-------------|-------------|
+| Prenom | Prénom de l'utilisateur | Oui |
+| Nom | Nom de famille | Oui |
+| Departement | Département (doit correspondre au mapping) | Oui |
+| Service | Service dans le département | Oui |
+| fonction | Poste/fonction | Oui |
+| Societe | Nom de la société | Oui |
+| Telephone fixe | Numéro de téléphone fixe | Non |
+| Telephone portable | Numéro de téléphone portable | Non |
+| Manager-Prenom | Prénom du manager | Non |
+| Manager-Nom | Nom du manager | Non |
+
+#### 2.2 Configuration du script
+
+Modifier les variables suivantes au début du script selon votre environnement :
+
+```powershell
+$SourceCSV = "C:\Scripts\s01_BillU.csv"    # Chemin du fichier CSV
+$DomainDN = "DC=billU,DC=lan"              # DN du domaine
+$DomainName = "@billU.lan"                  # Suffixe email
+$DefaultPassword = "Azerty1*"               # Mot de passe par défaut
+```
+
+**Mapping des départements et services :**
+
+Le script utilise des tables de correspondance pour mapper les noms vers les OU. Si un nouveau département ou service est ajouté, il doit être référencé dans les hashtables `$DepartementMapping` et `$ServiceMapping` du script.
+
+#### 2.3 Exécution du script
+
+1. Ouvrir **PowerShell en tant qu'administrateur**
+2. Se placer dans le répertoire du script :
+
+```powershell
+cd C:\
+```
+
+3. Exécuter le script :
+
+```powershell
+.\Create-ADUsers.ps1
+```
+
+**Fonctionnement du script :**
+
+Le script effectue automatiquement les actions suivantes :
+- Génération du **SamAccountName** : `prenom.nom` (minuscules, sans accents, max 20 caractères)
+- Génération de l'**UPN** : `prenom.nom@billU.lan`
+- Placement de l'utilisateur dans la **bonne OU** selon son département et service
+- Attribution du **mot de passe par défaut** (changement obligatoire à la première connexion)
+- Attribution du **manager** si renseigné dans le CSV (en 2e passe)
+
+#### 2.4 Vérification
+
+**Via l'interface graphique :**
+1. Ouvrir **Active Directory Users and Computers**
+2. Naviguer vers `billu.lan > BilluUsers`
+3. Vérifier que les utilisateurs sont placés dans les bonnes OU
+
+
 
 ---
 ## 3. Création des groupes
