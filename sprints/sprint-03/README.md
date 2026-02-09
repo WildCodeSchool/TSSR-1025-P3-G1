@@ -61,7 +61,8 @@
 
 - SSH sur windows Serveur 2022, problème d'installer par les outils Microsoft
     > Solution : Installation par une procédure d'installation manuel avec github
-- 
+- Blocage compréhension GPO, partage de dossier individuel.
+    > Solution : Création de 2 GPO 
 
 # 5. Les décisions techniques
 Création des conteneurs : 
@@ -72,6 +73,7 @@ Création des VM :
     - G1-DOM-ZABBIX-01
 
 # 6. Ce qu'il reste à faire 
+
 
 
 
