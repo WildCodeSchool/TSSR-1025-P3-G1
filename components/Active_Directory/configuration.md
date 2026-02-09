@@ -14,7 +14,6 @@
 	- [2.4 Vérification](#24-vérification)
 3. [Création des groupes](#3-création-des-groupes) 
 	- [3.1 Groupes de sécurité](#31-groupes-de-sécurité) 
-	- [3.2 Groupes de distribution](#32-groupes-de-distributions) 
 4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
 	- [4.1 Création de GPO](#41-création-de-gpo) 
 	- [4.2 GPO de sécurité](#42-gpo-de-sécurité) 
@@ -241,9 +240,126 @@ Le script effectue automatiquement les actions suivantes :
 
 #### 3.1 Groupes de sécurité
 
-#### 3.2 Groupes de distributions
+Tous les groupes doivent être créés dans l'arborescence suivante :
+
+```
+OU=BilluSecurity
+  ├── OU=Departments
+  │   └── Groupes GRP_DEP_*
+  └── OU=Services
+      └── Groupes GRP_SVC_*
+```
+
+## 3.1.1. Comment créer un groupe ?
+
+Suivez ces étapes dans Active Directory Users and Computers :
+
+- Faites un clic droit sur l'OU cible **(Departments ou Services)**
+- Sélectionnez **Nouveau > Groupe**
+- Remplissez les paramètres :
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **Nom du groupe** | Selon la nomenclature (voir liste ci-dessous) |
+| **Type de groupe** | **Sécurité** |
+| **Étendue du groupe** | **Globale** |
+
+## 3.1.2. Nomenclature
+
+| Préfixe | Description |
+|---------|-------------|
+| `GRP_DEP_` | Groupe de département (contient les groupes de services) |
+| `GRP_SVC_` | Groupe de service (contient les utilisateurs) |
 
 ---
+
+## 3.1.3. Liste des groupes à créer
+
+### 3.1.3.1 Groupes de départements (OU=Departments)
+
+```
+GRP_DEP_COMMERCIAL_USERS
+GRP_DEP_COMMUNICATION_USERS
+GRP_DEP_COMPTABILITE_USERS
+GRP_DEP_DEV_USERS
+GRP_DEP_DIRECTION_USERS
+GRP_DEP_DSI_USERS
+GRP_DEP_JURIDIQUE_USERS
+GRP_DEP_QHSE_USERS
+GRP_DEP_RH_USERS
+```
+
+### 3.1.3.2 Services COMMERCIAL (OU=Services)
+
+```
+GRP_SVC_ADMINISTRATION_DES_VENTES_USERS
+GRP_SVC_B2B_USERS
+GRP_SVC_SERVICE_ACHAT_USERS
+GRP_SVC_SERVICE_CLIENT_USERS
+```
+
+### 3.1.3.3 Services COMMUNICATION (OU=Services)
+
+```
+GRP_SVC_COMMUNICATION_INTERNE_USERS
+GRP_SVC_GESTION_DES_MARQUES_USERS
+GRP_SVC_RELATIONS_MEDIA_USERS
+```
+
+### 3.1.3.4 Services COMPTABILITÉ (OU=Services)
+
+```
+GRP_SVC_FINANCE_USERS
+GRP_SVC_FISCALITE_USERS
+GRP_SVC_SERVICE_COMPTABILITE_USERS
+```
+
+### 3.1.3.5 Services DÉVELOPPEMENT (OU=Services)
+
+```
+GRP_SVC_ANALYSE_CONCEPTION_USERS
+GRP_SVC_DEVELOPPEMENT_USERS
+GRP_SVC_RECHERCHE_PROTOTYPAGE_USERS
+GRP_SVC_TESTS_QUALITE_USERS
+```
+
+### 3.1.3.6 Services DIRECTION (OU=Services)
+
+```
+GRP_SVC_DIRECTION_USERS
+```
+
+### 3.1.3.7 Services DSI (OU=Services)
+
+```
+GRP_SVC_ADMIN_USERS
+GRP_SVC_ANALYSE_CONCEPTION_USERS
+GRP_SVC_DEVELOPPEMENT_INTEGRATION_USERS
+GRP_SVC_EXPLOITATION_USERS
+GRP_SVC_SUPPORT_USERS
+```
+
+### 3.1.3.8 Services JURIDIQUE (OU=Services)
+
+```
+GRP_SVC_DROITS_DES_SOCIETES_USERS
+GRP_SVC_PROPRIETES_INTELLECTUELLES_USERS
+GRP_SVC_PROTECTION_DONNEES_CONFORMITES_USERS
+```
+
+### 3.1.3.9 Services QHSE (OU=Services)
+
+```
+GRP_SVC_CERTIFICATION_USERS
+GRP_SVC_CONTROLE_QUALITE_USERS
+GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
+```
+
+### 3.1.3.10 Services RESSOURCES HUMAINES (OU=Services)
+
+```
+GRP_SVC_RH_USERS
+```
 
 ## 4. Stratégies de groupe (GPO)
 
