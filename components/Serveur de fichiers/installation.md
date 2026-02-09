@@ -111,7 +111,7 @@ Toujours dans Network Adapter Settings :
 
 | Serveur DNS          | Valeur                    |
 | -------------------- | ------------------------- |
-| Preferred DNS Server | `172.16.12.10` (IP du DC) |
+| Preferred DNS Server | `172.16.12.1` (IP du DC) |
 | Alternate DNS Server | Laisser vide ou second DC |
 
 2. Valider
