@@ -244,9 +244,7 @@ Tous les groupes doivent être créés dans l'arborescence suivante :
 
 ```
 OU=BilluSecurity
-  ├── OU=Departments
-  │   └── Groupes GRP_DEP_*
-  └── OU=Services
+      └── Groupes GRP_DEP_*
       └── Groupes GRP_SVC_*
 ```
 
