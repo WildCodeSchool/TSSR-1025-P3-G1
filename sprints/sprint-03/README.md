@@ -8,7 +8,7 @@
 6. [Ce qu'il reste à faire](#6-ce-quil-reste-à-faire)
 
 
-# 1. Les objectifs pris par le groupe sur le sprint
+# 1. Les objectifs pris par le groupe sur le sprint 3
 
 ## 1.1 Prioritaire :
 - Finalisation du PC dédié Administration
@@ -39,7 +39,7 @@
 - Mise en place du serveur WEB Interne - OK
 
 
-# 3. Membres du groupe du sprint 2
+# 3. Membres du groupe du sprint 3
 
 ## Semaine 1
 
@@ -73,6 +73,7 @@ Création des VM :
     - G1-DOM-ZABBIX-01
 
 # 6. Ce qu'il reste à faire 
+
 
 
 
