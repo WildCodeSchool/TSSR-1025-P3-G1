@@ -13,7 +13,9 @@
 	- [2.3 Exécution du script](#23-exécution-du-script)
 	- [2.4 Vérification](#24-vérification)
 3. [Création des groupes](#3-création-des-groupes) 
-	- [3.1 Groupes de sécurité](#31-groupes-de-sécurité) 
+	- [3.1. Arborescence des groupes de sécurités](#31-Arborescence-des-groupes-de-sécurités) 
+	- [3.2. Comment créer un groupe ?](#32-Comment-créer-un-groupe-?) 
+	- [3.3. Liste des groupes à créer](#33-Liste-des-groupes-à-créer) 
 4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
 	- [4.1 Création de GPO](#41-création-de-gpo) 
 	- [4.2 GPO de sécurité](#42-gpo-de-sécurité) 
@@ -238,7 +240,7 @@ Le script effectue automatiquement les actions suivantes :
 ---
 ## 3. Création des groupes
 
-### 3.1. Groupes de sécurité
+### 3.1. Arborescence des groupes de sécurités
 
 Tous les groupes doivent être créés dans l'arborescence suivante :
 
@@ -248,7 +250,7 @@ OU=BilluSecurity
       └── Groupes GRP_SVC_*
 ```
 
-#### 3.1.1. Comment créer un groupe ?
+#### 3.2. Comment créer un groupe ?
 
 Suivez ces étapes dans Active Directory Users and Computers :
 
@@ -262,7 +264,7 @@ Suivez ces étapes dans Active Directory Users and Computers :
 | **Type de groupe** | **Sécurité** |
 | **Étendue du groupe** | **Globale** |
 
-#### 3.1.2. Nomenclature
+##### Nomenclature
 
 | Préfixe | Description |
 |---------|-------------|
@@ -271,7 +273,7 @@ Suivez ces étapes dans Active Directory Users and Computers :
 
 ---
 
-#### 3.1.3. Liste des groupes à créer
+#### 3.3. Liste des groupes à créer
 
 ##### Groupes de départements (OU=Departments)
 
