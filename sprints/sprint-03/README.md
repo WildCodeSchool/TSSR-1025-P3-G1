@@ -1,8 +1,8 @@
 ## Sommaire
 
-1. [Les objectifs pris par le groupe sur le sprint 2](#1-lesobjectifsprisparlegroupesurlesprint2)
+1. [Les objectifs pris par le groupe sur le sprint 3](#1-lesobjectifsprisparlegroupesurlesprint3)
 2. [La finalité de ces objectifs à la fin du sprint](#2-la-finalite-de-ces-objectifs-a-la-fin-du-sprint)
-3. [Membres du groupe du sprint 2](#3-membres-du-groupe-du-sprint-2)
+3. [Membres du groupe du sprint 3](#3-membres-du-groupe-du-sprint-3)
 4. [Les problèmes rencontrés](#4-les-problemes-rencontres)
 5. [Les décisions techniques](#5-les-decisions-techniques)
 6. [Ce qu'il reste à faire](#6-ce-quil-reste-à-faire)
@@ -11,27 +11,32 @@
 # 1. Les objectifs pris par le groupe sur le sprint
 
 ## 1.1 Prioritaire :
-- Installation et configuration de ADDS
-    - Création des OU
-    - Création des groupes
-    - Création des utilisateurs
+- Finalisation du PC dédié Administration
+- Mettre en place d'un partage de fichier sur un serveur dédié
+- Mettre en place d'une supervision avec la solution Zabbix
+- Mettre en place d'une journalisation centralisé avec la solution Graylog
 
-- Création et mise en place des GPO 
-- Installation et configuration du DNS
-- Installation et configuration du DHCP
-- Installation et configuration de pfSense
 
 ## 1.2 Secondaire :
-- SÉCURITÉ - Mise en place d'un PC d'administration - 
-- SÉCURITÉ DE LA GESTION DE PARC - Restriction d'accès - 
-- GESTION DE PARC - Logiciel de gestion de parc et de ticketing (ITSM)
-- GESTION DE PARC - Synchronisation des objets avec AD
-- RÉSEAU - Mise en place du réseau de l'infrastructure en lien avec schéma réseau initial
+- SAUVEGARDE - Mettre en place une sauvegarde de données
+- ACTIVE DIRECTORY - Mettre en place une sauvegarde de données
+- ACTIVE DIRECTORY - Gestion des objets AD
+- SUPERVISION - Surveillance du pare-feu pfsense
+- JOURNALISATION - Mise en place d'une journalisation des scripts PowerShell
 
-
+## 1.3 Optionnel : 
+- WEB - Mettre en place un serveur WEB INTERNE
+- WEB - Mettre en place un serveur WEB EXTERNE
+- STOCKAGE AVANCÉ - Mettre en place du RAID 1 sur un serveur
+- STOCKAGE AVANCÉ - Mettre en place LVM sur un serveur Debian
+- JOURNALISATION - Mise en place d'une journalisation des scripts PowerShell
 
 # 2. La finalité de ces objectifs à la fin du sprint
-
+- Mise en place du serveur Graylog - OK
+- Mise en place du serveur Zabbix - OK
+- Mise en place du PC dédié - OK
+- Mise en place du partage de fichier - OK
+- Mise en place du serveur WEB Interne - OK
 
 
 # 3. Membres du groupe du sprint 2
@@ -40,35 +45,35 @@
 
 | Membre    | Rôle       |
 | --------- | ---------- |
-| Christian | SM        |
-| Franck    | Technicien       |
-| Matthias  | PO |
+| Christian | SM         |
+| Franck    | Technicien |
+| Matthias  | PO         |
 
 ## Semaine 2
 
 | Membre    | Rôle       |
 | --------- | ---------- |
-| Christian | Technicien        |
-| Franck    | PO       |
-| Matthias  | SM |
+| Christian | PO         |
+| Franck    | SM         |
+| Matthias  | Technicien |
 
 # 4. Les problèmes rencontrés
 
-- pfSense caché
-- Configuration pfSense
-- DHCP avant le DNS avec Active Directory
+- SSH sur windows Serveur 2022, problème d'installer par les outils Microsoft
+    > Solution : Installation par une procédure d'installation manuel avec github
+- 
 
 # 5. Les décisions techniques
-Création de la VM AD, DHCP, PC Admin, Routeur Vyos.  
-On a décidé de mettre le serveur DNS sur le serveur AD au lieu d'un serveur Core.
-
+Création des conteneurs : 
+    - DOM-LOGS-01 - Graylog
+    - DOM-WEBINT-01 - Site web interne
+    
+Création des VM : 
+    - G1-DOM-ZABBIX-01
 
 # 6. Ce qu'il reste à faire 
 
-Les tâches suivantes n'ont pas pu être finalisées durant ce Sprint 2 :
 
-- **Complétion de la documentation :**
-    - 
 
 
 
