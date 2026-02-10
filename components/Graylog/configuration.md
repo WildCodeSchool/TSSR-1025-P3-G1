@@ -129,7 +129,10 @@ Par :
 
 #### 2.3 Redémarrage du service
 
-1) Redémarrer le service NXLog avec la commande Powershell : 
+1) Redémarrer le service NXLog avec la commande Powershell :
+
+- **Utiliser une console powershell en mode Administrateur**
+
 ```bash
 Restart-Service nxlog
 ```
