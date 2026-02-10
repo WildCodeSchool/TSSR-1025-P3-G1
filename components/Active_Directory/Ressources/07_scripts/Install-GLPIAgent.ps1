@@ -1,40 +1,66 @@
 # Script d'installation de GLPI Agent par GPO
+#Requires -RunAsAdministrator
 
 # Variables
 $GlpiServer = "http://172.16.13.1"
 $InstallerPath = "\\DOM-FS-01\departements\dsi\scripts\GLPI-Agent-1.15-x64.msi"
 $LogPath = "C:\Windows\Temp\glpi-agent-install.log"
+$MsiLogPath = "C:\Windows\Temp\glpi-agent-msi-install.log"
 
-# Vérifier si déjà installé
-if (Test-Path "C:\Program Files\GLPI-Agent\glpi-agent.bat") {
-    "Agent GLPI déjà installé." | Out-File -FilePath $LogPath -Append
+# Fonction de log
+function Write-Log {
+    param($Message)
+    $TimeStamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    "$TimeStamp - $Message" | Out-File -FilePath $LogPath -Append -Encoding UTF8
+}
+
+Write-Log "=== Début installation GLPI Agent ==="
+
+# Vérifier si déjà installé (via registre)
+$Installed = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" -ErrorAction SilentlyContinue | 
+             Where-Object { $_.DisplayName -like "*GLPI*Agent*" }
+
+if ($Installed) {
+    Write-Log "Agent GLPI déjà installé (version: $($Installed.DisplayVersion))"
     exit 0
 }
 
-# Installation
-"Installation de GLPI Agent en cours..." | Out-File -FilePath $LogPath -Append
+# Vérifier l'accès au fichier MSI
+if (-not (Test-Path $InstallerPath)) {
+    Write-Log "ERREUR: Fichier MSI introuvable: $InstallerPath"
+    exit 1
+}
 
-# Paramètres d'installation
+# Installation
+Write-Log "Installation de GLPI Agent en cours..."
+
 $MsiArguments = @(
     "/i"
     "`"$InstallerPath`""
     "/quiet"
     "/norestart"
-    "SERVER=`"$GlpiServer`""
+    "SERVER=$GlpiServer"
     "ADD_FIREWALL_EXCEPTION=1"
     "RUNNOW=1"
-    "TAG=`"GPO-Deploy`""
+    "TAG=GPO-Deploy"
     "/L*v"
-    "`"$LogPath`""
+    "`"$MsiLogPath`""
 )
 
-$Process = Start-Process -FilePath "msiexec.exe" -ArgumentList $MsiArguments -Wait -PassThru -WindowStyle Hidden
-
-# Vérifier le résultat
-if ($Process.ExitCode -eq 0) {
-    "Installation réussie." | Out-File -FilePath $LogPath -Append
-} else {
-    "Erreur lors de l'installation. Code: $($Process.ExitCode)" | Out-File -FilePath $LogPath -Append
+try {
+    $Process = Start-Process -FilePath "msiexec.exe" -ArgumentList $MsiArguments -Wait -PassThru -NoNewWindow
+    
+    if ($Process.ExitCode -eq 0) {
+        Write-Log "Installation réussie"
+    } elseif ($Process.ExitCode -eq 3010) {
+        Write-Log "Installation réussie (redémarrage requis)"
+    } else {
+        Write-Log "ERREUR: Code de sortie MSI: $($Process.ExitCode)"
+    }
+    
+    exit $Process.ExitCode
+    
+} catch {
+    Write-Log "ERREUR Exception: $($_.Exception.Message)"
+    exit 1
 }
-
-exit $Process.ExitCode
