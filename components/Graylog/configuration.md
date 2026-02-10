@@ -54,7 +54,7 @@
 
 1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
 
-2) Remplacer tous le contenu du fichier par :
+2) Remplacer tout le contenu du fichier par :
   
 ```
 Panic Soft
