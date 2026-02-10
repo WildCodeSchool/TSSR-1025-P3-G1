@@ -234,34 +234,37 @@ systemctl status rsyslog
 
 - Sélectionner **Syslog UDP** dans la liste et cliquer sur **Launch new input**
 
+![img](Ressources/graylog_img/configuration/03_create_input/10_graylog_input.png)
+
 1) Mettre en titre `SYSLOG_UDP_Linux`
 2) Descendre et sélectionner `Europe/Paris` dans la **Time Zone**
 3) Cliquer sur **Launch Input**
 
-![img](Ressources/graylog_img/configuration/03_create_input/10_graylog_input.png)
 ![img](Ressources/graylog_img/configuration/03_create_input/11_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/12_graylog_input.png)
 
 - L'input **SYSLOG_UDP_Linux** doit apparaître dans **Global inputs**
 
-![img](Ressources/graylog_img/configuration/03_create_input/12_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/13_graylog_input.png)
 
 1) Cliquer sur **Set-up Input**
 2) Cliquer sur **Create Stream**
 3) Cliquer sur **Next**
 
-![img](Ressources/graylog_img/configuration/03_create_input/13_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/14_graylog_input.png)
 
 - Cliquer sur **Start Input**
 
-![img](Ressources/graylog_img/configuration/03_create_input/14_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/15_graylog_input.png)
 
 - Cliquer sur **Launch Input Diagnosis**
 
-![img](Ressources/graylog_img/configuration/03_create_input/15_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/16_graylog_input.png)
 
 - Vérifier que l'input est bien actif 
 
-![img](Ressources/graylog_img/configuration/03_create_input/16_graylog_input.png)
+![img](Ressources/graylog_img/configuration/03_create_input/17_graylog_input.png)
+
 
 #### 4.3 Création des Streams pour chaque serveur
 
