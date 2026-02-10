@@ -998,6 +998,34 @@ Clic droit > **Properties**
 | Filtrage | |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
+
+---  
+
+#### 4.3.7 Déploiement de GLPI Agent
+
+**Nom :** `PROD_COMPUTERS_GLPI_Agent`
+
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Scripts > Startup
+
+Onglet **PowerShell Scripts** > **Add...**
+
+**Paramètres :**
+
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Script Name | `\\DOM-AD-01\share\software\Install-GLPIAgent.ps1` | Chemin du script PowerShell d'installation |
+
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | |
+| Cible | Computers |
+| Statut | User configuration settings disabled |
+
 ---
 ## 5. Délégation d'administration
 
