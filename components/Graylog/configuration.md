@@ -118,7 +118,7 @@ SpoolDir  %ROOT%\data
 # ============================================================================
 <Output out>
     Module      om_tcp
-    Host        172.16.10.29
+    Host        172.16.13.2
     Port        12201
     OutputType  GELF_TCP
     Exec $Hostname = hostname();
