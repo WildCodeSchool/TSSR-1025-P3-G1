@@ -54,12 +54,53 @@
 
 1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
 
-2) Remplacer `<Output out>` par : 
+2) Remplacer tous les éléments après :
+
+- (`CTRL + F pour rechercher`)
+  
+```
+<Extension gelf>
+    Module      xm_gelf
+</Extension>:
+```
+Par : 
+
+
+```
+# ============================================================================
+# INPUT - Collecte TOUS les événements Windows
+# ============================================================================
+<Input in>
+    Module      im_msvistalog
+</Input>
+
+# ============================================================================
+# OUTPUT - Envoi vers Graylog
+# ============================================================================
+<Output out>
+    Module      om_tcp
+    Host        172.16.13.2
+    Port        12201
+    OutputType  GELF_TCP
+    Exec $Hostname = hostname();
+</Output>
+
+# ============================================================================
+# ROUTE - Connexion Input -> Output
+# ============================================================================
+<Route 1>
+    Path        in => out
+</Route>
+```
 
 > **Note :** L'adresse IP `172.16.13.2` correspond au serveur Graylog
 
-- (`CTRL + F pour rechercher`)
+- Résultat final : 
 ```
+<Extension gelf>
+    Module      xm_gelf
+</Extension>
+
 # ============================================================================
 # INPUT - Collecte TOUS les événements Windows
 # ============================================================================
