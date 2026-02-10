@@ -1,5 +1,4 @@
 # Script d'installation de GLPI Agent par GPO
-#Requires -RunAsAdministrator
 
 # Variables
 $GlpiServer = "http://172.16.13.1"
@@ -64,3 +63,4 @@ try {
     Write-Log "ERREUR Exception: $($_.Exception.Message)"
     exit 1
 }
+
