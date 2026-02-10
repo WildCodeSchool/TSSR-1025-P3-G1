@@ -54,49 +54,54 @@
 
 1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
 
-2) Remplacer tous les éléments après :
-
-- (`CTRL + F pour rechercher`)
+2) Remplacer tous le contenu du fichier par :
   
 ```
-<Extension gelf>
-    Module      xm_gelf
-</Extension>:
-```
-Par : 
+Panic Soft
+#NoFreeOnExit TRUE
 
+define ROOT     C:\Program Files\nxlog
+define CERTDIR  %ROOT%\cert
+define CONFDIR  %ROOT%\conf\nxlog.d
+define LOGDIR   %ROOT%\data
+define LOGFILE  %LOGDIR%\nxlog.log
 
-```
-# ============================================================================
-# INPUT - Collecte TOUS les événements Windows
-# ============================================================================
-<Input in>
-    Module      im_msvistalog
-</Input>
+LogFile %LOGFILE%
+Moduledir %ROOT%\modules
+CacheDir  %ROOT%\data
+Pidfile   %ROOT%\data\nxlog.pid
+SpoolDir  %ROOT%\data
 
-# ============================================================================
-# OUTPUT - Envoi vers Graylog
-# ============================================================================
-<Output out>
-    Module      om_tcp
-    Host        172.16.13.2
-    Port        12201
-    OutputType  GELF_TCP
-    Exec $Hostname = hostname();
-</Output>
+# NE PAS inclure d'autres fichiers pour éviter les conflits
+# include %CONFDIR%\\*.conf
 
-# ============================================================================
-# ROUTE - Connexion Input -> Output
-# ============================================================================
-<Route 1>
-    Path        in => out
-</Route>
-```
+<Extension _syslog>
+    Module      xm_syslog
+</Extension>
 
-> **Note :** L'adresse IP `172.16.13.2` correspond au serveur Graylog
+<Extension _charconv>
+    Module      xm_charconv
+    AutodetectCharsets iso8859-2, utf-8, utf-16, utf-32
+</Extension>
 
-- Résultat final : 
-```
+<Extension _exec>
+    Module      xm_exec
+</Extension>
+
+<Extension _fileop>
+    Module      xm_fileop
+    <Schedule>
+        Every   1 hour
+        Exec    if (file_exists('%LOGFILE%') and \
+                   (file_size('%LOGFILE%') >= 5M)) \
+                    file_cycle('%LOGFILE%', 8);
+    </Schedule>
+    <Schedule>
+        When    @weekly
+        Exec    if file_exists('%LOGFILE%') file_cycle('%LOGFILE%', 8);
+    </Schedule>
+</Extension>
+
 <Extension gelf>
     Module      xm_gelf
 </Extension>
