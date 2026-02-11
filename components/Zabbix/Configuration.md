@@ -186,6 +186,24 @@ sudo dpkg -i zabbix-agent2_7.0.6-1+debian12_amd64.deb
 sudo apt --fix-broken install
 ```
 
+- Modification du fichier de configuration "Zabbix" :
+```shell
+sudo nano /etc/zabbix/zabbix_agent.conf
+```
+
+- Modifier les lignes suivantes :
+`Server=172.16.13.3`
+`ServerActive=172.16.13.3`
+`Hostname=DOM-GLPI-01`
+Enregistrer et sortir du fichier
+
+- Démarrage du service :
+```shell
+sudo systemctl restart zabbix-agent2
+sudo systemctl enable zabbix-agent2
+sudo systemctl status zabbix-agent2
+```
+
 Depuis le `PC-ADMIN` se connecter sur l'interface du serveur **"ZABBIX"** : `G1-DOM-ZABBIX-01` :
 
 - Dans l'onglet `Collecte de données`
@@ -203,7 +221,6 @@ Oubliez pas d'adapter vos commandes.
 `G1-R1`
 `DOM-LOGS-01`
 `DOM-WEBINT-01`
-
 
 ---
 #### 4.3 Installation sur DOM-DHCP-01
@@ -227,7 +244,7 @@ Invoke-WebRequest -Uri "https://cdn.zabbix.com/zabbix/binaries/stable/7.0/7.0.5/
 
 - Lancer l'installation et attendre quel se termine :
 ```powershell
-Start-Process msiexec.exe -ArgumentList '/i', 'C:\Users\Administrator\Downloads\zabbix_agent2.msi', '/qn', 'SERVER=192.168.1.43', 'SERVERACTIVE=192.168.1.43', 'HOSTNAME=DOM-DHCP-01' -Wait
+Start-Process msiexec.exe -ArgumentList '/i', 'C:\Users\Administrator\zabbix_agent2.msi', '/qn', 'SERVER=172.16.13.3', 'SERVERACTIVE=172.16.13.3', 'HOSTNAME=DOM-DHCP-01' -Wait
 ```
 
 - Vérifier le service :
@@ -240,7 +257,7 @@ Get-Service "Zabbix Agent 2" | Select-Object Name, Status, StartType
 Set-Service -Name "Zabbix Agent 2" -StartupType Automatic
 ```
 
-Depuis le `PC-ADMIN` se connecter sur l'interface du serveur **"ZABBIX"** : `DOM-ZABBIX-01` :
+Depuis le `PC-ADMIN` se connecter sur l'interface web du serveur **"ZABBIX"** : `DOM-ZABBIX-01` :
 
 - Dans l'onglet `Collecte de données`
 - Cliquer sur `Hôtes`
@@ -257,4 +274,53 @@ Oubliez pas d'adapter vos commandes.
 
 ---
 #### 4.4 Installation sur PFSENSE
+
+Depuis le `PC-ADMIN` se connecter sur l'interface web du serveur **"PFsense"** :
+
+- Cliquer sur l'onglet `System`
+- Cliquer sur `Package Manager`
+- Cliquer sur `Available Packages`
+- Cliquer sur `zabbix64-agent-6.4.7`
+
+![image_25](Ressources/25_config_zabbix.png)
+
+- Cliquer sur `Confirm`
+
+Une fois l'installation terminer 
+
+ Cliquer sur l'onglet `Services` puis `Zabbix Agent 6.4`
+
+- Cocher le case `Enable Zabbix Agent service`
+- Dans la case `Server` mettre IP du serveur Zabbix `172.16.13.3`
+- Dans la case `Hostname` indiquer le nom du pfsense `Firewall.billu.pfsense`
+- Laisser les autres options par défauts.
+- Cliquer sur `Save`
+
+Il Faut créé un règle entre pfsense et le serveur zabbix
+
+- Cliquer sur l'onglet `Firewall` puis `Rules`
+- Cliquer sur l'interface `LAN`
+- Cliquer sur `ADD` avec la flèche vers le haut
+- Dans la case `Action` mettre `Pass`
+- Dans la case `Protocole` mettre `TCP/UDP`
+- Dans la case `Source` mettre `Address or Alias` et indiquer IP du serveur Zabbix `172.16.13.3`
+- Dans la case `Destination` mettre `LAN subnets`
+- Dans la case `Destination Port Range` mettre dans les deux cases `10050`
+- Dans la case `Description` mettre `Zabbix agent`
+- Cliquer sur `Save`
+- Cliquer sur `Apply Changes`
+
+Maintenant se connecter sur l'interface web du serveur **"ZABBIX"** :      `DOM-ZABBIX-01` :
+
+- Dans l'onglet `Collecte de données`
+- Cliquer sur `Hôtes`
+- Cliquer sur `Créér un hôte`
+- Compléter la fenêtre `Nouvel hôte`
+
+![image_26](Ressources/26_config_zabbix.png)
+- Cliquer sur `Ajouter`
+
+![image_27](Ressources/27_config_zabbix.png)
+
+
 
