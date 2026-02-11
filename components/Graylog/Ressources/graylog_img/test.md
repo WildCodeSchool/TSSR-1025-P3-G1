@@ -155,3 +155,54 @@ $output = "C:\Temp\nxlog-ce.msi"
 ---
 
 **Je recommande l'Option A** car elle garantit un fichier valide. Une fois le bon fichier en place, l'installation devrait fonctionner sans problème !
+
+---------------
+
+OK, pas de problème ! Voici comment télécharger depuis Internet en contournant l'erreur SSL :
+
+## Solution 1 : Utiliser curl (natif sur Windows Server 2022) ✅
+
+```powershell
+# curl est intégré à Windows Server 2022
+curl.exe -L "https://dl.nxlog.co/dl/698c50fec4204" -o "C:\Temp\nxlog-ce.msi"
+
+# Vérifier la taille
+(Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
+```
+
+---
+
+## Solution 2 : Forcer TLS 1.2 et ignorer les certificats SSL
+
+```powershell
+# Activer TLS 1.2
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+# Créer un client web qui ignore les erreurs SSL
+$webClient = New-Object System.Net.WebClient
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+
+# Télécharger
+$webClient.DownloadFile("https://dl.nxlog.co/dl/698c50fec4204", "C:\Temp\nxlog-ce.msi")
+
+# Vérifier
+(Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
+```
+
+---
+
+## Solution 3 : Utiliser BITS (Background Intelligent Transfer Service)
+
+```powershell
+# BITS gère mieux les certificats
+Start-BitsTransfer -Source "https://dl.nxlog.co/dl/698c50fec4204" -Destination "C:\Temp\nxlog-ce.msi"
+
+# Vérifier
+(Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
+```
+
+---
+
+**Essayez la Solution 1 (curl)** en premier, c'est la plus simple ! Si ça ne marche pas, on passe à la suivante.
+
+Dites-moi ce que ça donne ! 👍
