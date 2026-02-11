@@ -111,6 +111,34 @@ Vous avez des questions sur la configuration ou vous voulez adapter certains par
 
 -------------
 
+Parfait ! Le log révèle le problème : **Code d'erreur 1620** = "This installation package could not be opened"
+
+Cela signifie que le fichier MSI est **corrompu** ou **incomplet**.
+
+## Solution : Re-télécharger le fichier correctement
+
+### Option A : Télécharger depuis votre PC puis copier
+
+**C'est la méthode la plus fiable :**
+
+1. **Sur votre PC avec interface graphique**, téléchargez NXLog :
+   - Allez sur https://nxlog.co/products/nxlog-community-edition/download
+   - Téléchargez la version Windows (MSI)
+
+2. **Copiez le fichier vers le serveur Core** :
+   - Ouvrez l'explorateur : `\\VOTRE_SERVEUR_CORE\C$\Temp\`
+   - Collez le fichier `nxlog-ce-xxx.msi`
+
+3. **Installez depuis PowerShell sur le serveur Core** :
+   ```powershell
+   msiexec /i "C:\Temp\nxlog-ce-xxx.msi" /qn /norestart
+   ```
+
+---
+
+### Option B : Forcer un nouveau téléchargement
+
+```powershell
 # Supprimer le fichier corrompu
 Remove-Item "C:\Temp\nxlog-ce.msi" -Force
 
@@ -122,3 +150,8 @@ $output = "C:\Temp\nxlog-ce.msi"
 
 # Vérifier la taille (devrait être > 5 MB)
 (Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
+```
+
+---
+
+**Je recommande l'Option A** car elle garantit un fichier valide. Une fois le bon fichier en place, l'installation devrait fonctionner sans problème !
