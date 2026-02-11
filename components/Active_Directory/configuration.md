@@ -1016,6 +1016,64 @@ Onglet **PowerShell Scripts** > **Add...**
 |-----------|--------|------|
 | Script Name | `\\DOM-AD-01\share\software\Install-GLPIAgent.ps1` | Chemin du script PowerShell d'installation |
 
+---
+
+#### 4.3.8 Création automatique du dossier HOME
+
+**Nom :** `GPO-FS-HOME-CREATE`
+
+**Chemin de configuration :**
+> User Configuration > Preferences > Windows Settings > Folders
+
+Clic droit > **New** > **Folder**
+
+**Paramètres :**
+
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Action | `Create` | Crée le dossier s'il n'existe pas |
+| Path | `\\DOM-FS-01\HOME\%USERNAME%` | Chemin du dossier personnel de l'utilisateur |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | Authenticated Users |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
+---
+
+#### 4.3.9 Mappage du lecteur HOME
+
+**Nom :** `GPO-FS-HOME-I`
+
+**Chemin de configuration :**
+> User Configuration > Preferences > Windows Settings > Drive Maps
+
+Clic droit > **New** > **Mapped Drive**
+
+**Paramètres :**
+
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Action | `Create` | Crée le mappage du lecteur |
+| Location | `\\DOM-FS-01\HOME\%USERNAME%` | Chemin du dossier personnel de l'utilisateur |
+| Reconnect | `Enabled` | Reconnecte le lecteur à chaque ouverture de session |
+| Label as | `HOME` | Nom d'affichage du lecteur |
+| Drive Letter | `I:` | Lettre de lecteur à utiliser |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluUsers` |
+| Filtrage | Authenticated Users |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
+
+---
 
 **Portée :**
 
