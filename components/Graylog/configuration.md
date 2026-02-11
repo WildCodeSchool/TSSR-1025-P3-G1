@@ -310,10 +310,10 @@ Get-Service nxlog
 ### 4. Configuration de Linux
 
 #### 4.1 Liste des machines pour la configuration rsyslog
-- DOM-WEBINT-01
-- DOM-LOGS-01
-- DOM-GLPI-01
-- DOM-ZABBIX-01
+- DOM-GLPI-01 - 172.16.13.1
+- DOM-LOGS-01 - 172.16.13.2
+- DOM-ZABBIX-01 - 172.16.13.3
+- DOM-WEBINT-01 - 172.16.13.5
 
 #### 4.2 Installation et vérification de rsyslog
 
