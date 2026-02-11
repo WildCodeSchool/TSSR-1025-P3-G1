@@ -8,6 +8,7 @@
 		- [1.3.1 Création des sous-OU-BilluComputers](#131-création-des-sous-ou-de-billucomputers)
 		- [1.3.2 Création des sous-OU-BilluUsers](#132-création-des-sous-ou-de-billuusers)
 2. [Création des utilisateurs](#2-création-des-utilisateurs)
+
 	- [2.1 Préparation du fichier CSV](#21-préparation-du-fichier-csv) 
 	- [2.2 Configuration du script](#22-configuration-du-script) 
 	- [2.3 Exécution du script](#23-exécution-du-script)
@@ -16,6 +17,11 @@
 	- [3.1. Arborescence des groupes de sécurités](#31-Arborescence-des-groupes-de-sécurités) 
 	- [3.2. Comment créer un groupe ?](#32-Comment-créer-un-groupe-?) 
 	- [3.3. Liste des groupes à créer](#33-Liste-des-groupes-à-créer) 
+
+	- [2.1 Utilisateurs administrateurs](#21-utilisateurs-administrateurs) 
+	- [2.2 Utilisateurs par service](#22-utilisateurs-par-service) 
+3. [Création des groupes](#3-création-des-groupes)  
+
 4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
 	- [4.1 Création de GPO](#41-création-de-gpo) 
 	- [4.2 GPO de sécurité](#42-gpo-de-sécurité) 
@@ -270,6 +276,36 @@ Suivez ces étapes dans Active Directory Users and Computers :
 |---------|-------------|
 | `GRP_DEP_` | Groupe de département (contient les groupes de services) |
 | `GRP_SVC_` | Groupe de service (contient les utilisateurs) |
+
+Se rendre dans la fenêtre `Active Directory Users and Computers`
+
+Pour créé un groupe 
+ - Clique Droit sur `BilluSecurity`
+ - Cliquer sur `New`
+ - Cliquer sur `Group`
+ 
+Une nouvelle fenêtre s'ouvre : `New Object - Group`
+
+Dans la case `Group name` :
+
+Entrer les noms des différents groupes à créés (1 seule groupe à la fois)
+- `GRP-DEP-COMMERCIAL_USERS`
+- `GRP-DEP-COMMUNICATION_USERS`
+- `GRP-DEP-COMPTABILITE_USERS`
+-  `GRP-DEP-DEV_USERS`
+-  `GRP-DEP-DIRECTION_USERS`
+-  `GRP-DEP-DSI_USERS`
+- `GRP-DEP-DSI_COMPUTERS
+- `GRP-DEP-JURIDIQUE_USERS`
+-  `GRP-DEP-QHSE_USERS`
+-  `GRP-DEP-RH_USERS`
+-  `GRP-SEC_ADMIN_USERS`
+
+Cliquer sur `OK`
+
+![image08][Ressources/08_grp_ad.png]
+
+Ensuite dans chaque groupe ajouter les membres de chaque services dans le bon groupe.
 
 ---
 
