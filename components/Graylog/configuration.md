@@ -177,9 +177,7 @@ Get-Service nxlog
 \\DOM-FS-01\departements\dsi\softwares
 ```
 
-2) Copier le fichier `nxlog-ce-3.2.2329.msi` sur le serveur Core à l'emplacement :  
-
-- Créer le dossier **Temp** à la racine de `C:\` des machines distantes à l'emplacement :
+2) Créer le dossier **Temp** à la racine de `C:\` des machines distantes à l'emplacement :
 ```
 # Pour le serveur DHCP
 \\DOM-DHCP-01\c$\
@@ -189,7 +187,7 @@ Get-Service nxlog
 \\DOM-FS-01\c$\
 ```
 
-- Copier le fichier msi dans le dossier **Temp**
+3) Copier le fichier `nxlog-ce-3.2.2329.msi` sur le serveur Core à l'emplacement :  
 
 ```
 # Pour le serveur DHCP
