@@ -179,7 +179,17 @@ Get-Service nxlog
 
 2) Copier le fichier `nxlog-ce-3.2.2329.msi` sur le serveur Core à l'emplacement :  
 
-- **Si le dossier `Temp` n'existe pas, le créer à la racine de `\\DOM-DHCP-01\c$\`**
+- Créer le dossier **Temp** à la racine de `C:\` des machines distantes à l'emplacement :
+```
+# Pour le serveur DHCP
+\\DOM-DHCP-01\c$\
+```
+```
+# Pour le serveur FS
+\\DOM-FS-01\c$\
+```
+
+- Copier le fichier msi dans le dossier **Temp**
 
 ```
 # Pour le serveur DHCP
@@ -190,7 +200,8 @@ Get-Service nxlog
 # Pour le serveur FS
 \\DOM-FS-01\c$\Temp
 ```
-3) Executer la commande pour installer NXLog
+
+3) Executer la commande pour installer NXLog :
 
 - La terminaison du fichier MSI nxlog peut changer suivant la version du fichier.
 
