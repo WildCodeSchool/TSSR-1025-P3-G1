@@ -107,3 +107,18 @@ New-NetFirewallRule -DisplayName "NXLog to Graylog" -Direction Outbound -Action 
 - Le format **GELF_TCP** est recommandé pour Graylog
 
 Vous avez des questions sur la configuration ou vous voulez adapter certains paramètres ?
+
+
+-------------
+
+# Supprimer le fichier corrompu
+Remove-Item "C:\Temp\nxlog-ce.msi" -Force
+
+# Télécharger avec plus d'options
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$url = "https://nxlog.co/system/files/products/files/348/nxlog-ce-3.2.2329.msi"
+$output = "C:\Temp\nxlog-ce.msi"
+(New-Object System.Net.WebClient).DownloadFile($url, $output)
+
+# Vérifier la taille (devrait être > 5 MB)
+(Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
