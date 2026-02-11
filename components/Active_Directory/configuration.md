@@ -1,33 +1,34 @@
 # Sommaire
-1. [Structure organisationnelle (OU)](#1-structure-organisationnelle-ou) 
-	- [1.1 Arborescence des OU](#11-arborescence-des-ou) 
-		- [1.1.1 Arborescence des sous- OU de BilluComputers](#111-arborescense-des-sous-ou-de-billucomputers) 
-		-  [1.1.2 Arborescence des sous- OU de BilluUsers](#112-arborescence-des-sous-ou-de-billuusers)
-	- [1.2 Création des OU](#12-création-des-ou) 
-	- [1.3 Création des sous-OU](#13-création-des-sous-ou) 
-		- [1.3.1 Création des sous-OU-BilluComputers](#131-création-des-sous-ou-de-billucomputers)
-		- [1.3.2 Création des sous-OU-BilluUsers](#132-création-des-sous-ou-de-billuusers)
-2. [Création des utilisateurs](#2-création-des-utilisateurs)
 
-	- [2.1 Préparation du fichier CSV](#21-préparation-du-fichier-csv) 
-	- [2.2 Configuration du script](#22-configuration-du-script) 
-	- [2.3 Exécution du script](#23-exécution-du-script)
-	- [2.4 Vérification](#24-vérification)
-3. [Création des groupes](#3-création-des-groupes) 
-	- [3.1. Arborescence des groupes de sécurités](#31-Arborescence-des-groupes-de-sécurités) 
-	- [3.2. Comment créer un groupe ?](#32-Comment-créer-un-groupe-?) 
-	- [3.3. Liste des groupes à créer](#33-Liste-des-groupes-à-créer) 
+1. [Structure organisationnelle (OU)](#1-structure-organisationnelle-ou)
+   - [1.1 Arborescence des OU](#11-arborescence-des-ou)
+      - [1.1.1 Sous-OU de BilluComputers](#111-sous-ou-de-billucomputers)
+      - [1.1.2 Sous-OU de BilluUsers](#112-sous-ou-de-billuusers)
+   - [1.2 Création des OU](#12-creation-des-ou)
+   - [1.3 Création des sous-OU](#13-creation-des-sous-ou)
+      - [1.3.1 Sous-OU de BilluComputers](#131-sous-ou-de-billucomputers)
+      - [1.3.2 Sous-OU de BilluUsers](#132-sous-ou-de-billuusers)
 
-	- [2.1 Utilisateurs administrateurs](#21-utilisateurs-administrateurs) 
-	- [2.2 Utilisateurs par service](#22-utilisateurs-par-service) 
-3. [Création des groupes](#3-création-des-groupes)  
+2. [Création des utilisateurs](#2-creation-des-utilisateurs)
+   - [2.1 Préparation du fichier CSV](#21-preparation-du-fichier-csv)
+   - [2.2 Configuration du script](#22-configuration-du-script)
+   - [2.3 Exécution du script](#23-execution-du-script)
+   - [2.4 Vérification](#24-verification)
 
-4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
-	- [4.1 Création de GPO](#41-création-de-gpo) 
-	- [4.2 GPO de sécurité](#42-gpo-de-sécurité) 
-	- [4.3 GPO standard](#43-gpo-standard)
-5. [Délégation d'administration](#5-délégation-dadministration) 
-6. [Tests et validation](#6-test-et-validation)
+3. [Création des groupes](#3-creation-des-groupes)
+   - [3.1 Arborescence des groupes de sécurité](#31-arborescence-des-groupes-de-securite)
+   - [3.2 Création d’un groupe](#32-creation-dun-groupe)
+   - [3.3 Liste des groupes à créer](#33-liste-des-groupes-a-creer)
+
+4. [Stratégies de groupe (GPO)](#4-strategies-de-groupe-gpo)
+   - [4.1 Création de GPO](#41-creation-de-gpo)
+   - [4.2 GPO de sécurité](#42-gpo-de-securite)
+   - [4.3 GPO standard](#43-gpo-standard)
+
+5. [Délégation d’administration](#5-delegation-dadministration)
+
+6. [Test et validation](#6-test-et-validation)
+
 
 ## 1. Structure organisationnelle (OU)
 
@@ -244,9 +245,9 @@ Le script effectue automatiquement les actions suivantes :
 
 
 ---
-## 3. Création des groupes
+# 3. Création des groupes
 
-### 3.1. Arborescence des groupes de sécurités
+## 3.1. Arborescence des groupes de sécurité
 
 Tous les groupes doivent être créés dans l'arborescence suivante :
 
@@ -256,62 +257,38 @@ OU=BilluSecurity
       └── Groupes GRP_SVC_*
 ```
 
-#### 3.2. Comment créer un groupe ?
+## 3.2. Comment créer un groupe ?
 
-Suivez ces étapes dans Active Directory Users and Computers :
-
-- Faites un clic droit sur l'OU cible **(Departments ou Services)**
-- Sélectionnez **Nouveau > Groupe**
-- Remplissez les paramètres :
-
-| Paramètre | Valeur |
-|-----------|--------|
-| **Nom du groupe** | Selon la nomenclature (voir liste ci-dessous) |
-| **Type de groupe** | **Sécurité** |
-| **Étendue du groupe** | **Globale** |
-
-##### Nomenclature
+### Nomenclature
 
 | Préfixe | Description |
 |---------|-------------|
 | `GRP_DEP_` | Groupe de département (contient les groupes de services) |
 | `GRP_SVC_` | Groupe de service (contient les utilisateurs) |
 
-Se rendre dans la fenêtre `Active Directory Users and Computers`
+### Procédure de création
 
-Pour créé un groupe 
- - Clique Droit sur `BilluSecurity`
- - Cliquer sur `New`
- - Cliquer sur `Group`
- 
-Une nouvelle fenêtre s'ouvre : `New Object - Group`
+Dans Active Directory Users and Computers :
 
-Dans la case `Group name` :
+- Faire un clic droit sur l'OU **BilluSecurity**
+- Sélectionner **New > Group**
+- Remplir les paramètres suivants :
 
-Entrer les noms des différents groupes à créés (1 seule groupe à la fois)
-- `GRP-DEP-COMMERCIAL_USERS`
-- `GRP-DEP-COMMUNICATION_USERS`
-- `GRP-DEP-COMPTABILITE_USERS`
--  `GRP-DEP-DEV_USERS`
--  `GRP-DEP-DIRECTION_USERS`
--  `GRP-DEP-DSI_USERS`
-- `GRP-DEP-DSI_COMPUTERS
-- `GRP-DEP-JURIDIQUE_USERS`
--  `GRP-DEP-QHSE_USERS`
--  `GRP-DEP-RH_USERS`
--  `GRP-SEC_ADMIN_USERS`
+| Paramètre | Valeur |
+|-----------|--------|
+| **Nom du groupe** | Selon la nomenclature (voir tableau ci-dessus) |
+| **Type de groupe** | **Sécurité** |
+| **Étendue du groupe** | **Globale** |
 
-Cliquer sur `OK`
-
-![image08][Ressources/08_grp_ad.png]
-
-Ensuite dans chaque groupe ajouter les membres de chaque services dans le bon groupe.
+- Cliquer sur **OK**
+- Répéter l'opération pour chaque groupe à créer (voir liste ci-dessous)
+- Une fois les groupes créés, ajouter les membres de chaque service dans le groupe correspondant
 
 ---
 
-#### 3.3. Liste des groupes à créer
+## 3.3. Liste des groupes à créer
 
-##### Groupes de départements (OU=Departments)
+### Groupes de départements
 
 ```
 GRP_DEP_COMMERCIAL_USERS
@@ -320,12 +297,14 @@ GRP_DEP_COMPTABILITE_USERS
 GRP_DEP_DEV_USERS
 GRP_DEP_DIRECTION_USERS
 GRP_DEP_DSI_USERS
+GRP_DEP_DSI_COMPUTERS
 GRP_DEP_JURIDIQUE_USERS
 GRP_DEP_QHSE_USERS
 GRP_DEP_RH_USERS
+GRP_SEC_ADMIN_USERS
 ```
 
-##### Services COMMERCIAL (OU=Services)
+### Services COMMERCIAL
 
 ```
 GRP_SVC_ADMINISTRATION_DES_VENTES_USERS
@@ -334,7 +313,7 @@ GRP_SVC_SERVICE_ACHAT_USERS
 GRP_SVC_SERVICE_CLIENT_USERS
 ```
 
-##### Services COMMUNICATION (OU=Services)
+### Services COMMUNICATION
 
 ```
 GRP_SVC_COMMUNICATION_INTERNE_USERS
@@ -342,7 +321,7 @@ GRP_SVC_GESTION_DES_MARQUES_USERS
 GRP_SVC_RELATIONS_MEDIA_USERS
 ```
 
-##### Services COMPTABILITÉ (OU=Services)
+### Services COMPTABILITÉ
 
 ```
 GRP_SVC_FINANCE_USERS
@@ -350,7 +329,7 @@ GRP_SVC_FISCALITE_USERS
 GRP_SVC_SERVICE_COMPTABILITE_USERS
 ```
 
-##### Services DÉVELOPPEMENT (OU=Services)
+### Services DÉVELOPPEMENT
 
 ```
 GRP_SVC_ANALYSE_CONCEPTION_USERS
@@ -359,13 +338,13 @@ GRP_SVC_RECHERCHE_PROTOTYPAGE_USERS
 GRP_SVC_TESTS_QUALITE_USERS
 ```
 
-##### Services DIRECTION (OU=Services)
+### Services DIRECTION
 
 ```
 GRP_SVC_DIRECTION_USERS
 ```
 
-##### Services DSI (OU=Services)
+### Services DSI
 
 ```
 GRP_SVC_ADMIN_USERS
@@ -375,7 +354,7 @@ GRP_SVC_EXPLOITATION_USERS
 GRP_SVC_SUPPORT_USERS
 ```
 
-##### Services JURIDIQUE (OU=Services)
+### Services JURIDIQUE
 
 ```
 GRP_SVC_DROITS_DES_SOCIETES_USERS
@@ -383,7 +362,7 @@ GRP_SVC_PROPRIETES_INTELLECTUELLES_USERS
 GRP_SVC_PROTECTION_DONNEES_CONFORMITES_USERS
 ```
 
-### 3.1.3.9 Services QHSE (OU=Services)
+### Services QHSE
 
 ```
 GRP_SVC_CERTIFICATION_USERS
@@ -391,7 +370,7 @@ GRP_SVC_CONTROLE_QUALITE_USERS
 GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
 ```
 
-##### Services RESSOURCES HUMAINES (OU=Services)
+### Services RESSOURCES HUMAINES
 
 ```
 GRP_SVC_RH_USERS
