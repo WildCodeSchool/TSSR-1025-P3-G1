@@ -164,7 +164,7 @@ OK, pas de problème ! Voici comment télécharger depuis Internet en contournan
 
 ```powershell
 # curl est intégré à Windows Server 2022
-curl.exe -L "https://dl.nxlog.co/dl/698c50fec4204" -o "C:\Temp\nxlog-ce.msi"
+curl.exe -k -L "https://dl.nxlog.co/dl/698c50fec4204" -o "C:\Temp\nxlog-ce.msi"
 
 # Vérifier la taille
 (Get-Item "C:\Temp\nxlog-ce.msi").Length / 1MB
