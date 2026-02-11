@@ -167,7 +167,7 @@ Get-Service nxlog
 - DOM-DHCP-01 - 172.16.12.2
 - DOM-FS-01 - 172.16.13.4
 
-#### 3.2 Copier du fichier MSI et installation de NXLog sur Windows Core
+#### 3.2 Copie du fichier MSI et installation de NXLog sur Windows Core
 
 - **A partir du PC Administration**
 
@@ -308,7 +308,13 @@ Get-Service nxlog
 
 ### 4. Configuration de Linux
 
-#### 4.1 Installation et vérification de rsyslog
+#### 4.1 Liste des machines pour la configuration rsyslog
+- DOM-WEBINT-01
+- DOM-LOGS-01
+- DOM-GLPI-01
+- DOM-ZABBIX-01
+
+#### 4.2 Installation et vérification de rsyslog
 
 **Se connecter en root ou utiliser sudo pour les commandes nécessaires**
 
@@ -322,7 +328,7 @@ systemctl status rsyslog
 apt install rsyslog -y
 ```
 
-#### 4.2 Configuration du fichier rsyslog
+#### 4.3 Configuration du fichier rsyslog
 
 1) Ouvrir ou créer le fichier `nano /etc/rsyslog.d/90-graylog.conf` et ajouter :
 
@@ -337,7 +343,7 @@ apt install rsyslog -y
 rsyslogd -N1
 ```
 
-#### 4.3 Redémarrage du service
+#### 4.4 Redémarrage du service
 
 1) Redémarrer le service avec la commande :
 ```bash
@@ -477,9 +483,9 @@ systemctl status rsyslog
 
 ##### 5.3.2 Création des streams de l'infrastructure
 
-**Instructions :** Pour chaque serveur ci-dessous, suivre la procédure détaillée en 4.3.1 en utilisant les paramètres indiqués.
+**Instructions :** Pour chaque serveur ci-dessous, suivre la procédure détaillée en 5.3.1 en utilisant les paramètres indiqués.
 
-> **Note :** Le Stream 1 (DOM-AD-01) a déjà été créé comme exemple en section 4.3.1. Voici les paramètres pour les streams restants.
+> **Note :** Le Stream 1 (DOM-AD-01) a déjà été créé comme exemple en section 5.3.1. Voici les paramètres pour les streams restants.
 
 ---  
 
