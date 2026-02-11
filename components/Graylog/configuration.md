@@ -191,7 +191,17 @@ msiexec /i "C:\Temp\nxlog-ce-3.2.2329.msi" /qn /norestart
 #### 3.3 Modification du fichier nxlog.conf
 
 
-1) Ouvrir le fichier `\\DOM-DHCP-01\c$\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
+1) Ouvrir le fichier `nxlog.conf` avec un éditeur de texte à l'emplacement : 
+
+```
+# Pour le serveur DHCP
+\\DOM-DHCP-01\c$\Program Files\nxlog\conf\nxlog.conf
+```
+
+```
+# Pour le serveur FS
+\\DOM-FS-01\c$\Program Files\nxlog\conf\nxlog.conf
+```
 
 2) Remplacer tout le contenu du fichier par :
   
