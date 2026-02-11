@@ -153,21 +153,45 @@ Get-Service nxlog
 
 ---  
 
-### 3. Installation et configuration des agents NXLog sur les machines Windows CLI
+### 3. Installation et configuration des agents NXLog sur les machines Windows Core
 
-#### 2.1 Liste des machines pour l'installation des agents
+#### 3.1 Liste des machines pour l'installation des agents
 - DOM-DHCP-01 - 172.16.12.2
 - DOM-FS-01 - 172.16.13.4
 
-#### 2.2 Téléchargement et installation de NXLog sur Windows
+#### 3.2 Copier du fichier MSI et installation de NXLog sur Windows Core
 
-1) Télécharger NXLog pour Windows : https://nxlog.co/downloads
+- **A partir du PC Administration**
 
-2) Installer NXLog, pour chaque étape cliquer sur `Next`
+1) A partir de l'explorateur Windows de la machine Administration, entrer l'adresse de l'emplacement du fichier d'installation NXLog :
+```
+\\DOM-FS-01\departements\dsi\softwares
+```
 
-#### 2.3 Modification du fichier nxlog.conf
+2) Copier le fichier `nxlog-ce-3.2.2329.msi` sur le serveur Core à l'emplacement :
 
-1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
+```
+# Pour le serveur DHCP
+\\DOM-DHCP-01\c$\Temp
+```
+
+```
+# Pour le serveur FS
+\\DOM-FS-01\c$\Temp
+```
+3) Executer la commande pour installer NXLog
+
+- La terminaison du fichier MSI nxlog peut changer suivant la version du fichier.
+
+```
+msiexec /i "C:\Temp\nxlog-ce-3.2.2329.msi" /qn /norestart
+```
+
+
+#### 3.3 Modification du fichier nxlog.conf
+
+
+1) Ouvrir le fichier `\\DOM-DHCP-01\c$\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
 
 2) Remplacer tout le contenu du fichier par :
   
@@ -247,7 +271,7 @@ SpoolDir  %ROOT%\data
 </Route>
 ```
 
-#### 2.4 Redémarrage du service
+#### 3.4 Redémarrage du service
 
 1) Redémarrer le service NXLog avec la commande Powershell :
 
@@ -264,9 +288,9 @@ Get-Service nxlog
 
 ---  
 
-### 3. Configuration de Linux
+### 4. Configuration de Linux
 
-#### 3.1 Installation et vérification de rsyslog
+#### 4.1 Installation et vérification de rsyslog
 
 **Se connecter en root ou utiliser sudo pour les commandes nécessaires**
 
@@ -280,7 +304,7 @@ systemctl status rsyslog
 apt install rsyslog -y
 ```
 
-#### 3.2 Configuration du fichier rsyslog
+#### 4.2 Configuration du fichier rsyslog
 
 1) Ouvrir ou créer le fichier `nano /etc/rsyslog.d/90-graylog.conf` et ajouter :
 
@@ -295,7 +319,7 @@ apt install rsyslog -y
 rsyslogd -N1
 ```
 
-#### 3.3 Redémarrage du service
+#### 4.3 Redémarrage du service
 
 1) Redémarrer le service avec la commande :
 ```bash
@@ -309,9 +333,9 @@ systemctl status rsyslog
 
 ---  
 
-### 4. Configuration de Graylog
+### 5. Configuration de Graylog
 
-#### 4.1 Création d'un input NXLog pour Windows
+#### 5.1 Création d'un input NXLog pour Windows
 
 - Naviguer dans l'onglet **System** et cliquer sur **Inputs**
 
@@ -350,7 +374,7 @@ systemctl status rsyslog
 
 ![img](Ressources/graylog_img/configuration/03_create_input/09_graylog_input.png)
 
-#### 4.2 Création d'un input Syslog pour Linux
+#### 5.2 Création d'un input Syslog pour Linux
 
 - Sélectionner **Syslog UDP** dans la liste et cliquer sur **Launch new input**
 
@@ -386,9 +410,9 @@ systemctl status rsyslog
 ![img](Ressources/graylog_img/configuration/03_create_input/17_graylog_input.png)
 
 
-#### 4.3 Création des Streams pour chaque serveur
+#### 5.3 Création des Streams pour chaque serveur
 
-##### 4.3.1 Création d'un stream
+##### 5.3.1 Création d'un stream
 
 **Pour cette partie, la première partie sert d'exemple. Entrer les paramètres pour chaque stream dans la partie 4.3.2**
 
@@ -433,7 +457,7 @@ systemctl status rsyslog
 
 ---  
 
-##### 4.3.2 Création des streams de l'infrastructure
+##### 5.3.2 Création des streams de l'infrastructure
 
 **Instructions :** Pour chaque serveur ci-dessous, suivre la procédure détaillée en 4.3.1 en utilisant les paramètres indiqués.
 
