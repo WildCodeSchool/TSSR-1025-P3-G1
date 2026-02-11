@@ -150,3 +150,27 @@ Si tu utilises un container LXC, assure-toi que :
 - Il peut joindre l'IP 172.16.13.1
 - Test : `ping 172.16.13.1`
 - Test : `curl http://172.16.13.1`
+
+
+---------------------------------------------------
+
+
+# 1. Installer les dépendances minimales
+sudo apt update
+sudo apt install -y perl libwww-perl dmidecode
+
+# 2. Télécharger le script d'installation
+cd /tmp
+wget https://github.com/glpi-project/glpi-agent/releases/download/1.10/glpi-agent-1.10-linux-installer.pl
+
+# 3. Vérifier qu'il est bien téléchargé
+ls -lh glpi-agent-1.10-linux-installer.pl
+
+# 4. L'exécuter avec tes paramètres
+sudo perl glpi-agent-1.10-linux-installer.pl --install --server=http://172.16.13.1 --tag=ServeurLinux
+
+# 5. Vérifier l'installation
+glpi-agent --version
+
+# 6. Faire un test d'inventaire
+sudo glpi-agent --server=http://172.16.13.1 --force
