@@ -156,21 +156,28 @@ Si tu utilises un container LXC, assure-toi que :
 
 
 # 1. Installer les dépendances minimales
+```bash
 sudo apt update
 sudo apt install -y perl libwww-perl dmidecode
-
+```
 # 2. Télécharger le script d'installation
+```bash
 cd /tmp
 wget https://github.com/glpi-project/glpi-agent/releases/download/1.10/glpi-agent-1.10-linux-installer.pl
-
+```
 # 3. Vérifier qu'il est bien téléchargé
+```bash
 ls -lh glpi-agent-1.10-linux-installer.pl
-
+```
 # 4. L'exécuter avec tes paramètres
+```bash
 sudo perl glpi-agent-1.10-linux-installer.pl --install --server=http://172.16.13.1 --tag=ServeurLinux
-
+```
 # 5. Vérifier l'installation
+```bash
 glpi-agent --version
-
+```
 # 6. Faire un test d'inventaire
+```bash
 sudo glpi-agent --server=http://172.16.13.1 --force
+```
