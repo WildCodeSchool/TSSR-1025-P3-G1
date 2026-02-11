@@ -198,7 +198,7 @@ Get-Service nxlog
 \\DOM-FS-01\c$\Temp
 ```
 
-3) Executer la commande pour installer NXLog :
+3) Executer la commande pour installer NXLog dans la console du Windows Core ou par SSH sur la machine distante :
 
 - La terminaison du fichier MSI nxlog peut changer suivant la version du fichier.
 
