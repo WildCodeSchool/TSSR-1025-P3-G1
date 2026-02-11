@@ -144,7 +144,7 @@ Remove-Item "C:\Temp\nxlog-ce.msi" -Force
 
 # Télécharger avec plus d'options
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$url = "https://nxlog.co/system/files/products/files/348/nxlog-ce-3.2.2329.msi"
+$url = "https://dl.nxlog.co/dl/698c50fec4204"
 $output = "C:\Temp\nxlog-ce.msi"
 (New-Object System.Net.WebClient).DownloadFile($url, $output)
 
