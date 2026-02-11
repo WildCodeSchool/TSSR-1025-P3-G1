@@ -42,15 +42,19 @@
 
 ---  
 
-### 2. Configuration de Windows 
+### 2. Installation et configuration des agents NXLog sur les machines Windows Graphique
 
-#### 2.1 Téléchargement et installation de NXLog sur Windows
+#### 2.1 Liste des machines pour l'installation des agents
+- DOM-AD-01
+
+
+#### 2.2 Téléchargement et installation de NXLog sur Windows
 
 1) Télécharger NXLog pour Windows : https://nxlog.co/downloads
 
 2) Installer NXLog, pour chaque étape cliquer sur `Next`
 
-#### 2.2 Modification du fichier nxlog.conf
+#### 2.3 Modification du fichier nxlog.conf
 
 1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
 
@@ -132,7 +136,118 @@ SpoolDir  %ROOT%\data
 </Route>
 ```
 
-#### 2.3 Redémarrage du service
+#### 2.4 Redémarrage du service
+
+1) Redémarrer le service NXLog avec la commande Powershell :
+
+- **Utiliser une console powershell en mode Administrateur**
+
+```bash
+Restart-Service nxlog
+```
+
+2) Vérifier que le service est bien démarré avec la commande Powershell : 
+```bash
+Get-Service nxlog
+```
+
+---  
+
+### 3. Installation et configuration des agents NXLog sur les machines Windows CLI
+
+#### 2.1 Liste des machines pour l'installation des agents
+- DOM-DHCP-01 - 172.16.12.2
+- DOM-FS-01 - 172.16.13.4
+
+#### 2.2 Téléchargement et installation de NXLog sur Windows
+
+1) Télécharger NXLog pour Windows : https://nxlog.co/downloads
+
+2) Installer NXLog, pour chaque étape cliquer sur `Next`
+
+#### 2.3 Modification du fichier nxlog.conf
+
+1) Ouvrir le fichier `C:\Program Files\nxlog\conf\nxlog.conf` avec un éditeur de texte
+
+2) Remplacer tout le contenu du fichier par :
+  
+```
+Panic Soft
+#NoFreeOnExit TRUE
+
+define ROOT     C:\Program Files\nxlog
+define CERTDIR  %ROOT%\cert
+define CONFDIR  %ROOT%\conf\nxlog.d
+define LOGDIR   %ROOT%\data
+define LOGFILE  %LOGDIR%\nxlog.log
+
+LogFile %LOGFILE%
+Moduledir %ROOT%\modules
+CacheDir  %ROOT%\data
+Pidfile   %ROOT%\data\nxlog.pid
+SpoolDir  %ROOT%\data
+
+# NE PAS inclure d'autres fichiers pour éviter les conflits
+# include %CONFDIR%\\*.conf
+
+<Extension _syslog>
+    Module      xm_syslog
+</Extension>
+
+<Extension _charconv>
+    Module      xm_charconv
+    AutodetectCharsets iso8859-2, utf-8, utf-16, utf-32
+</Extension>
+
+<Extension _exec>
+    Module      xm_exec
+</Extension>
+
+<Extension _fileop>
+    Module      xm_fileop
+    <Schedule>
+        Every   1 hour
+        Exec    if (file_exists('%LOGFILE%') and \
+                   (file_size('%LOGFILE%') >= 5M)) \
+                    file_cycle('%LOGFILE%', 8);
+    </Schedule>
+    <Schedule>
+        When    @weekly
+        Exec    if file_exists('%LOGFILE%') file_cycle('%LOGFILE%', 8);
+    </Schedule>
+</Extension>
+
+<Extension gelf>
+    Module      xm_gelf
+</Extension>
+
+# ============================================================================
+# INPUT - Collecte TOUS les événements Windows
+# ============================================================================
+<Input in>
+    Module      im_msvistalog
+</Input>
+
+# ============================================================================
+# OUTPUT - Envoi vers Graylog
+# ============================================================================
+<Output out>
+    Module      om_tcp
+    Host        172.16.13.2
+    Port        12201
+    OutputType  GELF_TCP
+    Exec $Hostname = hostname();
+</Output>
+
+# ============================================================================
+# ROUTE - Connexion Input -> Output
+# ============================================================================
+<Route 1>
+    Path        in => out
+</Route>
+```
+
+#### 2.4 Redémarrage du service
 
 1) Redémarrer le service NXLog avec la commande Powershell :
 
