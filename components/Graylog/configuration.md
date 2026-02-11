@@ -8,7 +8,7 @@
    - 2.4 [Redémarrage du service](#24-redémarrage-du-service)
 3. [Installation et configuration des agents NXLog sur les machines Windows Core](#3-installation-et-configuration-des-agents-nxlog-sur-les-machines-windows-core)
    - 3.1 [Liste des machines pour l'installation des agents](#31-liste-des-machines-pour-linstallation-des-agents)
-   - 3.2 [Copier du fichier MSI et installation de NXLog sur Windows Core](#32-copier-du-fichier-msi-et-installation-de-nxlog-sur-windows-core)
+   - 3.2 [Copie du fichier MSI et installation de NXLog sur Windows Core](#32-copie-du-fichier-msi-et-installation-de-nxlog-sur-windows-core)
    - 3.3 [Modification du fichier nxlog.conf](#33-modification-du-fichier-nxlogconf)
    - 3.4 [Redémarrage du service](#34-redémarrage-du-service)
 4. [Configuration de Linux](#4-configuration-de-linux)
@@ -22,7 +22,6 @@
    - 5.3 [Création des Streams pour chaque serveur](#53-création-des-streams-pour-chaque-serveur)
       - 5.3.1 [Création d'un stream](#531-création-dun-stream)
       - 5.3.2 [Création des streams de l'infrastructure](#532-création-des-streams-de-linfrastructure)
-
 ---  
 
 ### 1. Création d'un compte Administrateur
