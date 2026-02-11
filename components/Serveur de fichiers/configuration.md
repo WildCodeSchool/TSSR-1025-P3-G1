@@ -198,7 +198,7 @@ Répéter pour chaque département en adaptant le groupe (GRP_DEP_COMPTA_USERS, 
 ### Création de la GPO
 
 1. Ouvrir **Group Policy Management** (GPMC)
-2. Naviguer vers l'OU contenant les utilisateurs
+2. Naviguer vers Group Plicy Objects
 3. Clic droit → **Create a GPO in this domain, and Link it here**
 4. Nom : `GPO-FS-DEPARTEMENTS-K`
 
@@ -231,7 +231,7 @@ Répéter pour chaque département en adaptant le groupe (GRP_DEP_COMPTA_USERS, 
 ### Filtrage de sécurité
 
 1. Fermer l'éditeur de GPO
-2. Dans GPMC, sélectionner la GPO `GPO-FS-DEPARTEMENTS-K`
+2. Dans GPMC, sélectionner la GPO `GPO_FS_DEPARTEMENTS_K`
 3. Onglet **Scope** → Section **Security Filtering**
 4. Supprimer **Authenticated Users**
 5. Cliquer sur **Add** et ajouter tous les groupes :
@@ -322,7 +322,7 @@ Un utilisateur peut être membre de plusieurs groupes `GRP_SVC_*_USERS`.
 ### Création de la GPO
 
 1. Ouvrir **Group Policy Management** (GPMC)
-2. Naviguer vers l'OU contenant les utilisateurs
+2. Naviguer vers Group Plicy Objects
 3. Clic droit → **Create a GPO in this domain, and Link it here**
 4. Nom : `GPO-FS-SERVICES-J`
 
@@ -354,7 +354,7 @@ Un utilisateur peut être membre de plusieurs groupes `GRP_SVC_*_USERS`.
 ### Filtrage de sécurité
 
 1. Fermer l'éditeur de GPO
-2. Dans GPMC, sélectionner la GPO `GPO-FS-SERVICES-J`
+2. Dans GPMC, sélectionner la GPO `GPO_FS_SERVICES_J`
 3. **Scope** → **Security Filtering**
 4. Supprimer **Authenticated Users**
 5. Ajouter tous les groupes :
@@ -450,7 +450,7 @@ Un dossier par utilisateur. Le nom du dossier correspond strictement à `%USERNA
 ### Création de la GPO
 
 1. Ouvrir **Group Policy Management** (GPMC)
-2. Naviguer vers l'OU contenant les utilisateurs
+2. Naviguer vers Group Plicy Objects
 3. Clic droit → **Create a GPO in this domain, and Link it here**
 4. Nom : `GPO-FS-HOME-CREATE`
 
@@ -479,7 +479,7 @@ Un dossier par utilisateur. Le nom du dossier correspond strictement à `%USERNA
 ### Filtrage de sécurité
 
 1. Fermer l'éditeur de GPO
-2. Dans GPMC, sélectionner la GPO `GPO-FS-HOME-CREATE`
+2. Dans GPMC, sélectionner la GPO `GPO_FS_HOME_CREATE`
 3. **Scope** → **Security Filtering**
 4. Vérifier que **Authenticated Users**
 
@@ -488,7 +488,7 @@ Un dossier par utilisateur. Le nom du dossier correspond strictement à `%USERNA
 ### Création de la GPO
 
 1. Ouvrir **Group Policy Management** (GPMC)
-2. Naviguer vers l'OU contenant les utilisateurs
+2. Naviguer vers Group Plicy Objects
 3. Clic droit → **Create a GPO in this domain, and Link it here**
 4. Nom : `GPO-FS-HOME-I`
 
@@ -520,6 +520,6 @@ Un dossier par utilisateur. Le nom du dossier correspond strictement à `%USERNA
 ### Filtrage de sécurité
 
 1. Fermer l'éditeur de GPO
-2. Dans GPMC, sélectionner la GPO `GPO-FS-HOME-I`
+2. Dans GPMC, sélectionner la GPO `GPO_FS_HOME_I`
 3. **Scope** → **Security Filtering**
 4. Vérifier que **Authenticated Users**
