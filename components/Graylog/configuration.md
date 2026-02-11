@@ -178,6 +178,7 @@ Get-Service nxlog
 ```
 
 2) Copier le fichier `nxlog-ce-3.2.2329.msi` sur le serveur Core à l'emplacement :
+**Si le dossier `Temp` n'existe pas, le créer à la racine de C:\**
 
 ```
 # Pour le serveur DHCP
