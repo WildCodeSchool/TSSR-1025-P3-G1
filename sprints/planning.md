@@ -296,17 +296,134 @@ Outils :
 
 ### 3.1 Liste des objectifs principaux
 
+Objectif 1 : Mise en place d'un PC d'administration
+Objectif 2 : Mise en place des Dossiers Partagés
+Objectif 3 : Supervision ZABBIX
+Objectif 4 : Journalisation GRAYLOG
+Objectif 5 : Surveillance du Pare-feu Pfsense
+Objectif 6 : GLPI - Agent GPO
+Objectif 7: Mise en place d'un serveur WEB EXTERNE
+
 ### 3.2 Liste des tâches de chaque objectifs
 
+**Objectif 1 - Mise en place d'un PC d'administration**
+Tâches :
+- Installation PC admin Windows
+- Installation Outils d'administration serveur Windows
+- Installation Outils et Logiciel multi OS
+- Installation Outils d'administration Serveur Linux
+- Documentation
+
+**Objectif 2 - Mise en place des Dossiers Partagés**
+Tâches :
+- Mettre en place des dossiers réseaux pour les utilisateurs
+- Sécurité de partage des dossiers par groupe AD 
+- Mappage des lecteurs sur les clients (au choix)Lettre de mappage réseau I : Dossier individuel
+- Lettre de mappage réseau J: Dossier de Service   
+- Lettre de mappage réseau K: Dossier de département
+- Documentation
+
+**Objectif 3 - Supervision ZABBIX**
+Tâches :
+- Installation de Zabbix
+- Installation de Zabbix Agent   
+- Mise en place de dashboard 
+-  Documentation
+
+**Objectif 4 - Journalisation GRAYLOG**
+Tâches :
+- Installation de Zabbix
+- Installation de Zabbix Agent   
+- Mise en place de dashboard 
+-  Documentation
+
+**Objectif 5 - Surveillance du pare-feu Pfsense*
+Tâches :
+- Installation de Zabbix Agent
+- Mise en place de dashboard  
+-  Documentation
+
+---
 ### 3.3 Organisation chronologique
+Le Sprint 3 s'organise en 4 phases successives sur 2 semaines, en respectant les dépendances techniques entre les objectifs : 
+### Phase 1 : Préparation (Jours 1-2) 
+**Objectif 1 - PC d'administration**
+- Installation et configuration complète du poste d'administration
+- Installation des outils d'administration Windows (RSAT, PowerShell, consoles MMC)
+- Installation des outils multi-OS (PuTTY, WinSCP, Notepad++, Wireshark)
+- Installation des outils Linux (SSH client, scripts de connexion)
+- Documentation des procédures d'installation et configuration 
+### Phase 2 : Infrastructure de données (Jours 3-4)
+**Objectif 2 - Dossiers Partagés** 
+- Création de l'arborescence des dossiers sur le serveur de fichiers 
+- Configuration des groupes AD pour la gestion des permissions 
+- Mise en place de la sécurité NTFS et de partage 
+- Configuration du mappage des lecteurs réseau (I:, J:, K:)
+- Tests d'accès par utilisateurs et groupes 
+- Documentation complète de la structure 
+### Phase 3 : Supervision et surveillance (Jours 5-8)
+**Objectif 3 - Supervision Zabbix** 
+- Installation du serveur Zabbix (Jour 5) 
+- Configuration de la base de données 
+- Installation des agents Zabbix sur les serveurs Windows et Linux (Jour 6)
+- Création des dashboards de supervision (Jour 7) 
+- Documentation
+**Objectif 4 - Journalisation Graylog** *(en parallèle)* 
+- Installation de Graylog (MongoDB, Elasticsearch, Graylog Server) (Jour 5)
+- Configuration des inputs pour recevoir les logs (Jour 6)
+- Configuration des agents sur les serveurs (Jour 7)
+- Création des dashboards de journalisation (Jour 8) 
+- Documentation 
+ **Objectif 5 - Surveillance du pare-feu pfSense**
+- Installation de l'agent Zabbix sur pfSense (Jour 7)
+- Configuration des templates de supervision pfSense 
+- Intégration dans les dashboards Zabbix (Jour 8)
+- Configuration de l'envoi de logs vers Graylog
+- Documentation 
+ 
+### Phase 4 : Services complémentaires (Jours 9-10)
+**Objectif 6 - GLPI Agent par GPO**
+- Préparation du package d'installation de l'agent GLPI 
+- Création de la GPO de déploiement 
+- Tests sur un groupe pilote
+- Déploiement général 
+- Documentation 
 
+**Objectif 7 - Serveur Web Externe** 
+- Installation du serveur web (Apache/Nginx) 
+- Configuration des règles NAT sur pfSense 
+- Configuration SSL/TLS
+- Tests d'accessibilité externe 
+- Documentation
+---
 ### 3.4 Prérequis
+#### Prérequis généraux Sprint 3
 
+- Infrastructure réseau opérationnelle (VLANs, routage inter-VLANs)
+-  Active Directory fonctionnel avec OUs, groupes et utilisateurs créés
+-  Serveurs Windows Server et Linux déployés et accessibles 
+-  pfSense configuré avec règles de pare-feu de base  
+- Connexion Internet opérationnelle pour téléchargements
+-  Accès administrateur sur tous les équipements
+
+---
 ### 3.5 Estimation du temps par objectifs
+
+| Objectif              | Charge estimée |
+| --------------------- | -------------- |
+| PC Admin              | JH             |
+| Dossiers Partagés     | JH             |
+| Supervision           | JH             |
+| Journalisation        | JH             |
+| Surveillance pare-feu | JH             |
+| GLPI -Agent           |                |
+| **Total prioritaire** | ** JH**        |
+
 
 ### 3.6 Estimation du temps par tâches
 
 ### 3.7 Synthèse
+
 
 
 ## 4. Sprint 4

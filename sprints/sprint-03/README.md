@@ -62,7 +62,10 @@
 - SSH sur windows Serveur 2022, problème d'installer par les outils Microsoft  
     > Solution : Installation par une procédure d'installation manuel avec github  
 - Blocage compréhension GPO, partage de dossier individuel.  
-    > Solution : Création de 2 GPO   
+    > Solution : Création de 2 GPO
+- Difficulté d'installation OpenSSH sur Windows-core
+- Difficulté de Script Powershell sur GLPI-Agent
+   
 
 # 5. Les décisions techniques
 Création des conteneurs :   
@@ -74,6 +77,7 @@ Création des VM :
 
 # 6. Ce qu'il reste à faire 
 
+Terminer la tâche secondaire commencer de l'installation du Serveur WEB externe.
 
 
 
