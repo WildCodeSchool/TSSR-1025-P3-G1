@@ -226,7 +226,7 @@ Cette section vous guide à travers la configuration initiale de pfSense via l'i
 | 172.16.10.0 | /28 | VLAN 100 - QHSE |
 | 172.16.11.0 | /28 | VLAN 110 - RH |
 | 172.16.12.0 | /29 | VLAN 120 - AD/DNS/DHCP |
-| 172.16.13.0 | /29 | VLAN 130 - Fichier/Message/GLPI |
+| 172.16.13.0 | /28 | VLAN 130 - Fichier/Message/GLPI |
 | 172.16.14.0 | /26 | VLAN 140 - INVITE |
 | 172.16.15.0 | /29 | VLAN 150 - ADMIN |
 
