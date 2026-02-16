@@ -568,4 +568,21 @@ systemctl status rsyslog
 
 ---
 
+###### Stream 6 : Serveur Web Interne
+**Paramètres du Stream :**
+- **Title :** DOM-WEBINT-01
+- **Description :** Serveur Web Interne
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-WEBINT-01
+- **Description :** Serveur Web Interne
+
+---
+
 **Note :** Après la création de chaque stream, ne pas oublier de cliquer sur le bouton Lecture pour l'activer.
