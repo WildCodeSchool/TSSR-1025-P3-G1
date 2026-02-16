@@ -388,8 +388,8 @@ GRP_SVC_RH_USERS
 ![img](Ressources/06_gpo/01_GPO.png)
 
 #### 4.1.2 Création d'une GPO
-1) Faire `Clic droit` sur `Domain Controllers`
-2) Sélectionner `Create a GPO in this domain, and Link it here...`
+1) Faire `Clic droit` sur `GRoup Policy Object`
+2) Sélectionner `New`
 
 ![img](Ressources/06_gpo/02_GPO.png)
 
