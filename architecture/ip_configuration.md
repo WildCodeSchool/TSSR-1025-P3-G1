@@ -205,14 +205,14 @@ Sommaire :
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Adresse réseau** | 172.16.13.0/29 |
-| **Masque de sous-réseau** | 255.255.255.248 |
-| **Nombre de serveurs prévus** | 4-5 |
-| **Adresses disponibles** | 5 |
+| **Adresse réseau** | 172.16.13.0/28 |
+| **Masque de sous-réseau** | 255.255.255.240 |
+| **Nombre de serveurs prévus** | 4-13 |
+| **Adresses disponibles** | 13 |
 | **Première adresse utilisable** | 172.16.13.1 |
-| **Dernière adresse utilisable** | 172.16.13.5 |
-| **Passerelle par défaut** | 172.16.13.6 |
-| **Adresse de broadcast** | 172.16.13.7 |
+| **Dernière adresse utilisable** | 172.16.13.13 |
+| **Passerelle par défaut** | 172.16.13.14 |
+| **Adresse de broadcast** | 172.16.13.15 |
 | **Serveur DNS** | 172.16.12.1 |
 
 
@@ -307,7 +307,7 @@ Sommaire :
 | | VLAN 100 | 100 | 172.16.10.14 | /28 | 
 | | VLAN 110 | 110 | 172.16.11.6 | /29 | 
 | | VLAN 120 | 120 | 172.16.12.6 | /29 | 
-| | VLAN 130 | 130 | 172.16.13.6 | /29 | 
+| | VLAN 130 | 130 | 172.16.13.14 | /28 | 
 | | VLAN 140 | 140 | 172.16.14.62 | /26 | 
 | | VLAN 150 | 150 | 172.16.15.62 | /26 | 
 
@@ -368,7 +368,7 @@ Sommaire :
 | 172.16.10.0/28 | VLAN 100 (QHSE) | 14 | 6 utilisateurs |
 | 172.16.11.0/29 | VLAN 110 (RH) | 6 | 3 utilisateurs | 
 | 172.16.12.0/29 | VLAN 120 (SERVEUR-AD) | 6 | 3 serveurs | 
-| 172.16.13.0/29 | VLAN 130 (SERVEURS) | 6 | 4-5 serveurs |
+| 172.16.13.0/28 | VLAN 130 (SERVEURS) | 6 | 4-13 serveurs |
 | 172.16.14.0/26 | VLAN 140 (INVITE) | 62 | Variable |
 | 172.16.15.0/26 | VLAN 150 (ADMIN) | 62 | ~20 équipements | 
 
@@ -384,6 +384,7 @@ Sommaire :
 ## 8. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
 
