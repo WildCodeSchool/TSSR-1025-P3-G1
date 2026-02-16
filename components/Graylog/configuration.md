@@ -551,4 +551,21 @@ systemctl status rsyslog
 
 ---
 
+###### Stream 5 : Serveur de Fichiers
+**Paramètres du Stream :**
+- **Title :** DOM-FS-01
+- **Description :** Serveur de fichiers
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-FS-01
+- **Description :** Serveur de fichiers
+
+---
+
 **Note :** Après la création de chaque stream, ne pas oublier de cliquer sur le bouton Lecture pour l'activer.
