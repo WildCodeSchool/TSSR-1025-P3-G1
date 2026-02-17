@@ -858,7 +858,7 @@ Clic droit > **Properties**
 3) Copier les fichiers `firefox.admx` et `mozilla.admx` dans le dossier `C:\Windows\PolicyDefinitions`
 4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
 
-**Nom :** `PROD_USERS_Firefox`
+**Nom :** `PROD_USERS_FirefoxSettings`
 
 **Chemin de configuration :**
 > User Configuration > Policies > Administrative Templates > Mozilla > Firefox > Homepage
