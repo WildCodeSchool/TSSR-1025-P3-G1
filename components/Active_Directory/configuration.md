@@ -375,6 +375,76 @@ GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
 ```
 GRP_SVC_RH_USERS
 ```
+## 4. Stratégies de groupe (GPO)
+
+### 4.1 Création de GPO
+
+ **Cette partie de création de GPO est à titre d'exemple, suivre l'exemple pour créer chaque GPO du chapitre 4.2 et 4.3**
+
+#### 4.1.1 Accès au menu des GPO
+- Dans `Server Manager` cliquer sur `Tools` et `Group Policy Management`
+
+![img](Ressources/06_gpo/01_GPO.png)
+
+#### 4.1.2 Création d'une GPO
+1) Faire `Clic droit` sur `GRoup Policy Object`
+2) Sélectionner `New`
+
+![img](Ressources/06_gpo/02_GPO.png)
+
+#### 4.1.3 Nommage de la GPO
+- Entrer le nom de la GPO en suivant la convention de nommage
+
+![img](Ressources/06_gpo/03_GPO.png)
+
+#### 4.1.4 Accès à l'éditeur de GPO
+1) Faire `Clic droit` sur la GPO créée
+2) Sélectionner `Edit...` pour faire apparaitre la console `Group Policy Management Editor`
+
+![img](Ressources/06_gpo/04_GPO.png)
+
+#### 4.1.5 Navigation dans les paramètres de la GPO
+
+1) Naviguer dans le menu pour trouver l'emplacement du paramètre
+2) Double-cliquer pour ouvrir un paramètre et l'éditer
+
+![img](Ressources/06_gpo/05_GPO.png)
+
+#### 4.1.6 Portée de la GPO
+
+1) Sélectionner l'onglet **Scope**
+2) Choisir l'OU de **Liaison** (Links)
+3) Choisir le ou les groupes/Utilisateurs/Ordinateurs pour le filtrage de la GPO.
+
+- La GPO sera appliquée à l'OU de liaison ainsi qu'au filtrage ajouté. 
+
+![img](Ressources/06_gpo/06_GPO.png)
+
+#### 4.1.7 Statut de la GPO
+
+1) Sélectionner l'onglet **Détails**
+2) Ajuster le statut de la GPO
+
+![img](Ressources/06_gpo/07_GPO.png)
+
+#### 4.1.8 Vérification de l'application des GPO
+
+**Forcer la mise à jour des GPO sur un ordinateur :**
+```cmd
+gpupdate /force
+```
+
+**Vérifier les GPO appliquées à l'ordinateur :**
+```cmd
+gpresult /r
+```
+
+**Générer un rapport HTML détaillé des GPO appliquées :**
+```cmd
+gpresult /h rapport_gpo.html
+```
+
+---  
 
 ### 4.2 GPO de sécurité
 
