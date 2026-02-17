@@ -528,7 +528,7 @@ GRP_SVC_RH_USERS
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers` |
+| Liaison | `BillU > BilluUsers` |
 | Filtrage | |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
