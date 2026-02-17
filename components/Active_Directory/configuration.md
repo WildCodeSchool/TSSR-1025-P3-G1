@@ -456,8 +456,8 @@ GRP_SVC_RH_USERS
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | |
-| Filtrage | Authenticated Users (sauf la DSI) |
+| Liaison | `BillU > BilluComputers > Tous les départements` | 
+| Filtrage | Tous les groupes de départements (sauf la DSI) |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
 
@@ -480,8 +480,8 @@ GRP_SVC_RH_USERS
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | Authenticated Users (exclure `Domain Admins`) |
+| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -504,8 +504,8 @@ GRP_SVC_RH_USERS
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | Authenticated Users (exclure les Admins) |
+| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -528,8 +528,8 @@ GRP_SVC_RH_USERS
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluComputers > Tous les départements sauf la DSI` |
+| Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -574,8 +574,8 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | |
+| Liaison | `BillU > BilluComputers > Tous les départements sauf la DSI` |
+| Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
 
@@ -601,8 +601,8 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -625,8 +625,8 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | Authenticated Users |
+| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -708,8 +708,8 @@ Autoriser l’accès local aux postes du VLAN DSI uniquement aux équipes habili
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements ` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -740,8 +740,8 @@ Clic droit > **New** > **Mapped Drive**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -773,8 +773,8 @@ Clic droit > **New** > **Mapped Drive**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | |
+| Liaison | `BillU > BilluComputers > Tous les départements` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
 
@@ -801,8 +801,8 @@ Clic droit > **New** > **Package**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -842,8 +842,8 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
@@ -858,7 +858,7 @@ Clic droit > **Properties**
 3) Copier les fichiers `firefox.admx` et `mozilla.admx` dans le dossier `C:\Windows\PolicyDefinitions`
 4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
 
-**Nom :** `PROD_USERS_FirefoxSettings`
+**Nom :** `PROD_USERS_Firefox`
 
 **Chemin de configuration :**
 > User Configuration > Policies > Administrative Templates > Mozilla > Firefox > Homepage
@@ -882,8 +882,8 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
-| Filtrage | |
+| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
