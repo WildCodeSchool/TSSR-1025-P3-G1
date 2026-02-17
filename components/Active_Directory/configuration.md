@@ -376,82 +376,11 @@ GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
 GRP_SVC_RH_USERS
 ```
 
-## 4. Stratégies de groupe (GPO)
-
-### 4.1 Création de GPO
-
- **Cette partie de création de GPO est à titre d'exemple, suivre l'exemple pour créer chaque GPO du chapitre 4.2 et 4.3**
-
-#### 4.1.1 Accès au menu des GPO
-- Dans `Server Manager` cliquer sur `Tools` et `Group Policy Management`
-
-![img](Ressources/06_gpo/01_GPO.png)
-
-#### 4.1.2 Création d'une GPO
-1) Faire `Clic droit` sur `GRoup Policy Object`
-2) Sélectionner `New`
-
-![img](Ressources/06_gpo/02_GPO.png)
-
-#### 4.1.3 Nommage de la GPO
-- Entrer le nom de la GPO en suivant la convention de nommage
-
-![img](Ressources/06_gpo/03_GPO.png)
-
-#### 4.1.4 Accès à l'éditeur de GPO
-1) Faire `Clic droit` sur la GPO créée
-2) Sélectionner `Edit...` pour faire apparaitre la console `Group Policy Management Editor`
-
-![img](Ressources/06_gpo/04_GPO.png)
-
-#### 4.1.5 Navigation dans les paramètres de la GPO
-
-1) Naviguer dans le menu pour trouver l'emplacement du paramètre
-2) Double-cliquer pour ouvrir un paramètre et l'éditer
-
-![img](Ressources/06_gpo/05_GPO.png)
-
-#### 4.1.6 Portée de la GPO
-
-1) Sélectionner l'onglet **Scope**
-2) Choisir l'OU de **Liaison** (Links)
-3) Choisir le ou les groupes/Utilisateurs/Ordinateurs pour le filtrage de la GPO.
-
-- La GPO sera appliquée à l'OU de liaison ainsi qu'au filtrage ajouté. 
-
-![img](Ressources/06_gpo/06_GPO.png)
-
-#### 4.1.7 Statut de la GPO
-
-1) Sélectionner l'onglet **Détails**
-2) Ajuster le statut de la GPO
-
-![img](Ressources/06_gpo/07_GPO.png)
-
-#### 4.1.8 Vérification de l'application des GPO
-
-**Forcer la mise à jour des GPO sur un ordinateur :**
-```cmd
-gpupdate /force
-```
-
-**Vérifier les GPO appliquées à l'ordinateur :**
-```cmd
-gpresult /r
-```
-
-**Générer un rapport HTML détaillé des GPO appliquées :**
-```cmd
-gpresult /h rapport_gpo.html
-```
-
----  
-
 ### 4.2 GPO de sécurité
 
 #### 4.2.1 Politique de mot de passe
 
-**Nom :** `PROD_COMPUTERS_Password`
+**Nom :** `Default Domain Policy`
 
 **Chemin de configuration :**
 > Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy
@@ -472,16 +401,18 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU` |
+| Liaison | Racine du domaine `BillU.local` |
 | Filtrage | Authenticated Users |
-| Cible | Computers |
+| Cible | Domain Controllers et tous les comptes du domaine |
 | Statut | User configuration settings disabled |
+
+> **Note :** Les Account Policies (Password Policy, Account Lockout Policy, Kerberos Policy) ne fonctionnent qu'au niveau du domaine. Elles doivent obligatoirement être configurées dans la Default Domain Policy ou une GPO liée à la racine du domaine pour affecter les comptes de domaine.
 
 ---
 
 #### 4.2.2 Verrouillage de compte
 
-**Nom :** `PROD_COMPUTERS_LockoutAccount`
+**Nom :** `Default Domain Policy`
 
 **Chemin de configuration :**
 > Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy
@@ -498,10 +429,12 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU` |
+| Liaison | Racine du domaine `BillU.local` |
 | Filtrage | Authenticated Users |
-| Cible | Computers |
+| Cible | Domain Controllers et tous les comptes du domaine |
 | Statut | User configuration settings disabled |
+
+> **Note :** Cette politique est configurée dans la même GPO que la Password Policy (Default Domain Policy) car les Account Policies ne s'appliquent qu'au niveau du domaine.
 
 ---
 
@@ -530,41 +463,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.4 Gestion de Windows Update
-
-**Nom :** `PROD_COMPUTERS_ConfigurationUpdates`
-
-**Chemin de configuration :**
-> Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Update
-
-**Paramètres :**
-
-| Paramètre | Valeur | Note |
-|-----------|--------|------|
-| Turn off auto-restart for updates during active hours | `Enabled` > `8 AM` et `6 PM` | Empêche les redémarrages automatique après une MAJ pendant les heures actives |
-
-> Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Update > Configure Automatic Updates
-
-| Paramètre | Valeur | Note |
-|-----------|--------|------|
-| Configure Automatic Updates | `Enabled` | Active la configuration centralisée |
-| Configure automatic updating | `4 - Auto download and schedule the install` | Téléchargement auto et installation planifiée |
-| Scheduled install day | `4 - Every Wednesday` | Jour d'installation |
-| Scheduled install time | `06:00` | Heure d'installation planifiée |
-| | `Second week on the month` | Deuxième semaine du mois |
-
-**Portée :**
-
-| Propriété | Valeur |
-|-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | |
-| Cible | Computers |
-| Statut | User configuration settings disabled |
-
----
-
-#### 4.2.5 Blocage de l'accès à la base de registre
+#### 4.2.4 Blocage de l'accès à la base de registre
 
 **Nom :** `PROD_USERS_BlockBaseRegistry`
 
@@ -614,10 +513,10 @@ gpresult /h rapport_gpo.html
 
 #### 4.2.7 Restriction des périphériques amovibles
 
-**Nom :** `PROD_COMPUTERS_RestrictionRemoveDevices`
+**Nom :** `PROD_USERS_RestrictionRemoveDevices`
 
 **Chemin de configuration :**
-> Computer Configuration > Policies > Administrative Templates > System > Removable Storage Access
+> User Configuration > Policies > Administrative Templates > System > Removable Storage Access
 
 **Paramètres :**
 
@@ -631,8 +530,8 @@ gpresult /h rapport_gpo.html
 |-----------|--------|
 | Liaison | `BillU > BilluComputers` |
 | Filtrage | |
-| Cible | Computers |
-| Statut | User configuration settings disabled |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
 
 ---
 
@@ -711,51 +610,25 @@ Clic droit > **Properties**
 
 #### 4.2.10 Bureau à distance sécurisé
 
-**Nom :** `PROD_COMPUTERS_RDP`
+**Nom :** `PROD_USERS_RDP`
 
 **Chemin de configuration :**
-> Computer Configuration > Policies > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Connections
+> User Configuration > Policies > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Connections
 
 **Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Allow users to connect remotely by using Remote Desktop Services | `Enabled` | Active le bureau à distance |
+| Set rules for remote control of Remote Desktop Services user sessions | `Enabled` > `Full Control with user's permission` | Autorise l'accès au bureau à distance |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers` |
+| Liaison | `BillU > BilluUsers` |
 | Filtrage | Authenticated Users |
-| Cible | Computers |
-| Statut | User configuration settings disabled |
-
----
-
-#### 4.2.11 Scripts de démarrage
-
-**Nom :** `PROD_COMPUTERS_StartupScripts`
-
-**Chemin de configuration :**
-> Computer Configuration > Policies > Windows Settings > Scripts (Startup/Shutdown) > Startup
-
-Clic droit > **Properties** > **Add**
-
-**Paramètres :**
-
-| Paramètre | Valeur | Note |
-|-----------|--------|------|
-| Script Name | `\\DOM-AD-01\share\scripts\startup.bat` | Chemin du script |
-
-**Portée :**
-
-| Propriété | Valeur |
-|-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | |
-| Cible | Computers |
-| Statut | User configuration settings disabled |
+| Cible | Users |
+| Statut | Computer configuration settings disabled |
 
 ---  
 
@@ -1100,6 +973,7 @@ Clic droit > **New** > **Mapped Drive**
 | Statut | User configuration settings disabled |
 
 ---
+
 ## 5. Délégation d'administration
 
 ---
