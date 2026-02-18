@@ -410,7 +410,7 @@ Get-ACL "AD:\OU=BilluUsers,DC=billu,DC=lan" | Format-List
 # Test de base (depuis DOM-MAIL-01)
 ldapsearch -x -H ldap://172.16.12.1 \
   -D "svc-mail@billu.lan" \
-  -w 'Azerty123!' \
+  -w 'Azerty1*' \
   -b "OU=BilluUsers,DC=billu,DC=lan" \
   -s sub \
   "(objectClass=user)" \
@@ -419,7 +419,7 @@ ldapsearch -x -H ldap://172.16.12.1 \
 # Compter les utilisateurs
 ldapsearch -x -H ldap://172.16.12.1 \
   -D "svc-mail@billu.lan" \
-  -w 'Azerty123!' \
+  -w 'Azerty1*' \
   -b "OU=BilluUsers,DC=billu,DC=lan" \
   -s sub \
   "(&(objectClass=user)(objectCategory=person)(userPrincipalName=*))" \
@@ -429,7 +429,7 @@ ldapsearch -x -H ldap://172.16.12.1 \
 # Test sur un utilisateur spécifique
 ldapsearch -x -H ldap://172.16.12.1 \
   -D "svc-mail@billu.lan" \
-  -w 'Azerty123!' \
+  -w 'Azerty1*' \
   -b "OU=BilluUsers,DC=billu,DC=lan" \
   "(userPrincipalName=marie.meyer@billu.lan)" \
   sAMAccountName userPrincipalName displayName
