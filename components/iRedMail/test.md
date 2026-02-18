@@ -540,38 +540,27 @@ nano /etc/dovecot/dovecot-ldap.conf.ext
 ```
 
 ```ini
-# =============================================================
-# Configuration LDAP/AD Finale — DOM-MAIL-01
-# =============================================================
-
-# --- Connexion ---
 hosts = 172.16.12.1:389
 ldap_version = 3
 tls = no
 
-# --- Compte de service (Bind DN) ---
-dn = svc-mail@billu.lan
+# Utilise de préférence le DN complet ici
+dn = CN=svc-mail,OU=BilluUsers,DC=billu,DC=lan
 dnpass = Azerty1*
 
-# --- Recherche ---
 base = OU=BilluUsers,DC=billu,DC=lan
 scope = subtree
 
-# --- Authentification Directe ---
-# On laisse vide pour forcer Dovecot à chercher le DN de l'utilisateur d'abord
 auth_bind = yes
-auth_bind_userdn = 
 
-# --- Filtres (Basés sur l'attribut 'mail' fonctionnel) ---
-# On utilise l'attribut 'mail' car l'UPN contient des majuscules gênantes
+# Filtre : on cherche l'objet utilisateur actif dont l'attribut mail correspond à la saisie
 user_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 pass_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 
-# --- Attributs de session iRedMail ---
-# On définit l'email comme identifiant et on force les IDs système 2000 (vmail)
-pass_attrs = mail=user, =userdb_uid=2000, =userdb_gid=2000, =userdb_home=/var/vmail/vmail1/%d/%n/
+# Mapping pour iRedMail (UID/GID 2000 correspond à l'utilisateur 'vmail' sous Linux)
+pass_attrs = mail=user,userPassword=password
+user_attrs = =uid=2000, =gid=2000, =home=/var/vmail/vmail1/%d/%n/, =mail=maildir:/var/vmail/vmail1/%d/%n/Maildir
 
-# --- Paramètres de stabilité ---
 default_pass_scheme = PLAIN
 chase_referrals = yes
 ```
