@@ -545,7 +545,7 @@ ldap_version = 3
 tls = no
 
 # Utilise de préférence le DN complet ici
-dn = CN=svc-mail,OU=BilluUsers,DC=billu,DC=lan
+dn = CN=svc-mail,OU=DSI,OU=BilluUsers,DC=billu,DC=lan
 dnpass = Azerty1*
 
 base = OU=BilluUsers,DC=billu,DC=lan
