@@ -1166,3 +1166,38 @@ nginx -t && systemctl reload nginx
 ---
 
 Après ça, quand un utilisateur entre `matthias.chicaud@billu.lan` dans Thunderbird, le nom d'hôte `172.16.13.5` se remplira automatiquement. ✅
+
+---
+
+L'erreur vient de Postfix qui ne trouve pas l'expéditeur dans l'AD via `ad_sender_login_maps.cf`. Testons ça étape par étape :
+
+```bash
+# Test 1 — Postfix trouve-t-il l'expéditeur ?
+postmap -q matthias.chicaud@billu.lan ldap:/etc/postfix/ad_sender_login_maps.cf
+
+# Test 2 — Et le destinataire ?
+postmap -q franck.paisant@billu.lan ldap:/etc/postfix/ad_virtual_mailbox_maps.cf
+```
+
+**Si aucun résultat ne s'affiche**, c'est probablement le problème de casse `billU.lan` — l'UPN dans l'AD est `matthias.chicaud@billU.lan` mais Thunderbird envoie `matthias.chicaud@billu.lan`.
+
+Vérifie l'UPN exact de matthias dans l'AD :
+
+```powershell
+# Sur le DC
+Get-ADUser -Identity "matthias.chicaud" -Properties UserPrincipalName, EmailAddress |
+  Select-Object UserPrincipalName, EmailAddress
+```
+
+Si tu vois `billU.lan` dans l'UPN, la solution est de corriger tous les UPN :
+
+```powershell
+Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
+  -Properties UserPrincipalName, EmailAddress | ForEach-Object {
+    Set-ADUser $_ `
+      -UserPrincipalName ($_.UserPrincipalName -replace "billU\.lan", "billu.lan") `
+      -EmailAddress      ($_.EmailAddress      -replace "billU\.lan", "billu.lan")
+}
+```
+
+Dis-moi ce que retournent les deux `postmap` et on identifie le problème précisément.
