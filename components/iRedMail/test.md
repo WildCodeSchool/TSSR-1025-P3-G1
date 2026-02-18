@@ -11,7 +11,8 @@ ldapsearch -x -h 172.16.12.1 \
   -D "CN=svc-mail,OU=DSI,OU=BilluUsers,DC=billu,DC=lan" \
   -W \
   -b "OU=BilluUsers,DC=billu,DC=lan" \
-  "(mail=marie.meyer@billu.lan)"```
+  "(mail=marie.meyer@billu.lan)"
+```
 
 # 📧 Tutoriel Complet — iRedMail + Active Directory
 
