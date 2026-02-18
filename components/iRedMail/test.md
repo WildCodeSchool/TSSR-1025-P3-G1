@@ -541,56 +541,42 @@ nano /etc/dovecot/dovecot-ldap.conf.ext
 
 ```ini
 # =============================================================
-# Configuration LDAP/AD pour Dovecot — DOM-MAIL-01
+# Configuration LDAP/AD optimisée pour iRedMail — DOM-MAIL-01
 # =============================================================
 
 # --- Connexion au contrôleur de domaine ---
-hosts = 172.16.12.1
-
-# Désactiver TLS pour commencer (activer en prod)
+# Utilisation du port 389 (confirmé fonctionnel par ldapsearch)
+hosts = 172.16.12.1:389
+ldap_version = 3
 tls = no
 
-# Protocole LDAP version 3 (requis pour AD)
-ldap_version = 3
-
-# --- Compte de service pour les recherches ---
+# --- Compte de service (Bind DN) ---
+# Ce compte permet à Dovecot de chercher l'utilisateur dans l'AD
 dn = svc-mail@billu.lan
 dnpass = Azerty123!
 
 # --- Base de recherche ---
-# Toute la branche BilluUsers, sous-OU incluses
 base = OU=BilluUsers,DC=billu,DC=lan
-
-# Recherche récursive dans toutes les sous-OU (subtree)
 scope = subtree
 
-# --- Authentification par bind direct (méthode recommandée avec AD) ---
-# Dovecot va faire un "bind" LDAP avec les credentials de l'utilisateur.
-# C'est AD lui-même qui valide le mot de passe — le plus sécurisé.
+# --- Authentification ---
+# On laisse auth_bind_userdn vide pour que Dovecot cherche le DN exact 
+# de l'utilisateur avant de tenter la connexion. C'est plus fiable.
 auth_bind = yes
+auth_bind_userdn = 
 
-# Le bind se fait avec l'UPN complet : marie.meyer@billu.lan
-# %u = identifiant fourni par l'utilisateur lors du login
-auth_bind_userdn = %u
+# --- Filtres de recherche ---
+# On filtre sur l'attribut 'mail' que tu as rempli dans l'AD
+user_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+pass_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 
-# --- Filtre de recherche des utilisateurs ---
-# Cherche l'utilisateur par son UPN (format user@domain)
-# Filtre les comptes désactivés (userAccountControl bit 2)
-# Filtre les comptes machine (ne prend que objectCategory=person)
-user_filter = (&(objectClass=user)(objectCategory=person)(userPrincipalName=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+# --- Attributs retournés ---
+# Indispensable pour iRedMail (UID/GID 2000 pour l'utilisateur vmail)
+pass_attrs = mail=user, =userdb_uid=2000, =userdb_gid=2000, =userdb_home=/var/vmail/vmail1/%d/%n/
 
-# Même filtre pour l'auth (passdb)
-pass_filter = (&(objectClass=user)(objectCategory=person)(userPrincipalName=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
-
-# --- Attributs récupérés ---
-# On récupère l'UPN comme identifiant utilisateur
-pass_attrs = userPrincipalName=user, =userdb_uid=2000, =userdb_gid=2000, =userdb_home=/var/vmail/vmail1/%d/%n/
-
-# Schéma de mot de passe (PLAIN car auth_bind gère tout)
+# --- Paramètres spécifiques AD ---
 default_pass_scheme = PLAIN
-
-# --- Options de débogage (désactiver en prod) ---
-# debug_level = 0
+chase_referrals = yes
 ```
 
 **Explication du filtre `userAccountControl:1.2.840.113556.1.4.803:=2` :**
