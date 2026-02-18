@@ -1,28 +1,29 @@
 # 📧 Tutoriel Complet — iRedMail + Active Directory
-
 ### Projet TSSR | Infrastructure billu.lan
-
-**Version** : 2.0 | **OS** : Debian 11/12 | **Backend** : OpenLDAP ← _Requis pour l'intégration AD_
+**Version** : 2.0 | **OS** : Debian 11/12 | **Backend** : OpenLDAP ← *Requis pour l'intégration AD*
 
 ---
 
-> ⚠️ **IMPORTANT** : Ce tutoriel suit la **documentation officielle iRedMail**. L'intégration Active Directory nécessite **obligatoirement** le backend **OpenLDAP**. Ne pas choisir MariaDB ou PostgreSQL lors de l'installation.
+> ⚠️ **IMPORTANT** : Ce tutoriel suit la **documentation officielle iRedMail**.
+> L'intégration Active Directory nécessite **obligatoirement** le backend **OpenLDAP**.
+> Ne pas choisir MariaDB ou PostgreSQL lors de l'installation.
 
 ---
 
 ## 📑 Table des matières
 
-```table-of-contents
-title: 
-style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel)
-minLevel: 2 # Include headings from the specified level
-maxLevel: 2 # Include headings up to the specified level
-include: 
-exclude: 
-includeLinks: true # Make headings clickable
-hideWhenEmpty: false # Hide TOC if no headings are found
-debugInConsole: false # Print debug info in Obsidian console
-```
+1. [Prérequis et infrastructure](#1-prérequis-et-infrastructure)
+2. [Préparation du serveur Debian](#2-préparation-du-serveur-debian)
+3. [Installation d'iRedMail avec OpenLDAP](#3-installation-diredmail-avec-openldap)
+4. [Vérification post-installation](#4-vérification-post-installation)
+5. [Préparation Active Directory](#5-préparation-active-directory)
+6. [Intégration AD dans Postfix](#6-intégration-ad-dans-postfix)
+7. [Intégration AD dans Dovecot](#7-intégration-ad-dans-dovecot)
+8. [Intégration AD dans Roundcube (carnet d'adresses global)](#8-intégration-ad-dans-roundcube-carnet-dadresses-global)
+9. [Configuration Thunderbird](#9-configuration-thunderbird)
+10. [Tests et validation](#10-tests-et-validation)
+11. [Dépannage](#11-dépannage)
+12. [Récapitulatif de l'architecture](#12-récapitulatif-de-larchitecture)
 
 ---
 
@@ -51,21 +52,21 @@ debugInConsole: false # Print debug info in Obsidian console
 
 ### 1.2 Tableau des serveurs
 
-|Rôle|Nom|IP|OS|
-|---|---|---|---|
-|Active Directory + DNS|DOM-AD-01|172.16.12.1|Windows Server 2022|
-|Serveur Mail|DOM-MAIL-01|172.16.13.5|Debian 11 ou 12|
+| Rôle | Nom | IP | OS |
+|------|-----|----|----|
+| Active Directory + DNS | DOM-AD-01 | 172.16.12.1 | Windows Server 2022 |
+| Serveur Mail | DOM-MAIL-01 | 172.16.13.5 | Debian 11 ou 12 |
 
 ### 1.3 Informations AD
 
-|Paramètre|Valeur|
-|---|---|
-|Domaine AD|`billu.lan`|
-|NetBIOS|`BILLU`|
-|Base DN|`DC=billu,DC=lan`|
-|OU utilisateurs|`OU=BilluUsers,DC=billu,DC=lan`|
-|Compte de service|`svc-mail@billu.lan`|
-|Mot de passe svc|`Azerty1*`|
+| Paramètre | Valeur |
+|-----------|--------|
+| Domaine AD | `billu.lan` |
+| NetBIOS | `BILLU` |
+| Base DN | `DC=billu,DC=lan` |
+| OU utilisateurs | `OU=BilluUsers,DC=billu,DC=lan` |
+| Compte de service | `svc-mail@billu.lan` |
+| Mot de passe svc | `Azerty1*` |
 
 > ⚠️ **Note** : Le mot de passe `Azerty1*` contient un `*`. La documentation iRedMail précise de **ne pas utiliser `#`** dans le mot de passe (traité comme commentaire). Le `*` est autorisé.
 
@@ -170,9 +171,9 @@ cd /root
 
 # Télécharger la dernière version
 # Vérifier la version actuelle sur https://www.iredmail.org/download.html
-wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.7.4.tar.gz
-tar xvf 1.7.4.tar.gz
-cd iRedMail-1.7.4
+wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.6.8.tar.gz
+tar xvf 1.6.8.tar.gz
+cd iRedMail-1.6.8
 ```
 
 ### 3.2 Lancer l'installateur
@@ -185,19 +186,16 @@ bash iRedMail.sh
 ### 3.3 Assistant d'installation — Réponses complètes
 
 **Étape 1 — Répertoire de stockage des mails**
-
 ```
 /var/vmail     ← Laisser par défaut
 ```
 
 **Étape 2 — Serveur web**
-
 ```
 [*] Nginx      ← Sélectionner Nginx
 ```
 
 **Étape 3 — Backend de stockage**
-
 ```
 [ ] MariaDB
 [*] OpenLDAP   ← OBLIGATOIRE pour l'intégration AD
@@ -207,34 +205,29 @@ bash iRedMail.sh
 **Étape 4 — Suffixe LDAP**
 
 iRedMail va vous demander le suffixe LDAP pour son annuaire interne :
-
 ```
 LDAP suffix: dc=billu,dc=lan
 ```
 
 **Étape 5 — Mot de passe administrateur OpenLDAP**
-
 ```
-Ex. : OpenLDAP_Admin_2024!
-(Notez-le précieusement — c'est le mot de passe du cn=Manager,dc=billu,dc=lan)
+Azerty1*
+(mot de passe du cn=Manager,dc=billu,dc=lan)
 ```
 
 **Étape 6 — Domaine mail principal**
-
 ```
 billu.lan
 ```
 
 **Étape 7 — Mot de passe administrateur mail**
-
 ```
 Compte : postmaster@billu.lan
-Mot de passe : Ex. PostMaster_2024!
-(Notez-le précieusement)
+Mot de passe : Azerty1*
+
 ```
 
 **Étape 8 — Composants optionnels**
-
 ```
 [*] Roundcube Webmail    ← Cocher (obligatoire pour le webmail)
 [*] iRedAdmin            ← Cocher (interface d'administration)
@@ -244,7 +237,6 @@ Mot de passe : Ex. PostMaster_2024!
 ```
 
 **Confirmation finale :**
-
 ```
 Continue? [y|N]  →  y
 ```
@@ -252,7 +244,6 @@ Continue? [y|N]  →  y
 ### 3.4 Ce qu'iRedMail installe et configure automatiquement
 
 Avec le backend OpenLDAP, iRedMail va :
-
 - Installer et configurer **OpenLDAP** (slapd) avec son propre annuaire interne
 - Créer les comptes LDAP de service : `cn=vmail` (lecture) et `cn=vmailadmin` (écriture)
 - Configurer **Postfix** pour interroger OpenLDAP
@@ -311,9 +302,9 @@ LISTEN  *:389      ← OpenLDAP interne iRedMail (slapd)
 ### 4.3 Vérifier l'accès web
 
 - **Roundcube** : https://172.16.13.5/mail/
-    - Login : `postmaster@billu.lan` + votre mot de passe admin
+  - Login : `postmaster@billu.lan` / `Azerty1*`
 - **iRedAdmin** : https://172.16.13.5/iredadmin/
-    - Login : `postmaster@billu.lan` + votre mot de passe admin
+  - Login : `postmaster@billu.lan` / `Azerty1*`
 
 > Acceptez l'exception de certificat SSL auto-signé.
 
@@ -484,7 +475,9 @@ result_format   = %d/%u/Maildir/
 debuglevel      = 0
 ```
 
-> 💡 `result_format = %d/%u/Maildir/` construit le chemin de boîte mail : `%d` = domaine (billu.lan), `%u` = utilisateur (marie.meyer) → Résultat : `billu.lan/marie.meyer/Maildir/`
+> 💡 `result_format = %d/%u/Maildir/` construit le chemin de boîte mail :
+> `%d` = domaine (billu.lan), `%u` = utilisateur (marie.meyer)
+> → Résultat : `billu.lan/marie.meyer/Maildir/`
 
 ### 6.8 Créer le fichier ad_virtual_group_maps.cf
 
@@ -520,7 +513,6 @@ nano /etc/postfix/main.cf
 ```
 
 Chercher et **supprimer** cette ligne (si elle existe) :
-
 ```
 check_policy_service inet:127.0.0.1:7777
 ```
@@ -624,7 +616,6 @@ user_attrs      = mail=master_user,mail=user,=home=/var/vmail/vmail1/%Ld/%Ln/,=m
 ```
 
 **Explication du filtre `userAccountControl:1.2.840.113556.1.4.803:=2` :**
-
 - C'est un filtre bitwise spécifique à Active Directory
 - Le bit 2 = ACCOUNTDISABLE (compte désactivé)
 - Le `!` (NOT) exclut les comptes désactivés
@@ -670,7 +661,6 @@ Une fois connecté, taper (le point `.` au début est obligatoire) :
 ```
 
 **Résultat attendu :**
-
 ```
 . OK [CAPABILITY ...] Logged in
 ```
@@ -678,7 +668,6 @@ Une fois connecté, taper (le point `.` au début est obligatoire) :
 Pour quitter : `Ctrl+]` puis `quit`
 
 **Alternative avec doveadm :**
-
 ```bash
 doveadm auth test marie.meyer@billu.lan 'Azerty1*'
 # Attendu : passdb: marie.meyer@billu.lan auth succeeded
@@ -782,23 +771,23 @@ Dans Thunderbird, lors de la création du compte : **"Configure manually"** / **
 
 #### Réception — IMAP
 
-|Champ|Valeur|
-|---|---|
-|Server hostname|`172.16.13.5`|
-|Port|`993`|
-|Connection security|`SSL/TLS`|
-|Authentication method|`Normal password`|
-|Username|`marie.meyer@billu.lan`|
+| Champ | Valeur |
+|-------|--------|
+| Server hostname | `172.16.13.5` |
+| Port | `993` |
+| Connection security | `SSL/TLS` |
+| Authentication method | `Normal password` |
+| Username | `marie.meyer@billu.lan` |
 
 #### Envoi — SMTP
 
-|Champ|Valeur|
-|---|---|
-|Server hostname|`172.16.13.5`|
-|Port|`587`|
-|Connection security|`STARTTLS`|
-|Authentication method|`Normal password`|
-|Username|`marie.meyer@billu.lan`|
+| Champ | Valeur |
+|-------|--------|
+| Server hostname | `172.16.13.5` |
+| Port | `587` |
+| Connection security | `STARTTLS` |
+| Authentication method | `Normal password` |
+| Username | `marie.meyer@billu.lan` |
 
 ### 9.2 Gestion du certificat auto-signé
 
@@ -938,13 +927,13 @@ tail -f /var/log/dovecot.log &
 doveadm auth test marie.meyer@billu.lan 'Azerty1*'
 ```
 
-|Message dans les logs|Cause|Solution|
+| Message dans les logs | Cause | Solution |
 |---|---|---|
-|`Can't contact LDAP server`|AD injoignable|Vérifier `nc -zv 172.16.12.1 389`|
-|`Invalid credentials`|Mauvais mot de passe svc-mail|Vérifier `dnpass` dans dovecot-ldap.conf|
-|`No such object`|Base DN incorrecte|Vérifier `base =`|
-|`user not found`|Filtre trop restrictif|Tester avec filtre simplifié `(userPrincipalName=%u)`|
-|Aucun log|Config non prise en compte|Vérifier `doveconf -n` et relancer dovecot|
+| `Can't contact LDAP server` | AD injoignable | Vérifier `nc -zv 172.16.12.1 389` |
+| `Invalid credentials` | Mauvais mot de passe svc-mail | Vérifier `dnpass` dans dovecot-ldap.conf |
+| `No such object` | Base DN incorrecte | Vérifier `base =` |
+| `user not found` | Filtre trop restrictif | Tester avec filtre simplifié `(userPrincipalName=%u)` |
+| Aucun log | Config non prise en compte | Vérifier `doveconf -n` et relancer dovecot |
 
 ### 11.2 Postfix — postmap ne retourne rien
 
@@ -1053,26 +1042,26 @@ Thunderbird SMTP:587                   Postfix reçoit le mail sur :25
 
 ### 12.3 Fichiers de configuration modifiés
 
-|Fichier|Rôle|Section|
-|---|---|---|
-|`/etc/postfix/main.cf`|Paramètres globaux Postfix|§6.2 à §6.4|
-|`/etc/postfix/transport`|Transport mail pour billu.lan|§6.5|
-|`/etc/postfix/ad_sender_login_maps.cf`|Vérification expéditeurs SMTP|§6.6|
-|`/etc/postfix/ad_virtual_mailbox_maps.cf`|Vérification destinataires + chemin boîte|§6.7|
-|`/etc/postfix/ad_virtual_group_maps.cf`|Groupes AD comme listes de diffusion|§6.8|
-|`/etc/dovecot/dovecot-ldap.conf`|Auth Dovecot via AD|§7.2|
-|`/opt/www/roundcubemail/config/config.inc.php`|Carnet d'adresses global AD|§8.1|
+| Fichier | Rôle | Section |
+|---------|------|---------|
+| `/etc/postfix/main.cf` | Paramètres globaux Postfix | §6.2 à §6.4 |
+| `/etc/postfix/transport` | Transport mail pour billu.lan | §6.5 |
+| `/etc/postfix/ad_sender_login_maps.cf` | Vérification expéditeurs SMTP | §6.6 |
+| `/etc/postfix/ad_virtual_mailbox_maps.cf` | Vérification destinataires + chemin boîte | §6.7 |
+| `/etc/postfix/ad_virtual_group_maps.cf` | Groupes AD comme listes de diffusion | §6.8 |
+| `/etc/dovecot/dovecot-ldap.conf` | Auth Dovecot via AD | §7.2 |
+| `/opt/www/roundcubemail/config/config.inc.php` | Carnet d'adresses global AD | §8.1 |
 
 ### 12.4 Ports et protocoles
 
-|Port|Protocole|Usage|
-|---|---|---|
-|389|LDAP|Requêtes vers l'AD (172.16.12.1)|
-|993|IMAPS|Clients mail (SSL/TLS) ← Recommandé|
-|143|IMAP|Clients mail (STARTTLS)|
-|587|SMTP|Envoi authentifié (STARTTLS)|
-|25|SMTP|Réception MX|
-|443|HTTPS|Roundcube / iRedAdmin|
+| Port | Protocole | Usage |
+|------|-----------|-------|
+| 389 | LDAP | Requêtes vers l'AD (172.16.12.1) |
+| 993 | IMAPS | Clients mail (SSL/TLS) ← Recommandé |
+| 143 | IMAP | Clients mail (STARTTLS) |
+| 587 | SMTP | Envoi authentifié (STARTTLS) |
+| 25 | SMTP | Réception MX |
+| 443 | HTTPS | Roundcube / iRedAdmin |
 
 ---
 
@@ -1084,4 +1073,6 @@ Thunderbird SMTP:587                   Postfix reçoit le mail sur :25
 
 ---
 
-_Tutoriel basé sur la documentation officielle iRedMail_ _Backend : OpenLDAP | Serveur mail : DOM-MAIL-01 (172.16.13.5) | AD : DOM-AD-01 (172.16.12.1)_ _Domaine : billu.lan | Compte de service : svc-mail@billu.lan_
+*Tutoriel basé sur la documentation officielle iRedMail*
+*Backend : OpenLDAP | Serveur mail : DOM-MAIL-01 (172.16.13.5) | AD : DOM-AD-01 (172.16.12.1)*
+*Domaine : billu.lan | Compte de service : svc-mail@billu.lan*
