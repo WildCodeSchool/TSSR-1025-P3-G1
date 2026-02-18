@@ -1217,3 +1217,43 @@ grep "smtpd_recipient_restrictions" /etc/postfix/main.cf
 ```
 
 Colle-moi le résultat. Ce que je suspecte c'est que `reject_unlisted_sender` ou `reject_sender_login_mismatch` est présent dans les restrictions Postfix et bloque l'envoi parce que `smtpd_sender_login_maps` n'est pas défini.
+
+
+---  
+
+Je vois le problème ! `smtpd_sender_login_maps` est bien défini mais `smtpd_sender_restrictions` est **vide**. Il manque la règle qui autorise les utilisateurs authentifiés à envoyer. Corrige ça :
+
+```bash
+postconf -e smtpd_sender_restrictions='reject_sender_login_mismatch, permit_sasl_authenticated, permit_mynetworks, reject'
+```
+
+Puis redémarre Postfix :
+
+```bash
+systemctl restart postfix
+```
+
+Et reteste l'envoi depuis Thunderbird.
+
+---
+
+Si ça ne suffit pas, vérifie aussi si iRedAPD est encore actif (il interfère avec AD) :
+
+```bash
+systemctl status iredapd
+```
+
+S'il est actif :
+
+```bash
+systemctl stop iredapd
+systemctl disable iredapd
+```
+
+Et retire sa ligne dans `main.cf` si elle existe encore :
+
+```bash
+grep "check_policy_service" /etc/postfix/main.cf
+# Si tu vois inet:127.0.0.1:7777, la supprimer puis :
+systemctl restart postfix
+```
