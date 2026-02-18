@@ -423,12 +423,27 @@ chown -R vmail:vmail /var/vmail/
 
 ---
 
-## 📝 Points importants pour le projet TSSR
+nano /etc/dovecot/dovecot-ldap.conf.ext
+```
 
-- **Compte de service** : `svc-mail` créé dans `BillUsers > DSI` avec droits lecture seule
-- **Sécurité** : En production, activer TLS (`tls = yes`) pour chiffrer les échanges LDAP
-- **Synchronisation** : Le script cron tourne toutes les nuits à 2h pour créer les boites des nouveaux utilisateurs
-- **Identifiants** : Les utilisateurs utilisent leurs **mots de passe Windows AD**, pas de double gestion
-- **Certificat SSL** : Auto-signé en labo, à remplacer par un certificat valide en production
+Remplace **tout le contenu** par :
+```
+hosts           = 172.16.12.1:389
+ldap_version    = 3
+auth_bind       = yes
+dn              = vmail
+dnpass          = Azerty123!
+base            = cn=users,dc=billu,dc=lan
+scope           = subtree
+deref           = never
 
-Bon courage pour la suite du projet ! 🚀
+# Pour les commandes doveadm
+iterate_attrs   = userPrincipalName=user
+iterate_filter  = (&(userPrincipalName=*)(objectClass=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+
+# Filtres d'authentification
+user_filter     = (&(userPrincipalName=%u)(objectClass=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+pass_filter     = (&(userPrincipalName=%u)(objectClass=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+pass_attrs      = userPassword=password
+default_pass_scheme = CRYPT
+user_attrs      = =home=/var/vmail/billu.lan/%Ln/,=mail=maildir:~/Maildir/
