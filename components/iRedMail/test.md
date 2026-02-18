@@ -560,7 +560,7 @@ scope = subtree
 auth_bind = yes
 
 # Filtre : on cherche l'objet utilisateur actif dont l'attribut mail correspond à la saisie
-user_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
+user_filter = (&(objectClass=user)(objectCategory=person)(|(mail=%u)(userPrincipalName=%u))(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 pass_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 
 # Mapping pour iRedMail (UID/GID 2000 correspond à l'utilisateur 'vmail' sous Linux)
