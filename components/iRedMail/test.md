@@ -1085,3 +1085,9 @@ Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
     Set-ADUser $_ -UserPrincipalName $newUPN -EmailAddress $newEmail
 }
 ```
+
+``` 
+# Sur le DC Windows
+Add-DnsServerResourceRecordCName -ZoneName "billu.lan" `
+  -Name "autoconfig" -HostNameAlias "DOM-MAIL-01.billu.lan"
+```
