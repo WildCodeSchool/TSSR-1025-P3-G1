@@ -170,9 +170,9 @@ cd /root
 
 # Télécharger la dernière version
 # Vérifier la version actuelle sur https://www.iredmail.org/download.html
-wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.6.8.tar.gz
-tar xvf 1.6.8.tar.gz
-cd iRedMail-1.6.8
+wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.7.4.tar.gz
+tar xvf 1.7.4.tar.gz
+cd iRedMail-1.7.4
 ```
 
 ### 3.2 Lancer l'installateur
