@@ -2,6 +2,8 @@
 ldapsearch -x -H ldaps://172.16.12.1:636 -D "svc-mail@billu.lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(sAMAccountName=marie.meyer)" -o nettimeout=5
 
 nc -zv 172.16.12.1 636
+
+LDAPTLS_REQCERT=never ldapsearch -x -H ldaps://172.16.12.1:636 -D "svc-mail@billu.lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(sAMAccountName=marie.meyer)"
 ```
 
 # 📧 Tutoriel Complet — iRedMail + Active Directory
