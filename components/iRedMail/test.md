@@ -578,7 +578,7 @@ pass_filter = (&(objectClass=user)(objectCategory=person)(userPrincipalName=%u)(
 
 # --- Attributs récupérés ---
 # On récupère l'UPN comme identifiant utilisateur
-pass_attrs = userPrincipalName=user
+pass_attrs = userPrincipalName=user, =userdb_uid=2000, =userdb_gid=2000, =userdb_home=/var/vmail/vmail1/%d/%n/
 
 # Schéma de mot de passe (PLAIN car auth_bind gère tout)
 default_pass_scheme = PLAIN
