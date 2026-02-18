@@ -1076,3 +1076,11 @@ Thunderbird SMTP:587                   Postfix reçoit le mail sur :25
 *Tutoriel basé sur la documentation officielle iRedMail*
 *Backend : OpenLDAP | Serveur mail : DOM-MAIL-01 (172.16.13.5) | AD : DOM-AD-01 (172.16.12.1)*
 *Domaine : billu.lan | Compte de service : svc-mail@billu.lan*
+
+```
+# Juste afficher sans modifier
+Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
+  -Properties UserPrincipalName, EmailAddress |
+  Where-Object { $_.UserPrincipalName -like "*@billu.lan" } |
+  Select-Object Name, UserPrincipalName, EmailAddress
+```
