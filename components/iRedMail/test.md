@@ -447,3 +447,7 @@ pass_filter     = (&(userPrincipalName=%u)(objectClass=person)(!(userAccountCont
 pass_attrs      = userPassword=password
 default_pass_scheme = CRYPT
 user_attrs      = =home=/var/vmail/billu.lan/%Ln/,=mail=maildir:~/Maildir/
+
+-----
+
+ldapsearch -x -H ldap://172.16.12.1 -D "svc-mail@billu.lan" -w 'Azerty123!' -b "OU=BilluUsers,DC=billu,DC=lan" "(userPrincipalName=marie.meyer@billu.lan)" userPrincipalName sAMAccountName
