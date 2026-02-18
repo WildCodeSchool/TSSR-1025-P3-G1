@@ -259,6 +259,7 @@ foreach ($User in $SourceData) {
             -SamAccountName $SamAccount `
             -UserPrincipalName $UPN `
             -DisplayName "$($User.Prenom) $($User.Nom)" `
+            -EmailAddress $UPN `
             -Path $OUPath `
             -AccountPassword $SecurePassword `
             -Enabled $true `
