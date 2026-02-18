@@ -6,6 +6,8 @@ nc -zv 172.16.12.1 636
 LDAPTLS_REQCERT=never ldapsearch -x -H ldaps://172.16.12.1:636 -D "svc-mail@billu.lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(sAMAccountName=marie.meyer)"
 
 ldapsearch -x -H ldap://172.16.12.1:389 -D "svc-mail@billu.lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(sAMAccountName=marie.meyer)"
+
+ldapsearch -x -h 172.16.12.1 -D "CN=svc-mail,OU=DSI,OU=BilluUsers,DC=billu,DC=lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(mail=ton-mail-test@billu.lan)"
 ```
 
 # 📧 Tutoriel Complet — iRedMail + Active Directory
