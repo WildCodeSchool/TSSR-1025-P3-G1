@@ -1072,8 +1072,8 @@ Ou éditer manuellement le fichier `/etc/krb5.conf` :
 
 [realms]
     BILLU.LAN = {
-        kdc = dc01.billu.lan
-        admin_server = dc01.billu.lan
+        kdc = DOM-AD-01
+        admin_server = administrator
     }
 
 [domain_realm]
