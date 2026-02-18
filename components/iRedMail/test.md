@@ -1,3 +1,7 @@
+```
+ldapsearch -x -h 172.16.12.1 -D "svc-mail@billu.lan" -W -b "OU=BilluUsers,DC=billu,DC=lan" "(sAMAccountName=marie.meyer)"
+```
+
 # 📧 Tutoriel Complet — iRedMail + Active Directory
 
 ### Projet TSSR | Infrastructure billu.lan
