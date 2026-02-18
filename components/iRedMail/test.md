@@ -1078,9 +1078,13 @@ Thunderbird SMTP:587                   Postfix reçoit le mail sur :25
 *Domaine : billu.lan | Compte de service : svc-mail@billu.lan*
 
 ```
-# Juste afficher sans modifier
+# Remplir automatiquement le champ mail de tous les utilisateurs
+# en utilisant leur userPrincipalName comme adresse mail
 Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
   -Properties UserPrincipalName, EmailAddress |
   Where-Object { $_.UserPrincipalName -like "*@billu.lan" } |
-  Select-Object Name, UserPrincipalName, EmailAddress
+  ForEach-Object {
+    Set-ADUser $_ -EmailAddress $_.UserPrincipalName
+    Write-Host "Mis à jour : $($_.UserPrincipalName)"
+  }
 ```
