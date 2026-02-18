@@ -1091,3 +1091,78 @@ Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
 Add-DnsServerResourceRecordCName -ZoneName "billu.lan" `
   -Name "autoconfig" -HostNameAlias "DOM-MAIL-01.billu.lan"
 ```
+
+---
+
+C'est parce que Thunderbird essaie de détecter automatiquement la configuration mais n'y arrive pas — il récupère juste le domaine `.billu.lan` sans le nom du serveur.
+
+La solution c'est le fichier **autoconfig** que j'ai mentionné dans le tutoriel. Il faut deux choses :
+
+---
+
+### 1. Créer l'entrée DNS autoconfig sur le DC
+
+```powershell
+# Sur le DC Windows
+Add-DnsServerResourceRecordCName -ZoneName "billu.lan" `
+  -Name "autoconfig" -HostNameAlias "DOM-MAIL-01.billu.lan"
+```
+
+### 2. Créer le fichier autoconfig sur le serveur mail
+
+```bash
+# Sur DOM-MAIL-01
+mkdir -p /opt/www/roundcubemail/autoconfig/mail
+nano /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<clientConfig version="1.1">
+  <emailProvider id="billu.lan">
+    <domain>billu.lan</domain>
+    <displayName>Messagerie billu.lan</displayName>
+    <incomingServer type="imap">
+      <hostname>172.16.13.5</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>172.16.13.5</hostname>
+      <port>587</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+  </emailProvider>
+</clientConfig>
+```
+
+### 3. Configurer Nginx pour servir ce fichier
+
+```bash
+nano /etc/nginx/sites-available/autoconfig
+```
+
+```nginx
+server {
+    listen 80;
+    server_name autoconfig.billu.lan;
+
+    location /mail/config-v1.1.xml {
+        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        default_type text/xml;
+    }
+}
+```
+
+```bash
+ln -s /etc/nginx/sites-available/autoconfig /etc/nginx/sites-enabled/
+nginx -t && systemctl reload nginx
+```
+
+---
+
+Après ça, quand un utilisateur entre `matthias.chicaud@billu.lan` dans Thunderbird, le nom d'hôte `172.16.13.5` se remplira automatiquement. ✅
