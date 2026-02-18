@@ -1201,3 +1201,19 @@ Get-ADUser -Filter * -SearchBase "OU=BilluUsers,DC=billu,DC=lan" `
 ```
 
 Dis-moi ce que retournent les deux `postmap` et on identifie le problème précisément.
+
+--- 
+
+Ces deux paramètres n'existent pas dans ton `main.cf` — les commandes `postconf -e` de l'étape 6 n'ont probablement pas toutes été exécutées. Vérifions ce qu'il y a réellement dans ton main.cf :
+
+```bash
+grep -E "smtpd_sender|smtpd_recipient|sender_login" /etc/postfix/main.cf
+```
+
+Et aussi :
+
+```bash
+grep "smtpd_recipient_restrictions" /etc/postfix/main.cf
+```
+
+Colle-moi le résultat. Ce que je suspecte c'est que `reject_unlisted_sender` ou `reject_sender_login_mismatch` est présent dans les restrictions Postfix et bloque l'envoi parce que `smtpd_sender_login_maps` n'est pas défini.
