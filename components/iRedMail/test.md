@@ -541,40 +541,37 @@ nano /etc/dovecot/dovecot-ldap.conf.ext
 
 ```ini
 # =============================================================
-# Configuration LDAP/AD optimisée pour iRedMail — DOM-MAIL-01
+# Configuration LDAP/AD Finale — DOM-MAIL-01
 # =============================================================
 
-# --- Connexion au contrôleur de domaine ---
-# Utilisation du port 389 (confirmé fonctionnel par ldapsearch)
+# --- Connexion ---
 hosts = 172.16.12.1:389
 ldap_version = 3
 tls = no
 
 # --- Compte de service (Bind DN) ---
-# Ce compte permet à Dovecot de chercher l'utilisateur dans l'AD
 dn = svc-mail@billu.lan
 dnpass = Azerty123!
 
-# --- Base de recherche ---
+# --- Recherche ---
 base = OU=BilluUsers,DC=billu,DC=lan
 scope = subtree
 
-# --- Authentification ---
-# On laisse auth_bind_userdn vide pour que Dovecot cherche le DN exact 
-# de l'utilisateur avant de tenter la connexion. C'est plus fiable.
+# --- Authentification Directe ---
+# On laisse vide pour forcer Dovecot à chercher le DN de l'utilisateur d'abord
 auth_bind = yes
 auth_bind_userdn = 
 
-# --- Filtres de recherche ---
-# On filtre sur l'attribut 'mail' que tu as rempli dans l'AD
+# --- Filtres (Basés sur l'attribut 'mail' fonctionnel) ---
+# On utilise l'attribut 'mail' car l'UPN contient des majuscules gênantes
 user_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 pass_filter = (&(objectClass=user)(objectCategory=person)(mail=%u)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 
-# --- Attributs retournés ---
-# Indispensable pour iRedMail (UID/GID 2000 pour l'utilisateur vmail)
+# --- Attributs de session iRedMail ---
+# On définit l'email comme identifiant et on force les IDs système 2000 (vmail)
 pass_attrs = mail=user, =userdb_uid=2000, =userdb_gid=2000, =userdb_home=/var/vmail/vmail1/%d/%n/
 
-# --- Paramètres spécifiques AD ---
+# --- Paramètres de stabilité ---
 default_pass_scheme = PLAIN
 chase_referrals = yes
 ```
