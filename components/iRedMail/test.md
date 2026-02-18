@@ -551,7 +551,7 @@ tls = no
 
 # --- Compte de service (Bind DN) ---
 dn = svc-mail@billu.lan
-dnpass = Azerty123!
+dnpass = Azerty1*
 
 # --- Recherche ---
 base = OU=BilluUsers,DC=billu,DC=lan
