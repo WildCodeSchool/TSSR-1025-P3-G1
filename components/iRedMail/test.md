@@ -1257,3 +1257,50 @@ grep "check_policy_service" /etc/postfix/main.cf
 # Si tu vois inet:127.0.0.1:7777, la supprimer puis :
 systemctl restart postfix
 ```
+---
+
+Toujours 301. C'est un vhost global d'iRedMail qui intercepte tout le trafic HTTP avant ton vhost autoconfig. Vérifions :
+
+```bash
+grep -r "return 301\|rewrite.*https" /etc/nginx/sites-enabled/
+```
+
+Et montre-moi la liste des vhosts actifs :
+
+```bash
+ls -la /etc/nginx/sites-enabled/
+```
+
+La solution sera probablement d'ajouter une exception dans le vhost HTTP global d'iRedMail pour exclure `autoconfig.billu.lan`. Mais d'abord, montre-moi ce que retournent ces deux commandes.
+
+---
+
+**En attendant**, la solution de contournement la plus simple pour Thunderbird c'est de configurer l'autoconfig en **HTTPS** directement, puisque iRedMail redirige tout vers HTTPS de toute façon :
+
+```bash
+nano /etc/nginx/sites-available/autoconfig
+```
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name autoconfig.billu.lan;
+
+    ssl_certificate     /etc/ssl/certs/iRedMail.crt;
+    ssl_certificate_key /etc/ssl/private/iRedMail.key;
+
+    location /mail/config-v1.1.xml {
+        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        default_type text/xml;
+    }
+}
+```
+
+```bash
+nginx -t && systemctl reload nginx
+
+# Tester
+curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
+```
+
+Le `-k` ignore le certificat auto-signé. Si ça retourne le XML, Thunderbird devrait fonctionner.
