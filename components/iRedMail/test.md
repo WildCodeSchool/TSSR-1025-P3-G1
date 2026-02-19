@@ -1475,7 +1475,7 @@ Dis-moi ce que tu obtiens !
 #
 # Note: This file must be loaded before other virtual host config files,
 #
-
+```
 # HTTP
 server {
     # Listen on ipv4
@@ -1503,3 +1503,4 @@ server {
         return 301 https://$host$request_uri;
     }
 }
+```
