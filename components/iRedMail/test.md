@@ -1424,167 +1424,48 @@ curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
 ```
 
 ---  
+
+Pas de problème, le dossier `.well-known` n'existe pas encore, tu dois le créer. Exécute ces commandes une par une :
+
+**1. Crée les dossiers**
 ```bash
-Stop-Service wuauserv
-Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" -Name SusClientId -ErrorAction SilentlyContinue
-Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" -Name SusClientIdValidation -ErrorAction SilentlyContinue
-Start-Service wuauserv
-UsoClient StartScan
+mkdir -p /var/www/html/.well-known/autoconfig/mail/
 ```
 
----  
-
-On va creuser davantage. Vérifie ces points :
-
-### 1. Tester depuis un poste client
-Connecte-toi sur un PC client et exécute :
-```powershell
-# Vérifier vers quel serveur WSUS le client pointe
-reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v WUServer
-reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v WUStatusServer
-```
-Est-ce que l'URL retournée correspond bien à ton serveur WSUS ?
-
----
-
-### 2. Forcer plus agressivement la détection
-```powershell
-Stop-Service wuauserv
-Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\AccountDomainSid" -ErrorAction SilentlyContinue
-Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\PingID" -ErrorAction SilentlyContinue
-Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\SusClientId" -ErrorAction SilentlyContinue
-Start-Service wuauserv
-wuauclt /resetauthorization /detectnow
+**2. Crée et édite le fichier XML**
+```bash
+nano /var/www/html/.well-known/autoconfig/mail/config-v1.1.xml
 ```
 
----
-
-### 3. Vérifier que le serveur WSUS répond bien
-Depuis un client, ouvre un navigateur et teste :
-```
-http://[NomServeurWSUS]:8530/selfupdate/iuident.cab
-```
-Tu dois voir un fichier se télécharger, sinon WSUS n'est pas joignable.
-
----
-
-**Dis-moi :**
-- L'URL dans le registre est-elle correcte ?
-- Le fichier `.cab` se télécharge-t-il bien ?
-
-
----  
-
-### Suppression complète de WSUS via PowerShell
-
-**1. Stopper les services WSUS**
-```powershell
-Stop-Service WsusService, W3SVC -Force
-```
-
-**2. Désinstaller le rôle WSUS**
-```powershell
-Remove-WindowsFeature -Name UpdateServices, UpdateServices-WidDB, UpdateServices-DB, UpdateServices-Services, UpdateServices-RSAT, UpdateServices-API, UpdateServices-UI
+**3. Colle le contenu XML** (clic droit dans le terminal pour coller) :
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<clientConfig version="1.1">
+  <emailProvider id="billu.lan">
+    <domain>billu.lan</domain>
+    <incomingServer type="imap">
+      <hostname>dom-mail-01.billu.lan</hostname>
+      <port>143</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>dom-mail-01.billu.lan</hostname>
+      <port>587</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+  </emailProvider>
+</clientConfig>
 ```
 
-**3. Supprimer les fichiers résiduels**
-```powershell
-# Supprimer le dossier d'installation WSUS (adapte le chemin si besoin)
-Remove-Item "C:\Program Files\Update Services" -Recurse -Force -ErrorAction SilentlyContinue
+**4. Sauvegarde** avec `Ctrl+O` → `Entrée` → `Ctrl+X` pour quitter
 
-# Supprimer le dossier de contenu WSUS (adapte le chemin)
-Remove-Item "C:\WSUS" -Recurse -Force -ErrorAction SilentlyContinue
+**5. Vérifie que le fichier est bien créé**
+```bash
+cat /var/www/html/.well-known/autoconfig/mail/config-v1.1.xml
 ```
 
-**4. Redémarrer le serveur**
-```powershell
-Restart-Computer
-```
-
----
-
-### Après le redémarrage, vérifie que le rôle est bien supprimé :
-```powershell
-Get-WindowsFeature -Name UpdateServices* | Select-Object Name, InstallState
-```
-Tout doit être en **Available** (non installé).
-
----
-
-Une fois que c'est fait, on s'occupera de la **SUSDB** puis de la **réinstallation propre**. Tu me confirmes quand le serveur a redémarré ?
-
----  
-
-### Étape 1 : Supprimer la SUSDB
-
-D'abord, dis-moi ce que retourne cette commande :
-```powershell
-Get-Service *MSSQL* | Select-Object Name, Status
-```
-
-Ça va nous dire si tu es en **WID** ou **SQL Server** pour qu'on supprime la base correctement.
-
----
-
-### En attendant, vérifie aussi le chemin du dossier de contenu WSUS :
-```powershell
-Get-ChildItem C:\ -Directory | Where-Object {$_.Name -like "*WSUS*" -or $_.Name -like "*UpdateServices*"}
-```
-
-Colle-moi les résultats et on enchaîne sur la suppression de la SUSDB puis la réinstallation propre. 🙂
-
----  
-
-C'est bien **WID** (Windows Internal Database). On va supprimer la SUSDB :
-
-### Étape 1 : Stopper le service WID
-```powershell
-Stop-Service MSSQL$MICROSOFT##WID -Force
-```
-
-### Étape 2 : Supprimer les fichiers SUSDB
-```powershell
-Remove-Item "C:\Windows\WID\Data\SUSDB*" -Force
-```
-
-### Étape 3 : Vérifier que les fichiers sont bien supprimés
-```powershell
-Get-ChildItem "C:\Windows\WID\Data\" | Where-Object {$_.Name -like "*SUSDB*"}
-```
-Ça ne doit rien retourner.
-
-### Étape 4 : Redémarrer le service WID
-```powershell
-Start-Service MSSQL$MICROSOFT##WID
-```
-
----
-
-Dis-moi si les fichiers SUSDB ont bien été supprimés et on passe à la **réinstallation propre de WSUS** !
-
----  
-
-### Étape 1 : Installer le rôle WSUS avec WID
-```powershell
-Install-WindowsFeature -Name UpdateServices, UpdateServices-WidDB, UpdateServices-Services, UpdateServices-RSAT, UpdateServices-API, UpdateServices-UI -IncludeManagementTools
-```
-
-### Étape 2 : Configurer WSUS (post-installation)
-```powershell
-& "C:\Program Files\Update Services\Tools\WsusUtil.exe" postinstall CONTENT_DIR=C:\WSUS
-```
-> Adapte `C:\WSUS` si tu veux stocker le contenu ailleurs (disque D: par exemple).
-
-### Étape 3 : Démarrer les services
-```powershell
-Start-Service WsusService, W3SVC
-```
-
-### Étape 4 : Vérifier que tout tourne
-```powershell
-Get-Service WsusService, W3SVC | Select-Object Name, Status
-```
-
----
-
-**Dis-moi quand l'installation est terminée**, on passera ensuite à la configuration initiale (synchronisation, langues, produits) et à la GPO pour reconnecter les clients.
+Dis-moi ce que tu obtiens !
