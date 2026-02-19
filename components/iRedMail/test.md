@@ -1313,3 +1313,19 @@ grep -r "server_name\|listen 443" /etc/nginx/sites-enabled/
 ```
 
 Ça nous dira si un autre bloc prend le dessus sur le tien.
+
+---  
+
+# Vérifier
+ls -la /etc/nginx/sites-enabled/
+
+# Créer le lien symbolique
+ln -s /etc/nginx/sites-available/autoconfig /etc/nginx/sites-enabled/autoconfig
+
+# Vérifier que le lien est créé
+ls -la /etc/nginx/sites-enabled/
+
+nginx -t && systemctl reload nginx
+
+# Tester
+curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
