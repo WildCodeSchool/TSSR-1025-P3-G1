@@ -1424,10 +1424,11 @@ curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
 ```
 
 ---  
-
+```bash
 Stop-Service wuauserv
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" -Name SusClientId -ErrorAction SilentlyContinue
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" -Name SusClientIdValidation -ErrorAction SilentlyContinue
 Start-Service wuauserv
 UsoClient StartScan
+```
 
