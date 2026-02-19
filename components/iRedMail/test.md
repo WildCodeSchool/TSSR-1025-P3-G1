@@ -1512,3 +1512,23 @@ Tout doit être en **Available** (non installé).
 ---
 
 Une fois que c'est fait, on s'occupera de la **SUSDB** puis de la **réinstallation propre**. Tu me confirmes quand le serveur a redémarré ?
+
+---  
+
+### Étape 1 : Supprimer la SUSDB
+
+D'abord, dis-moi ce que retourne cette commande :
+```powershell
+Get-Service *MSSQL* | Select-Object Name, Status
+```
+
+Ça va nous dire si tu es en **WID** ou **SQL Server** pour qu'on supprime la base correctement.
+
+---
+
+### En attendant, vérifie aussi le chemin du dossier de contenu WSUS :
+```powershell
+Get-ChildItem C:\ -Directory | Where-Object {$_.Name -like "*WSUS*" -or $_.Name -like "*UpdateServices*"}
+```
+
+Colle-moi les résultats et on enchaîne sur la suppression de la SUSDB puis la réinstallation propre. 🙂
