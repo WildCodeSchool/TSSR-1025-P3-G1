@@ -1471,3 +1471,44 @@ Tu dois voir un fichier se télécharger, sinon WSUS n'est pas joignable.
 **Dis-moi :**
 - L'URL dans le registre est-elle correcte ?
 - Le fichier `.cab` se télécharge-t-il bien ?
+
+
+---  
+
+### Suppression complète de WSUS via PowerShell
+
+**1. Stopper les services WSUS**
+```powershell
+Stop-Service WsusService, W3SVC -Force
+```
+
+**2. Désinstaller le rôle WSUS**
+```powershell
+Remove-WindowsFeature -Name UpdateServices, UpdateServices-WidDB, UpdateServices-DB, UpdateServices-Services, UpdateServices-RSAT, UpdateServices-API, UpdateServices-UI
+```
+
+**3. Supprimer les fichiers résiduels**
+```powershell
+# Supprimer le dossier d'installation WSUS (adapte le chemin si besoin)
+Remove-Item "C:\Program Files\Update Services" -Recurse -Force -ErrorAction SilentlyContinue
+
+# Supprimer le dossier de contenu WSUS (adapte le chemin)
+Remove-Item "C:\WSUS" -Recurse -Force -ErrorAction SilentlyContinue
+```
+
+**4. Redémarrer le serveur**
+```powershell
+Restart-Computer
+```
+
+---
+
+### Après le redémarrage, vérifie que le rôle est bien supprimé :
+```powershell
+Get-WindowsFeature -Name UpdateServices* | Select-Object Name, InstallState
+```
+Tout doit être en **Available** (non installé).
+
+---
+
+Une fois que c'est fait, on s'occupera de la **SUSDB** puis de la **réinstallation propre**. Tu me confirmes quand le serveur a redémarré ?
