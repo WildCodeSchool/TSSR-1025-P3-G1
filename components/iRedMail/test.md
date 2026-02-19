@@ -1518,3 +1518,54 @@ Et reteste :
 ```
 https://autoconfig.billu.lan/.well-known/autoconfig/mail/config-v1.1.xml
 ```
+---  
+
+Le navigateur force toujours HTTPS et Roundcube intercepte `/mail/`. La meilleure solution est de créer un **virtual host dédié** pour `autoconfig.billu.lan` sans les templates Roundcube.
+
+```bash
+nano /etc/nginx/sites-enabled/autoconfig.conf
+```
+
+Colle ce contenu :
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name autoconfig.billu.lan;
+
+    location /mail/ {
+        alias /opt/www/well_known/mail/;
+        allow all;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name autoconfig.billu.lan;
+
+    include /etc/nginx/templates/ssl.tmpl;
+
+    location /mail/ {
+        alias /opt/www/well_known/mail/;
+        allow all;
+    }
+
+    location /.well-known/autoconfig/ {
+        alias /opt/www/well_known/autoconfig/;
+        allow all;
+    }
+}
+```
+
+Puis :
+```bash
+nginx -t && systemctl reload nginx
+```
+
+Et teste :
+```
+http://autoconfig.billu.lan/mail/config-v1.1.xml
+https://autoconfig.billu.lan/mail/config-v1.1.xml
+```
