@@ -1504,3 +1504,17 @@ server {
     }
 }
 ```
+---  
+
+Le problème vient du template `misc.tmpl` ! Il sert les fichiers `.well-known` depuis `/opt/www/well_known` et pas depuis `/var/www/html`. Il faut donc copier ton fichier XML à cet endroit :
+
+```bash
+mkdir -p /opt/www/well_known/autoconfig/mail/
+cp /var/www/html/.well-known/autoconfig/mail/config-v1.1.xml /opt/www/well_known/autoconfig/mail/
+chown -R www-data:www-data /opt/www/well_known/autoconfig/
+```
+
+Et reteste :
+```
+https://autoconfig.billu.lan/.well-known/autoconfig/mail/config-v1.1.xml
+```
