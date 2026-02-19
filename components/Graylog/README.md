@@ -80,13 +80,13 @@ Graylog permet :
 ## 4. Structure de la documentation
 
 - **README.md** - Ce fichier - Vue d'ensemble du projet
-- **[installation.md](installation.md)** - Procédure d'installation complète de Graylog :
+- **[installation.md](components/Graylog/installation.md)** - Procédure d'installation complète de Graylog :
   - Préparation du système Debian
   - Installation de MongoDB
   - Installation et configuration d'OpenSearch
   - Installation et configuration de Graylog Server
   - Première connexion à l'interface web
-- **[configuration.md](configuration.md)** - Guide détaillé de configuration :
+- **[configuration.md](components/Graylog/configuration.md)** - Guide détaillé de configuration :
   - Création du compte administrateur
   - Configuration des agents Windows (NXLog)
   - Configuration des agents Linux (rsyslog)
