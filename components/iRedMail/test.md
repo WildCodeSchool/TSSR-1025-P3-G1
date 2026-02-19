@@ -1469,3 +1469,37 @@ cat /var/www/html/.well-known/autoconfig/mail/config-v1.1.xml
 ```
 
 Dis-moi ce que tu obtiens !
+
+---  
+
+#
+# Note: This file must be loaded before other virtual host config files,
+#
+
+# HTTP
+server {
+    # Listen on ipv4
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    # Allow ACME challenge to be served over HTTP (don't redirect to HTTPS).
+    location ~* ^/.well-known/acme-challenge/ {
+        root /opt/www/well_known;
+        try_files $uri =404;
+        allow all;
+    }
+
+    # Allow autoconfig for Thunderbird
+    location /.well-known/autoconfig/ {
+        root /var/www/html;
+        try_files $uri =404;
+        allow all;
+    }
+
+    # Redirect all insecure http requests to https.
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
