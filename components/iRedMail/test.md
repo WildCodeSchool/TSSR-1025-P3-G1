@@ -1561,3 +1561,30 @@ Start-Service MSSQL$MICROSOFT##WID
 ---
 
 Dis-moi si les fichiers SUSDB ont bien été supprimés et on passe à la **réinstallation propre de WSUS** !
+
+---  
+
+### Étape 1 : Installer le rôle WSUS avec WID
+```powershell
+Install-WindowsFeature -Name UpdateServices, UpdateServices-WidDB, UpdateServices-Services, UpdateServices-RSAT, UpdateServices-API, UpdateServices-UI -IncludeManagementTools
+```
+
+### Étape 2 : Configurer WSUS (post-installation)
+```powershell
+& "C:\Program Files\Update Services\Tools\WsusUtil.exe" postinstall CONTENT_DIR=C:\WSUS
+```
+> Adapte `C:\WSUS` si tu veux stocker le contenu ailleurs (disque D: par exemple).
+
+### Étape 3 : Démarrer les services
+```powershell
+Start-Service WsusService, W3SVC
+```
+
+### Étape 4 : Vérifier que tout tourne
+```powershell
+Get-Service WsusService, W3SVC | Select-Object Name, Status
+```
+
+---
+
+**Dis-moi quand l'installation est terminée**, on passera ensuite à la configuration initiale (synchronisation, langues, produits) et à la GPO pour reconnecter les clients.
