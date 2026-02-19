@@ -1380,3 +1380,45 @@ curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
 ```
 
 Tu dois voir le XML s'afficher !
+
+---  
+
+Le problème vient probablement du template `roundcube.tmpl` qui capture déjà toutes les requêtes `/mail/` avant ton bloc. Vérifions :
+
+```bash
+cat /etc/nginx/templates/roundcube.tmpl
+```
+
+Si tu vois un `location /mail` dedans, c'est lui qui intercepte la requête. Dans ce cas la solution est de placer ton bloc **avant** les includes dans `00-default-ssl.conf` :
+
+```bash
+nano /etc/nginx/sites-available/00-default-ssl.conf
+```
+
+```nginx
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name _;
+
+    root /var/www/html;
+    index index.php index.html;
+
+    # ← Mettre ICI avant tous les includes
+    location = /mail/config-v1.1.xml {
+        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        default_type text/xml;
+    }
+
+    include /etc/nginx/templates/misc.tmpl;
+    include /etc/nginx/templates/ssl.tmpl;
+    ...
+}
+```
+
+> 💡 Le `=` dans `location =` force une correspondance **exacte** et est prioritaire sur tous les autres blocs location.
+
+```bash
+nginx -t && systemctl reload nginx
+curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
+```
