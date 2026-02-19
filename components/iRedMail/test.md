@@ -1532,3 +1532,32 @@ Get-ChildItem C:\ -Directory | Where-Object {$_.Name -like "*WSUS*" -or $_.Name 
 ```
 
 Colle-moi les résultats et on enchaîne sur la suppression de la SUSDB puis la réinstallation propre. 🙂
+
+---  
+
+C'est bien **WID** (Windows Internal Database). On va supprimer la SUSDB :
+
+### Étape 1 : Stopper le service WID
+```powershell
+Stop-Service MSSQL$MICROSOFT##WID -Force
+```
+
+### Étape 2 : Supprimer les fichiers SUSDB
+```powershell
+Remove-Item "C:\Windows\WID\Data\SUSDB*" -Force
+```
+
+### Étape 3 : Vérifier que les fichiers sont bien supprimés
+```powershell
+Get-ChildItem "C:\Windows\WID\Data\" | Where-Object {$_.Name -like "*SUSDB*"}
+```
+Ça ne doit rien retourner.
+
+### Étape 4 : Redémarrer le service WID
+```powershell
+Start-Service MSSQL$MICROSOFT##WID
+```
+
+---
+
+Dis-moi si les fichiers SUSDB ont bien été supprimés et on passe à la **réinstallation propre de WSUS** !
