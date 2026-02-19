@@ -1289,8 +1289,10 @@ server {
     ssl_certificate     /etc/ssl/certs/iRedMail.crt;
     ssl_certificate_key /etc/ssl/private/iRedMail.key;
 
+    root /opt/www/roundcubemail/autoconfig;
+
     location /mail/config-v1.1.xml {
-        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        try_files $uri =404;
         default_type text/xml;
     }
 }
