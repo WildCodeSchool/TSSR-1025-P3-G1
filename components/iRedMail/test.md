@@ -1275,7 +1275,9 @@ La solution sera probablement d'ajouter une exception dans le vhost HTTP global 
 
 ---
 
-**En attendant**, la solution de contournement la plus simple pour Thunderbird c'est de configurer l'autoconfig en **HTTPS** directement, puisque iRedMail redirige tout vers HTTPS de toute façon :
+Le fichier existe et le chemin est correct. Le problème vient du fait que Nginx utilise probablement un autre bloc `server` SSL catch-all d'iRedMail qui intercepte la requête avant le tien.
+
+Essaie de remplacer `alias` par `root` dans le vhost :
 
 ```bash
 nano /etc/nginx/sites-available/autoconfig
@@ -1300,9 +1302,14 @@ server {
 
 ```bash
 nginx -t && systemctl reload nginx
-
-# Tester
 curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
 ```
 
-Le `-k` ignore le certificat auto-signé. Si ça retourne le XML, Thunderbird devrait fonctionner.
+Si tu vois toujours un 404, vérifions quel bloc Nginx répond réellement :
+
+```bash
+# Voir tous les server_name SSL actifs
+grep -r "server_name\|listen 443" /etc/nginx/sites-enabled/
+```
+
+Ça nous dira si un autre bloc prend le dessus sur le tien.
