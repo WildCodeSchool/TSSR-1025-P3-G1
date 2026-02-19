@@ -1329,3 +1329,54 @@ nginx -t && systemctl reload nginx
 
 # Tester
 curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
+
+---  
+
+C'est clair ! `server_name _` est un **catch-all** qui intercepte tout. Il faut ajouter le bloc location directement dans ce fichier, juste avant la dernière accolade `}` :
+
+```bash
+nano /etc/nginx/sites-available/00-default-ssl.conf
+```
+
+Ajouter cette ligne avant le `}` final :
+
+```nginx
+    location /mail/config-v1.1.xml {
+        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        default_type text/xml;
+    }
+```
+
+Le fichier doit ressembler à :
+
+```nginx
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name _;
+
+    root /var/www/html;
+    index index.php index.html;
+
+    include /etc/nginx/templates/misc.tmpl;
+    include /etc/nginx/templates/ssl.tmpl;
+    include /etc/nginx/templates/iredadmin.tmpl;
+    include /etc/nginx/templates/roundcube.tmpl;
+    include /etc/nginx/templates/sogo.tmpl;
+    include /etc/nginx/templates/netdata.tmpl;
+    include /etc/nginx/templates/php-catchall.tmpl;
+    include /etc/nginx/templates/stub_status.tmpl;
+
+    location /mail/config-v1.1.xml {
+        alias /opt/www/roundcubemail/autoconfig/mail/config-v1.1.xml;
+        default_type text/xml;
+    }
+}
+```
+
+```bash
+nginx -t && systemctl reload nginx
+curl -k https://autoconfig.billu.lan/mail/config-v1.1.xml
+```
+
+Tu dois voir le XML s'afficher !
