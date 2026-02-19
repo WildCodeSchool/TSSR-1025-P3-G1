@@ -1078,3 +1078,26 @@ Thunderbird SMTP:587                   Postfix reçoit le mail sur :25
 *Domaine : billu.lan | Compte de service : svc-mail@billu.lan*
 
 ```
+---
+
+Confirmé — **aucun SAN**, c'est bien la cause du problème. Thunderbird (comme tous les clients modernes) refuse les certificats sans SAN.
+
+Lance la commande de régénération :
+
+```bash
+openssl req -x509 -new -nodes -newkey rsa:2048 \
+  -keyout /etc/ssl/private/iRedMail.key \
+  -out /etc/ssl/certs/iRedMail.crt \
+  -days 3650 -sha256 \
+  -subj "/CN=dom-mail-01.billu.lan" \
+  -addext "subjectAltName=DNS:dom-mail-01.billu.lan"
+
+systemctl restart postfix dovecot nginx
+```
+
+Ensuite :
+1. **Récupère le nouveau** `iRedMail.crt` et **mets à jour ta GPO** avec ce nouveau certificat (supprime l'ancien, importe le nouveau)
+2. `gpupdate /force` sur les postes clients
+3. Redémarre Thunderbird
+
+Le problème devrait être résolu !
