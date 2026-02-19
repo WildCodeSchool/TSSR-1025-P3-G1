@@ -1432,3 +1432,42 @@ Start-Service wuauserv
 UsoClient StartScan
 ```
 
+---  
+
+On va creuser davantage. Vérifie ces points :
+
+### 1. Tester depuis un poste client
+Connecte-toi sur un PC client et exécute :
+```powershell
+# Vérifier vers quel serveur WSUS le client pointe
+reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v WUServer
+reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v WUStatusServer
+```
+Est-ce que l'URL retournée correspond bien à ton serveur WSUS ?
+
+---
+
+### 2. Forcer plus agressivement la détection
+```powershell
+Stop-Service wuauserv
+Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\AccountDomainSid" -ErrorAction SilentlyContinue
+Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\PingID" -ErrorAction SilentlyContinue
+Remove-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\SusClientId" -ErrorAction SilentlyContinue
+Start-Service wuauserv
+wuauclt /resetauthorization /detectnow
+```
+
+---
+
+### 3. Vérifier que le serveur WSUS répond bien
+Depuis un client, ouvre un navigateur et teste :
+```
+http://[NomServeurWSUS]:8530/selfupdate/iuident.cab
+```
+Tu dois voir un fichier se télécharger, sinon WSUS n'est pas joignable.
+
+---
+
+**Dis-moi :**
+- L'URL dans le registre est-elle correcte ?
+- Le fichier `.cab` se télécharge-t-il bien ?
