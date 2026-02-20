@@ -429,7 +429,7 @@ nc -zv 172.16.12.1 3268
 
 ---
 
-## 🔗 Références
+## Références
 
 - [Documentation officielle iRedMail — Intégration AD](https://docs.iredmail.org/active.directory.html)
 - [Guide d'installation iRedMail sur Debian](https://docs.iredmail.org/install.iredmail.on.debian.ubuntu.html)
