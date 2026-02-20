@@ -18,10 +18,10 @@
 $SourceCSV = "C:\Scripts\s01_BillU.csv"
 
 # Configuration AD
-$DomainDN = "DC=billU,DC=lan"
+$DomainDN = "DC=billu,DC=lan"
 
 # Suffixe pour les adresses mails
-$DomainName = "@billU.lan"
+$DomainName = "@billu.lan"
 
 # Mot de passe par défaut
 $DefaultPassword = "Azerty1*" 
