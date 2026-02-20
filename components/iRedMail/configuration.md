@@ -251,7 +251,7 @@ iterate_filter  = (&(userPrincipalName=*)(objectClass=person)(!(userAccountContr
 user_filter     = (&(userPrincipalName=%u)(objectClass=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 pass_filter     = (&(userPrincipalName=%u)(objectClass=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))
 
-pass_attrs      = userPassword=password
+pass_attrs      = 
 default_pass_scheme = CRYPT
 
 user_attrs      = mail=master_user,mail=user,=home=/var/vmail/vmail1/%Ld/%Ln/,=mail=maildir:~/Maildir/
