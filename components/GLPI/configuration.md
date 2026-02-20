@@ -123,7 +123,7 @@ http://ADRESSE_IP_DU_SERVEUR_GLPI/  (172.16.13.1)
 
 #### 3.1 Création d'un compte GLPI dans Active Directory ( Serveur AD)
 
-- Créer un utilisateur `svc_glpi_` avec le mot de passe `Azerty1*` dans Active Directory
+- Créer un utilisateur `svc_glpi` avec le mot de passe `Azerty1*` dans Active Directory
 
 #### 3.2 Installation du module PHP (si nécessaire)
 
@@ -221,6 +221,7 @@ systemctl restart apache2
 - **Forum communautaire** : https://forum.glpi-project.org/
 - **GitHub GLPI** : https://github.com/glpi-project/glpi
 - **Plugins GLPI** : https://plugins.glpi-project.org/
+
 
 
 
