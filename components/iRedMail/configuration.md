@@ -286,47 +286,10 @@ doveadm auth test marie.meyer@billu.lan 'Azerty1*'
 ```bash
 nano /opt/www/roundcubemail/config/config.inc.php
 ```
+- Trouver la ligne `$config['ldap_public']["global_ldap_abook"] = array(` et modifier l'adresse de la ligne `hosts` par l'adresse du serveur AD
 
-Ajouter la configuration suivante à la fin du fichier :
+![img](Ressources/iredmail_img/configuration/01_iredmail_configuration.png)
 
-- En dessous de cette ligne
-```php
-$config['autocomplete_addressbooks'] = array("sql", "global_ldap_abook");
-```
-- Ajouter :
-```php
-$config['ldap_public']["global_ldap_abook"] = array(
-    'name'          => 'Annuaire billu.lan',
-    'hosts'         => array("172.16.12.1"),
-    'port'          => 389,
-    'use_tls'       => false,
-    'ldap_version'  => '3',
-    'network_timeout' => 10,
-    'user_specific' => false,
-    'base_dn'       => "OU=BilluUsers,DC=billu,DC=lan",
-    'bind_dn'       => "svc-mail@billu.lan",
-    'bind_pass'     => "Azerty1*",
-    'writable'      => false,
-    'search_fields' => array('mail', 'cn', 'sAMAccountName', 'displayname', 'sn', 'givenName'),
-    'fieldmap' => array(
-        'name'          => 'cn',
-        'displayname'   => 'displayName',
-        'surname'       => 'sn',
-        'firstname'     => 'givenName',
-        'email'         => 'mail:*',
-        'phone:work'    => 'telephoneNumber',
-        'phone:mobile'  => 'mobile',
-    ),
-    'sort'          => 'cn',
-    'scope'         => 'sub',
-    'filter'        => "(&(|(objectclass=person)(objectclass=group))(!(userAccountControl:1.2.840.113556.1.4.803:=2)))",
-    'fuzzy_search'  => true,
-    'vlv'           => false,
-    'sizelimit'     => '0',
-    'timelimit'     => '0',
-    'referrals'     => false,
-);
-```
 
 ---
 
