@@ -430,7 +430,68 @@ Le Sprint 3 s'organise en 4 phases successives sur 2 semaines, en respectant les
 
 ### 4.1 Liste des objectifs principaux
 
+- WEB – Mise en place d’un serveur WEB EXTERNE (DMZ)
+- GESTION DE PARC – Déploiement WDS
+- SÉCURITÉ – Mise en place d’un serveur WSUS
+- MESSAGERIE – Mise en place d’un serveur RedMail
+- VOIP – Mise en place d’un serveur de téléphonie IP
+- AD – Script RH automatisé
+
 ### 4.2 Liste des tâches de chaque objectifs
+
+#### Objectif 1 – Serveur WEB EXTERNE (Apache)
+
+Tâches :
+- Préparation et installation du serveur Web en DMZ
+- Configuration réseau et règles firewall/NAT
+- Tests de connectivité interne et externe
+- Installation Apache
+- Configuration Apache (VirtualHost)
+- Déploiement site vitrine
+- Documentation complète (LLD + DEX)
+
+#### Objectif 2 – WDS (Windows Deployment Services)
+
+Tâches :
+- Préparation et installation du serveur WDS
+- Configuration des services réseau associés
+- Import et organisation des images de déploiement
+- Paramétrage PXE et validation des services
+- Tests fonctionnels complets de déploiement
+- Documentation
+
+#### Objectif 3 – WSUS
+
+Tâches :
+- Installation et configuration du serveur WSUS
+- Création et configuration des GPO de mise à jour
+- Création des groupes WSUS
+- Gestion des mises à jour (approbation, synchronisation)
+- Documentation
+
+#### Objectif 4 – Messagerie (RedMail)
+
+Tâches :
+- Préparation de l’installation
+- Installation de RedMail
+- Post-installation (DNS, SPF, DKIM si simulé)
+- Configuration
+- Documentation
+
+#### Objectif 5 – VOIP
+
+Tâches :
+- Installation serveur VoIP
+- Configuration réseau et tests internes
+- Documentation
+
+#### Objectif 6 – AD – Script RH
+
+Tâches :
+- Script modification comptes AD
+- Script désactivation comptes / OU désactivés
+- Script féminisation des intitulés
+- Documentation
 
 ### 4.3 Organisation chronologique
 
@@ -438,10 +499,29 @@ Le Sprint 3 s'organise en 4 phases successives sur 2 semaines, en respectant les
 
 ### 4.5 Estimation du temps par objectifs
 
+| Objectif            | Charge estimée |
+| ------------------- | -------------- |
+| Serveur WEB EXTERNE | 3 JH           |
+| WDS                 | 5 JH           |
+| WSUS                | 3 JH           |
+| Messagerie          | 3 JH           |
+| VOIP                | 2 JH           |
+| Scripts AD          | 2 JH           |
+| **Total estimé**    | **18 JH**      |
+
+
 ### 4.6 Estimation du temps par tâches
+
+
 
 ### 4.7 Synthèse
 
+- L’entreprise dispose d’un site web accessible depuis l’extérieur
+- Les postes peuvent être déployés automatiquement via PXE
+- Les mises à jour Windows sont centralisées et maîtrisées
+- Une messagerie interne est hébergée sur l’infrastructure
+- Une solution VOIP interne est fonctionnelle
+- L’administration AD est partiellement automatisée
 
 ## 5. Sprint 5
 
