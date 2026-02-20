@@ -1,31 +1,25 @@
-# Guide d'installation — iRedMail + Active Directory
+# Guide d'installation - iRedMail
 
 ## Sommaire
 
-1. [Prérequis et infrastructure](#1-prérequis-et-infrastructure)
-   - 1.1 [Schéma d'infrastructure](#11-schéma-dinfrastructure)
-   - 1.2 [Tableau des serveurs](#12-tableau-des-serveurs)
-   - 1.3 [Informations AD](#13-informations-ad)
-   - 1.4 [Prérequis système](#14-prérequis-système)
+1. [Préparation du système](#1-préparation-du-système)
+   - 1.1 [Pré-requis](#11-pré-requis)
+   - 1.2 [Connexion en root](#12-connexion-en-root)
+   - 1.3 [Configurer le hostname](#13-configurer-le-hostname)
+   - 1.4 [Configurer /etc/hosts](#14-configurer-etchosts)
+   - 1.5 [Configurer le DNS](#15-configurer-le-dns)
+   - 1.6 [Installation des outils nécessaires](#16-installation-des-outils-nécessaires)
+   - 1.7 [Création de l'utilisateur de service mail dans Active Directory](#17-création-de-lutilisateur-de-service-mail-dans-active-directory)
 
-2. [Préparation du serveur Debian](#2-préparation-du-serveur-debian)
-   - 2.1 [Configurer le hostname](#21-configurer-le-hostname)
-   - 2.2 [Configurer /etc/hosts](#22-configurer-etchosts)
-   - 2.3 [Configurer le DNS](#23-configurer-le-dns)
-   - 2.4 [Vérifications réseau préalables](#24-vérifications-réseau-préalables)
-   - 2.5 [Mise à jour du système](#25-mise-à-jour-du-système)
+2. [Installation d'iRedMail avec OpenLDAP](#2-installation-diredmail-avec-openldap)
+   - 2.1 [Télécharger iRedMail](#21-télécharger-iredmail)
+   - 2.2 [Lancer l'installateur](#22-lancer-linstallateur)
+   - 2.3 [Assistant d'installation iRedMail](#23-assistant-dinstallation-iredmail)
+   - 2.4 [Redémarrer après installation](#24-redémarrer-après-installation)
 
-3. [Installation d'iRedMail avec OpenLDAP](#3-installation-diredmail-avec-openldap)
-   - 3.1 [Télécharger iRedMail](#31-télécharger-iredmail)
-   - 3.2 [Lancer l'installateur](#32-lancer-linstallateur)
-   - 3.3 [Assistant d'installation — Réponses complètes](#33-assistant-dinstallation--réponses-complètes)
-   - 3.4 [Conserver les informations d'installation](#34-conserver-les-informations-dinstallation)
-   - 3.5 [Redémarrer après installation](#35-redémarrer-après-installation)
-
-4. [Vérification post-installation](#4-vérification-post-installation)
-   - 4.1 [Vérifier les services](#41-vérifier-les-services)
-   - 4.2 [Vérifier les ports](#42-vérifier-les-ports)
-   - 4.3 [Vérifier l'accès web](#43-vérifier-laccès-web)
+3. [Vérification post-installation](#3-vérification-post-installation)
+   - 3.1 [Vérifier les services](#31-vérifier-les-services)
+   - 3.2 [Vérifier l'accès web](#32-vérifier-laccès-web)
 
 ---
 
@@ -96,7 +90,7 @@ nameserver 172.16.12.1
 nameserver 8.8.8.8
 ```
 
-### 1.6 Installation des outils nécessaire
+### 1.6 Installation des outils nécessaires
 
 - Mettre à jour le gestionnaire de paquets
 
@@ -149,9 +143,9 @@ ldapsearch -x -H ldap://172.16.12.1 \
 
 ---
 
-## 3. Installation d'iRedMail avec OpenLDAP
+## 2. Installation d'iRedMail avec OpenLDAP
 
-### 3.1 Télécharger iRedMail
+### 2.1 Télécharger iRedMail
 
 ```bash
 cd /root
@@ -160,14 +154,14 @@ tar xvf 1.7.4.tar.gz
 cd iRedMail-1.7.4
 ```
 
-### 3.2 Lancer l'installateur
+### 2.2 Lancer l'installateur
 
 ```bash
 chmod +x iRedMail.sh
 bash iRedMail.sh
 ```
 
-### 3.3 Assistant d'installation iRedMail
+### 2.3 Assistant d'installation iRedMail
 
 - Sélectionner `YES`
 
@@ -232,7 +226,7 @@ Mot de passe : Azerty1*
 ![img](Ressources/iredmail_img/installation/12_iredmail_installation.png)
 
 
-### 3.4 Redémarrer après installation
+### 2.4 Redémarrer après installation
 
 ```bash
 reboot
@@ -240,9 +234,9 @@ reboot
 
 ---
 
-## 4. Vérification post-installation
+## 3. Vérification post-installation
 
-### 4.1 Vérifier les services
+### 3.1 Vérifier les services
 
 ```bash
 systemctl status postfix
@@ -253,7 +247,7 @@ systemctl status amavis
 ```
 
 
-### 4.2 Vérifier l'accès web
+### 3.2 Vérifier l'accès web
 
 - **Roundcube** : https://172.16.13.5/mail/
 - **iRedAdmin** : https://172.16.13.5/iredadmin/
