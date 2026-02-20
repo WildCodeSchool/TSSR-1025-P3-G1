@@ -231,8 +231,6 @@ cp /etc/dovecot/dovecot-ldap.conf /etc/dovecot/dovecot-ldap.conf.bak
 nano /etc/dovecot/dovecot-ldap.conf
 ```
 
-> ⚠️ Si nano affiche **"is meant to be read-only"** en bas, ne pas sauvegarder depuis nano. Utiliser à la place la commande suivante après avoir créé le contenu.
-
 Remplacer **tout le contenu** par :
 
 ```ini
