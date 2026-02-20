@@ -16,14 +16,15 @@
 
 ## 1. Référence rapide des équipements fixes
 
-### Serveurs VLAN 120 - Active Directory (172.16.12.0/29)
+### Serveurs VLAN 120 - Active Directory (172.16.12.0/28)
 
 | Équipement | Adresse IP | Masque | Passerelle |
 |------------|------------|--------|------------|
-| ADDS | 172.16.12.1 | 255.255.255.248 | 172.16.12.6 |
-| DHCP | 172.16.12.2 | 255.255.255.248 | 172.16.12.6 |
-| WSUS | 172.16.12.3 | 255.255.255.248 | 172.16.12.6 |
-| Serveur de fichiers | 172.16.12.4 | 255.255.255.248 | 172.16.12.6 |
+| ADDS | 172.16.12.1 | 255.255.255.240 | 172.16.12.14 |
+| DHCP | 172.16.12.2 | 255.255.255.240 | 172.16.12.14 |
+| WDS | 172.16.12.3 | 255.255.255.240 | 172.16.12.14 |
+| Serveur de fichiers | 172.16.12.4 | 255.255.255.240 | 172.16.12.14 |
+| WSUS | 172.16.12.5 | 255.255.255.240 | 172.16.12.14 |
 
 ### Serveurs VLAN 130 - Serveurs applicatifs (172.16.13.0/28)
 
@@ -32,7 +33,8 @@
 | GLPI | 172.16.13.1 | 255.255.255.240 | 172.16.13.14 |
 | Graylog | 172.16.13.2 | 255.255.255.240 | 172.16.13.14 |
 | Zabbix | 172.16.13.3 | 255.255.255.240 | 172.16.13.14 |
-| Web Interne | 172.16.13.5 | 255.255.255.240 | 172.16.13.14 |
+| MAIL | 172.16.13.5 | 255.255.255.240 | 172.16.13.14 |
+| Web Interne | 172.16.13.6 | 255.255.255.240 | 172.16.13.14 |
 
 ### Imprimantes VLAN 90 - Impression (172.16.9.0/28)
 
@@ -233,14 +235,14 @@
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Adresse réseau** | 172.16.12.0/29 |
-| **Masque de sous-réseau** | 255.255.255.248 |
+| **Adresse réseau** | 172.16.12.0/20 |
+| **Masque de sous-réseau** | 255.255.255.240 |
 | **Nombre de serveurs prévus** | 3 |
 | **Adresses disponibles** | 5 |
 | **Première adresse utilisable** | 172.16.12.1 |
-| **Dernière adresse utilisable** | 172.16.12.5 |
-| **Passerelle par défaut** | 172.16.12.6 |
-| **Adresse de broadcast** | 172.16.12.7 |
+| **Dernière adresse utilisable** | 172.16.12.13 |
+| **Passerelle par défaut** | 172.16.12.14 |
+| **Adresse de broadcast** | 172.16.12.15 |
 | **Serveur DNS** | 172.16.12.1 |
 
 #### VLAN 130 - Serveurs (SERVEURS)
@@ -313,7 +315,7 @@
 | | VLAN 90 | 90 | 172.16.9.14 | /28 |
 | | VLAN 100 | 100 | 172.16.10.14 | /28 |
 | | VLAN 110 | 110 | 172.16.11.6 | /29 |
-| | VLAN 120 | 120 | 172.16.12.6 | /29 |
+| | VLAN 120 | 120 | 172.16.12.14 | /28 |
 | | VLAN 130 | 130 | 172.16.13.14 | /28 |
 | | VLAN 140 | 140 | 172.16.14.62 | /26 |
 | | VLAN 150 | 150 | 172.16.15.62 | /26 |
@@ -374,7 +376,7 @@
 | 172.16.9.0/28 | VLAN 90 (IMPRESSION) | 14 | 9 imprimantes |
 | 172.16.10.0/28 | VLAN 100 (QHSE) | 14 | 6 utilisateurs |
 | 172.16.11.0/29 | VLAN 110 (RH) | 6 | 3 utilisateurs |
-| 172.16.12.0/29 | VLAN 120 (SERVEUR-AD) | 6 | 3 serveurs |
+| 172.16.12.0/28 | VLAN 120 (SERVEUR-AD) | 6 | 4-13 serveurs |
 | 172.16.13.0/28 | VLAN 130 (SERVEURS) | 14 | 4-13 serveurs |
 | 172.16.14.0/26 | VLAN 140 (INVITE) | 62 | Variable |
 | 172.16.15.0/26 | VLAN 150 (ADMIN) | 62 | ~20 équipements |
@@ -390,3 +392,4 @@
 ## 9. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
