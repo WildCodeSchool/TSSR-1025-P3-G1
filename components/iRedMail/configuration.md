@@ -286,7 +286,7 @@ doveadm auth test marie.meyer@billu.lan 'Azerty1*'
 ```bash
 nano /opt/www/roundcubemail/config/config.inc.php
 ```
-- Trouver la ligne `$config['ldap_public']["global_ldap_abook"] = array(` et modifier l'adresse de la ligne `hosts` par l'adresse du serveur AD
+- Trouver la ligne "`$config['ldap_public']["global_ldap_abook"] = array(`" et modifier l'adresse de la ligne `hosts` par l'adresse du serveur AD
 
 ![img](Ressources/iredmail_img/configuration/01_iredmail_configuration.png)
 
