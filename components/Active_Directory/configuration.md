@@ -25,7 +25,7 @@
    - [4.2 GPO de sécurité](#42-gpo-de-securite)
    - [4.3 GPO standard](#43-gpo-standard)
 
-5. [Délégation d’administration](#5-delegation-dadministration)
+5. [Jonction au domaine](#5-jonction-au-domaine)
 
 6. [Test et validation](#6-test-et-validation)
 
@@ -1044,7 +1044,90 @@ Clic droit > **New** > **Mapped Drive**
 
 ---
 
-## 5. Délégation d'administration
+## 5. Jonction au domaine
+
+### 1. Joindre Ubuntu/Debian à un domaine Active Directory
+
+#### Prérequis
+
+- Le DNS du serveur doit pointer vers le contrôleur de domaine (DC)
+- L'heure du serveur doit être synchronisée avec le DC (Kerberos est sensible au décalage horaire)
+- Un compte AD avec les droits de jonction au domaine
+
+#### 1.1. Installation des paquets
+
+```bash
+sudo apt update
+sudo apt install -y realmd sssd sssd-tools adcli krb5-user \
+    packagekit samba-common-bin oddjob oddjob-mkhomedir
+```
+
+> ⚠️ Lors de l'installation de `krb5-user`, entrez le royaume Kerberos en **MAJUSCULES** (ex: `BILLU.LAN`)
+
+Ou éditer manuellement le fichier `/etc/krb5.conf` :
+
+```ini
+[libdefaults]
+    default_realm = BILLU.LAN
+
+[realms]
+    BILLU.LAN = {
+        kdc = DOM-AD-01
+        admin_server = administrator
+    }
+
+[domain_realm]
+    .billu.lan = BILLU.LAN
+    billu.lan = BILLU.LAN
+```
+---
+
+#### 1.2. Découverte du domaine
+
+Voir le DNS actuellement configuré :
+```bash
+cat /etc/resolv.conf
+```
+
+Le DNS doit pointer vers votre **contrôleur de domaine AD**. Si ce n'est pas le cas, corrigez-le :
+
+```bash
+sudo nano /etc/resolv.conf
+```
+
+```
+nameserver 172.16.12.1   # IP de votre DC
+search billu.lan
+````
+
+```bash
+realm discover billu.lan
+```
+
+La commande doit retourner les informations du domaine. Si rien n'apparaît, vérifiez votre configuration DNS.
+
+---
+
+#### 1.3. Jonction au domaine
+
+```bash
+sudo realm join --user=Administrator billu.lan
+```
+
+Entrez le mot de passe du compte AD quand il est demandé.
+
+---
+
+#### 1.4. Vérification
+
+```bash
+# Vérifier que la jonction est réussie
+realm list
+
+# Tester avec un compte AD existant
+id moncompte@billu.lan
+```
+
 
 ---
 ## 6. Test et validation
