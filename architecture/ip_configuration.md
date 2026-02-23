@@ -35,6 +35,7 @@
 | Zabbix | 172.16.13.3 | 255.255.255.240 | 172.16.13.14 |
 | MAIL | 172.16.13.5 | 255.255.255.240 | 172.16.13.14 |
 | Web Interne | 172.16.13.6 | 255.255.255.240 | 172.16.13.14 |
+| VOIP | 172.16.13.7 | 255.255.255.240 | 172.16.13.14 |
 
 ### Imprimantes VLAN 90 - Impression (172.16.9.0/28)
 
@@ -392,5 +393,6 @@
 ## 9. Plan de migration
 
 ### Migration depuis l'ancienne infrastructure
+
 
 
