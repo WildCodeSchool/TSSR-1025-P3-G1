@@ -368,7 +368,7 @@ nc -zv 172.16.12.1 3268
 ### 7.1 Fichiers de configuration modifiés
 
 | Fichier | Rôle | 
-|---|---|---|
+|---|---|
 | `/etc/postfix/main.cf` | Paramètres globaux Postfix |
 | `/etc/postfix/transport` | Transport mail pour billu.lan | 
 | `/etc/postfix/ad_sender_login_maps.cf` | Vérification expéditeurs SMTP |
