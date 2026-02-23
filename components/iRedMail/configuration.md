@@ -367,15 +367,15 @@ nc -zv 172.16.12.1 3268
 
 ### 7.1 Fichiers de configuration modifiés
 
-| Fichier | Rôle | Section |
+| Fichier | Rôle | 
 |---|---|---|
-| `/etc/postfix/main.cf` | Paramètres globaux Postfix | §2 |
-| `/etc/postfix/transport` | Transport mail pour billu.lan | §2.4 |
-| `/etc/postfix/ad_sender_login_maps.cf` | Vérification expéditeurs SMTP | §2.5 |
-| `/etc/postfix/ad_virtual_mailbox_maps.cf` | Vérification destinataires | §2.5 |
-| `/etc/postfix/ad_virtual_group_maps.cf` | Groupes AD comme listes | §2.5 |
-| `/etc/dovecot/dovecot-ldap.conf` | Auth Dovecot via AD | §3.2 |
-| `/opt/www/roundcubemail/config/config.inc.php` | Carnet d'adresses global AD | §4.1 |
+| `/etc/postfix/main.cf` | Paramètres globaux Postfix |
+| `/etc/postfix/transport` | Transport mail pour billu.lan | 
+| `/etc/postfix/ad_sender_login_maps.cf` | Vérification expéditeurs SMTP |
+| `/etc/postfix/ad_virtual_mailbox_maps.cf` | Vérification destinataires | 
+| `/etc/postfix/ad_virtual_group_maps.cf` | Groupes AD comme listes |
+| `/etc/dovecot/dovecot-ldap.conf` | Auth Dovecot via AD |
+| `/opt/www/roundcubemail/config/config.inc.php` | Carnet d'adresses global AD |
 
 ### 7.2 Ports et protocoles
 
