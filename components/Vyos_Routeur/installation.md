@@ -126,7 +126,7 @@ set system host-name 'VYOS-ROUTER-01'
 Pour définir le nom de domaine :
 
 ```bash
-set system domain-name 'billu.local'
+set system domain-name 'billu.lan'
 ```
 
 Pour valider :
