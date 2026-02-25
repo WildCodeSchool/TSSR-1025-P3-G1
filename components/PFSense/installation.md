@@ -2,8 +2,8 @@
 
 ## Sommaire
 
-[1. Installation de pfSense](#1-installation-de-pfsense)
-[2. Première configuration CLI de pfSense](#2-première-configuration-cli-de-pfsense)
+[1. Installation de pfSense](#1-installation-de-pfsense)  
+[2. Première configuration CLI de pfSense](#2-première-configuration-cli-de-pfsense)  
 
 
 ### 1. Installation de pfSense
