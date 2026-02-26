@@ -43,15 +43,15 @@
 |-----------|------------|
 | Christian | Technicien |
 | Franck    | PO         |
-| Matthias  | SM |
+| Matthias  | SM         |
 
 ## Semaine 2
 
 | Membre    | Rôle       |
 |-----------|------------|
-| Christian |          |
-| Franck    |          |
-| Matthias  |  |
+| Christian | SM         |
+| Franck    | Technicien |
+| Matthias  | PO         |
 
 ---
 
@@ -60,6 +60,8 @@
 - Difficultés PXE (DHCP / options / firewall).
 - Temps de synchronisation WSUS important.
 - GPO recalcitrante
+- Problème avec le Pare-feu
+- Problème avec Certificat pour Thunderbird
 
 ---
 
@@ -70,15 +72,17 @@
 - DOM-WEBEXT-01 → Serveur Web externe (DMZ)
 - DOM-WDS-01 → Serveur de déploiement
 - DOM-WSUS-01 → Serveur de mises à jour
-- DOM-MAIL-01 → Serveur 
+- DOM-MAIL-01 → Serveur Mail (iRedMail)
+- DOM-VOIP-01 → Serveur VoIP
 
 ## Choix techniques
 
 - Apache pour le serveur Web externe
 - WDS intégré au domaine Active Directory
 - WSUS piloté via GPO
-- RedMail sur serveur Linux dédié
+- iRedMail sur serveur Linux dédié
 - Scripts PowerShell pour automatisation AD
+- FreePBX sur un serveur dédié
 
 ---
 
