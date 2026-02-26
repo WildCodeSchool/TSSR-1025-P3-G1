@@ -151,7 +151,7 @@ Indiquer le nom du groupe cible : `AD`
 | Statut    | configuration utilisateur désactivée |
 
 ---
-
+## 4 . Création de groupes 
 
 
 
