@@ -88,5 +88,5 @@
 
 # 6. Ce qu'il reste à faire
 
-
+Finaliser la documentation de plusieurs tâches.
 ---
