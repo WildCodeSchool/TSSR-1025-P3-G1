@@ -296,13 +296,13 @@ Outils :
 
 ### 3.1 Liste des objectifs principaux
 
-Objectif 1 : Mise en place d'un PC d'administration
-Objectif 2 : Mise en place des Dossiers Partagés
-Objectif 3 : Supervision ZABBIX
-Objectif 4 : Journalisation GRAYLOG
-Objectif 5 : Surveillance du Pare-feu Pfsense
-Objectif 6 : GLPI - Agent GPO
-Objectif 7: Mise en place d'un serveur WEB EXTERNE
+Objectif 1 : Mise en place d'un PC d'administration  
+Objectif 2 : Mise en place des Dossiers Partagés  
+Objectif 3 : Supervision ZABBIX  
+Objectif 4 : Journalisation GRAYLOG  
+Objectif 5 : Surveillance du Pare-feu Pfsense  
+Objectif 6 : GLPI - Agent GPO  
+Objectif 7: Mise en place d'un serveur WEB EXTERNE  
 
 ### 3.2 Liste des tâches de chaque objectifs
 
