@@ -337,7 +337,7 @@ Tâches :
 - Mise en place de dashboard 
 -  Documentation
 
-**Objectif 5 - Surveillance du pare-feu Pfsense*
+**Objectif 5 - Surveillance du pare-feu Pfsense**
 Tâches :
 - Installation de Zabbix Agent
 - Mise en place de dashboard  
