@@ -31,7 +31,11 @@
 # 2. La finalité de ces objectifs à la fin du sprint
 
 À la fin du Sprint 4 :
-
+- Mise en place du Web Externe - OK
+- Mise en place de la VoIP - OK
+- Mise en place du serveur WSUS - OK
+- Mise en place du serveur de messagerie - OK
+- Mise en place du serveur WDS - OK
 
 ---
 
