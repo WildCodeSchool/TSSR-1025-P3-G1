@@ -1075,7 +1075,9 @@ $ous = @(
     "OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan",
     "OU=DEV,OU=BilluUsers,DC=billu,DC=lan",
     "OU=DIRECTION,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=EXPLOITATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=SUPPORT,OU=DSI,OU=BilluUsers,DC=billu,DC=lan"
     "OU=JURIDIQUE,OU=BilluUsers,DC=billu,DC=lan",
     "OU=QHSE,OU=BilluUsers,DC=billu,DC=lan",
     "OU=RH,OU=BilluUsers,DC=billu,DC=lan"
