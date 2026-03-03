@@ -1065,7 +1065,7 @@ Clic droit > **New** > **Mapped Drive**
 | Cible | Computer |
 | Statut | User configuration settings disabled |
 
-**Commandes à exécuter pour appliquer la police d'horaire aux utilisateurs**
+**Commandes à exécuter pour appliquer la politique de restriction d'horaire aux utilisateurs**
 
 ```
 $bytes = (Get-ADUser "logon-account" -Properties logonHours).logonHours
