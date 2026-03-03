@@ -234,6 +234,7 @@ Redémarrage et statut du **"DHCP relay"** :
 
 ```bash
 sudo systemctl restart isc-dhcp-relay
+sudo systemctl enable isc-dhcp-relay
 sudo systemctl status isc-dhcp-relay
 ```
 

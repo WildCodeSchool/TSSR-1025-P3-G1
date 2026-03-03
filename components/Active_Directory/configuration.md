@@ -1042,6 +1042,52 @@ Clic droit > **New** > **Mapped Drive**
 | Cible | Computers |
 | Statut | User configuration settings disabled |
 
+---  
+
+**Nom :** `PROD_COMPUTER_LogonRestriction`
+
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
+
+**Paramètres :**
+
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Network Security : Force logoff when logon hours expire | `Define this policy Setting` > `Enabled` | Crée le mappage du lecteur |
+
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `BillU > BilluComputers` |
+| Filtrage | Domain Computers |
+| Cible | Computer |
+| Statut | User configuration settings disabled |
+
+**Commandes à exécuter pour appliquer la politique de restriction d'horaire aux utilisateurs**
+
+```
+$bytes = (Get-ADUser "logon-account" -Properties logonHours).logonHours
+$ous = @(
+    "OU=COMMERCIAL,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=COMMUNICATION,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DEV,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DIRECTION,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=EXPLOITATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=SUPPORT,OU=DSI,OU=BilluUsers,DC=billu,DC=lan"
+    "OU=JURIDIQUE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=QHSE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=RH,OU=BilluUsers,DC=billu,DC=lan"
+)
+
+foreach ($ou in $ous) {
+    Get-ADUser -Filter * -SearchBase $ou |
+    ForEach-Object { Set-ADUser $_ -Replace @{logonHours = $bytes} }
+}
+```
 ---
 
 ## 5. Jonction au domaine
