@@ -767,20 +767,16 @@ Clic droit > **Properties**
 ---
 
 #### 4.2.12 Restriction des horaires de connexion
-
 **Nom :** `PROD_COMPUTER_LogonRestriction`
-
 **Chemin de configuration :**
 > Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
 
 **Paramètres :**
-
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Network Security : Force logoff when logon hours expire | `Define this policy Setting` > `Enabled` | Déconnecte les sessions hors horaires autorisés |
 
 **Portée :**
-
 | Propriété | Valeur |
 |-----------|--------|
 | Liaison | `billu.lan > BilluComputers` |
@@ -788,28 +784,22 @@ Clic droit > **Properties**
 | Cible | Computer |
 | Statut | User configuration settings disabled |
 
-**Commandes PowerShell pour appliquer les restrictions d'horaires aux utilisateurs :**
 
+**Tâche planifiée :**
+
+> Le script [`Set-LogonHours.ps1`](ressources/Set-LogonHours.ps1) est stocké sur `\\DOM-FS-01\departements\DSI\scripts` et exécuté automatiquement chaque jour à 06h55 via la tâche planifiée suivante :
 ```powershell
-$bytes = (Get-ADUser "logon-account" -Properties logonHours).logonHours
-$ous = @(
-    "OU=COMMERCIAL,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=COMMUNICATION,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DEV,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DIRECTION,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=EXPLOITATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=SUPPORT,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=JURIDIQUE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=QHSE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=RH,OU=BilluUsers,DC=billu,DC=lan"
-)
+$action  = New-ScheduledTaskAction -Execute "powershell.exe" `
+           -Argument '-ExecutionPolicy Bypass -File "\\DOM-FS-01\departements\DSI\scripts\Set-LogonHours.ps1"'
 
-foreach ($ou in $ous) {
-    Get-ADUser -Filter * -SearchBase $ou |
-    ForEach-Object { Set-ADUser $_ -Replace @{logonHours = $bytes} }
-}
+$trigger = New-ScheduledTaskTrigger -Daily -At "06:55"
+
+Register-ScheduledTask -TaskName "Restriction horaires de connexion" `
+                       -Action $action `
+                       -Trigger $trigger `
+                       -RunLevel Highest `
+                       -User "BILLU\Administrateur" `
+                       -Password "TonMotDePasse"
 ```
 
 ---
