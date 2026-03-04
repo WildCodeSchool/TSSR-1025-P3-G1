@@ -1202,7 +1202,7 @@ Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 
 1. Choisir l'option **1** dans sconfig
 
-![img](Ressources/configuration_img/01_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/01_fsmo_configuration.png)
 
 2. Ajouter le serveur dans le domaine :
     - Entrer `D` pour sélectionner Domain
@@ -1213,7 +1213,7 @@ Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
     - Entrer le mot de passe du serveur Core
     - Redémarrer en appuyant sur `Y`
 
-![img](Ressources/configuration_img/02_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/02_fsmo_configuration.png)
 
 #### 6.1.3 Ajout du serveur dans le Server Manager
 
@@ -1221,17 +1221,17 @@ Depuis le serveur graphique :
 
 1. Cliquer sur `Manage` puis `Add Servers`
 
-![img](Ressources/configuration_img/03_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/03_fsmo_configuration.png)
 
 2. Cliquer sur `Find Now`
 3. Sélectionner le serveur à ajouter
 4. Vérifier qu'il apparaît dans la liste **Selected**
 
-![img](Ressources/configuration_img/04_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/04_fsmo_configuration.png)
 
 Le serveur doit apparaître dans la liste `All Servers`.
 
-![img](Ressources/configuration_img/05_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/05_fsmo_configuration.png)
 
 ---
 
@@ -1239,29 +1239,29 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 - Faire `clic droit` sur le serveur **PDC** dans la liste `All Servers`
 
-![img](Ressources/configuration_img/06_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/06_fsmo_configuration.png)
 
 1. Cliquer sur `Next` jusqu'à la sélection des serveurs
 2. Sélectionner le serveur PDC
 
-![img](Ressources/configuration_img/07_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/07_fsmo_configuration.png)
 
 3. Cocher **Active Directory Domain Services**
 
-![img](Ressources/configuration_img/08_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/08_fsmo_configuration.png)
 
 4. Cliquer sur `Add Features`
 
-![img](Ressources/configuration_img/09_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/09_fsmo_configuration.png)
 
 5. Faire `Next` jusqu'à l'étape `Confirmation`
 6. Vérifier les informations et cliquer sur `Install`
 
-![img](Ressources/configuration_img/10_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/10_fsmo_configuration.png)
 
 7. Attendre la confirmation de l'installation
 
-![img](Ressources/configuration_img/11_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/11_fsmo_configuration.png)
 
 ---
 
@@ -1270,25 +1270,25 @@ Le serveur doit apparaître dans la liste `All Servers`.
 1. Cliquer sur le drapeau
 2. Cliquer sur `Promote this server to a domain controller`
 
-![img](Ressources/configuration_img/12_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/12_fsmo_configuration.png)
 
 3. Sélectionner `Add a domain controller to an existing domain`
 4. Cliquer sur `Change` et entrer les credentials Administrator
 
-![img](Ressources/configuration_img/13_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/13_fsmo_configuration.png)
 
 5. Cocher `Domain Name System (DNS) server` et `Global Catalog (GC)`
 6. Définir un mot de passe DSRM
 
-![img](Ressources/configuration_img/14_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/14_fsmo_configuration.png)
 
 7. Cliquer sur `Next` jusqu'à `Prerequisites Check` puis sur `Install`
 
-![img](Ressources/configuration_img/17_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/17_fsmo_configuration.png)
 
 8. Attendre la confirmation de la configuration
 
-![img](Ressources/configuration_img/18_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/18_fsmo_configuration.png)
 
 9. **Redémarrer le serveur Core**
 
@@ -1300,23 +1300,23 @@ Le serveur doit apparaître dans la liste `All Servers`.
 2. Faire `Clic droit` sur le serveur **PDC**
 3. Sélectionner `Active Directory Users and Computers`
 
-![img](Ressources/configuration_img/19_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/19_fsmo_configuration.png)
 
 Dans la console `Active Directory Users and Computers` :
 
 1. Faire `Clic droit` sur le domaine
 2. Cliquer sur `Operations Masters`
 
-![img](Ressources/configuration_img/19_fsmo_configuration1.png)
+![img](Ressources/configuration_fsmo_img/19_fsmo_configuration1.png)
 
 3. Sélectionner l'onglet `PDC`
 4. Cliquer sur `Changer`
 
-![img](Ressources/configuration_img/20_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/20_fsmo_configuration.png)
 
 5. Sélectionner `Yes` pour transférer le rôle PDC Emulator sur le serveur Core
 
-![img](Ressources/configuration_img/21_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/21_fsmo_configuration.png)
 
 #### Transfert du rôle RID Master
 
@@ -1327,14 +1327,14 @@ Une fois le serveur prêt, procéder au transfert du rôle :
 1. Dans le **Server Manager**, faire `Clic droit` sur le serveur **DOM-AD-RID-01**
 2. Sélectionner `Active Directory Users and Computers`
 
-![img](Ressources/configuration_img/24_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/24_fsmo_configuration.png)
 
 3. Dans la console `Active Directory Users and Computers`, faire `Clic droit` sur le domaine
 4. Cliquer sur `Operations Masters`
 5. Sélectionner l'onglet `RID`
 6. Cliquer sur `Change...` pour transférer le rôle vers `dom-ad-rid-01.billu.lan`
 
-![img](Ressources/configuration_img/25_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/25_fsmo_configuration.png)
 
 ---
 
@@ -1350,7 +1350,7 @@ Le résultat doit afficher :
 - **PDCEmulator** → `DOM-AD-PDC-01.billu.lan`
 - **RIDMaster** → `DOM-AD-RID-01.billu.lan`
 
-![img](Ressources/configuration_img/26_fsmo_configuration.png)
+![img](Ressources/configuration_fsmo_img/26_fsmo_configuration.png)
 
 ---
 
