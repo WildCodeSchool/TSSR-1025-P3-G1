@@ -1349,7 +1349,7 @@ Depuis le `Server Manager`
 - Entrer IP du DNS Ecotech : `10.20.20.20.6`
 - Cliquer sur `Next`
 
-![image_01](Ressources/Configuration/01_config_adds.png)
+![image_01](Ressources/configuration/01_config_adds.png)
 
 ---
 
