@@ -1320,25 +1320,37 @@ Dans la console `Active Directory Users and Computers` :
 
 #### Transfert du rôle RID Master
 
-La procédure est identique, depuis la même fenêtre `Operations Masters` :
+Le rôle RID Master est transféré sur un second serveur Core dédié (`DOM-AD-RID-01`). La procédure de déploiement de ce serveur (config IP, jonction au domaine, installation AD DS, promotion DC) est identique à celle décrite aux étapes 6.1 à 6.3 en adaptant le nom de machine à `DOM-AD-RID-01`.
 
-1. Sélectionner l'onglet `RID`
-2. Cliquer sur `Changer`
-3. Sélectionner `Yes` pour confirmer le transfert du rôle RID Master sur le serveur Core
+Une fois le serveur prêt, procéder au transfert du rôle :
+
+1. Dans le **Server Manager**, faire `Clic droit` sur le serveur **DOM-AD-RID-01**
+2. Sélectionner `Active Directory Users and Computers`
+
+![img](Ressources/configuration_img/24_fsmo_configuration.png)
+
+3. Dans la console `Active Directory Users and Computers`, faire `Clic droit` sur le domaine
+4. Cliquer sur `Operations Masters`
+5. Sélectionner l'onglet `RID`
+6. Cliquer sur `Change...` pour transférer le rôle vers `dom-ad-rid-01.billu.lan`
+
+![img](Ressources/configuration_img/25_fsmo_configuration.png)
 
 ---
 
 ### 6.5 Vérification
 
-Exécuter la commande suivante dans PowerShell pour confirmer le transfert des rôles :
+Exécuter la commande suivante dans PowerShell pour confirmer le transfert des deux rôles :
 
 ```powershell
 Get-ADDomain | Select-Object PDCEmulator, RIDMaster, InfrastructureMaster
 ```
 
-Le serveur Core (`DOM-AD-PDC-01`) doit apparaître comme détenteur des rôles PDC Emulator et RID Master.
+Le résultat doit afficher :
+- **PDCEmulator** → `DOM-AD-PDC-01.billu.lan`
+- **RIDMaster** → `DOM-AD-RID-01.billu.lan`
 
-![img](Ressources/configuration_img/23_fsmo_configuration.png)
+![img](Ressources/configuration_img/26_fsmo_configuration.png)
 
 ---
 
