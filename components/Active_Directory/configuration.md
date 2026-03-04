@@ -787,20 +787,7 @@ Clic droit > **Properties**
 
 **Tâche planifiée :**
 
-> Le script [`Set-LogonHours.ps1`](Ressources/07_scripts/Set-LogonHours.ps1) est stocké sur `\\DOM-FS-01\departements\DSI\scripts` et exécuté automatiquement chaque jour à 06h55 via la tâche planifiée suivante :
-```powershell
-$action  = New-ScheduledTaskAction -Execute "powershell.exe" `
-           -Argument '-ExecutionPolicy Bypass -File "\\DOM-FS-01\departements\DSI\scripts\Set-LogonHours.ps1"'
 
-$trigger = New-ScheduledTaskTrigger -Daily -At "06:55"
-
-Register-ScheduledTask -TaskName "Restriction horaires de connexion" `
-                       -Action $action `
-                       -Trigger $trigger `
-                       -RunLevel Highest `
-                       -User "BILLU\Administrateur" `
-                       -Password "Azerty1*"
-```
 
 ---
 
