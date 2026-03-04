@@ -1331,6 +1331,11 @@ Le résultat doit afficher :
 
 ---
 
+
+
+
+
+--- 
 ## 7. Test et validation
 
 ---
