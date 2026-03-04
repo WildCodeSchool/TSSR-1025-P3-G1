@@ -211,7 +211,7 @@ Sophie;Lefebvre;DSI;Support;Technicien Support;BillU;01 23 45 67 90;;Jean;Dupont
 Modifier les variables suivantes au début du script selon votre environnement :
 
 ```powershell
-$SourceCSV = "C:\Scripts\s01_BillU.csv"    # Chemin du fichier CSV
+$SourceCSV = "\\DOM-FS-01\departements\DSI\scripts\s01_BillU.csv"    # Chemin du fichier CSV
 $DomainDN = "DC=billU,DC=lan"              # DN du domaine
 $DomainName = "@billU.lan"                  # Suffixe email
 $DefaultPassword = "Azerty1*"               # Mot de passe par défaut
