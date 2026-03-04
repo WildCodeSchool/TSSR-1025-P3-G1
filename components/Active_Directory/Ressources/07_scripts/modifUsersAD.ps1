@@ -1,4 +1,4 @@
-﻿# Script de modification d'utilisateur Active Directory à partir d'un fichier .csv
+# Script de modification d'utilisateur Active Directory à partir d'un fichier .csv
 # Auteur : Franck
 
 # Sommaire
@@ -120,8 +120,8 @@ function Clean-Name {
         -replace "[ÉÈÊË]", "E" -replace "[ÀÂÄÁ]", "A" -replace "[ÔÖ]", "O" `
         -replace "[ÙÛÜ]", "U" -replace "[ÏÎ]", "I" -replace "[Ç]", "C"
     
-    # Supprime les apostrophes, espaces et tirets
-    $Name = $Name -replace "[''\s-]", ""
+    # Supprime TOUTES les variantes d'apostrophes, espaces et tirets
+    $Name = $Name -replace "[\u0027\u2018\u2019\u02BC\u0060\s\-]", ""
     
     return $Name
 }
@@ -148,10 +148,12 @@ function Get-SamAccountName {
     # Vérifie si le compte existe déjà
     $Counter = 2
     $FinalSamAccount = $SamAccount
-    
+    $Suffix = ""
+
     while (Get-ADUser -Filter "SamAccountName -eq '$FinalSamAccount'" -ErrorAction SilentlyContinue) {
 
         # Le compte existe, on ajoute un numéro 
+        $Suffix = "$Counter"
         $FinalSamAccount = "$SamAccount$Counter"
         
         # Si le nouveau nom est trop long, on retronque
@@ -162,8 +164,12 @@ function Get-SamAccountName {
         
         $Counter++
     }
-    
-    return $FinalSamAccount
+
+    # Retourne un objet avec les deux valeurs
+    return [PSCustomObject]@{
+        SamAccount    = $FinalSamAccount
+        DisplaySuffix = $Suffix
+    }
 }
 
 # Construit le chemin de l'OU dans AD
@@ -284,45 +290,54 @@ foreach ($User in $SourceData) {
             #------------------------------------------------
             # CAS 2 : L'utilisateur N'EXISTE PAS donc création
             #-------------------------------------------------
-                 # Génère le compte utilisateur
-        $SamAccount = Get-SamAccountName -Prenom $User.Prenom -Nom $User.Nom
-        
-        # Génère le mail
-        $UPN = "$SamAccount$DomainName"
-        
-        # Chemin de l'OU
-        $OUPath = Get-OUPath -Departement $User.Departement -Service $User.Service
-        
-        # Création de l'utilisateur dans AD
-        New-ADUser `
-            -Name "$($User.Prenom) $($User.Nom)" `
-            -GivenName $User.Prenom `
-            -Surname $User.Nom `
-            -SamAccountName $SamAccount `
-            -UserPrincipalName $UPN `
-            -DisplayName "$($User.Prenom) $($User.Nom)" `
-            -EmailAddress $UPN `
-            -Path $OUPath `
-            -AccountPassword $SecurePassword `
-            -Enabled $true `
-            -ChangePasswordAtLogon $true `
-            -Department $User.Departement `
-            -Title $User.fonction `
-            -Company $User.Societe `
-            -OfficePhone $User.'Telephone fixe' `
-            -MobilePhone $User.'Telephone portable' `
-            -ErrorAction Stop
 
-        # Stocke le SamAccount pour la deuxième passe
-        $UserKey = "$($User.Prenom) $($User.Nom)"
-        $CreatedAccounts[$UserKey] = $SamAccount
+            # Génère le compte utilisateur
+            $AccountInfo = Get-SamAccountName -Prenom $User.Prenom -Nom $User.Nom
+            $SamAccount  = $AccountInfo.SamAccount
+
+            # Nom d'affichage unique si doublon
+            $DisplayName = if ($AccountInfo.DisplaySuffix) {
+                "$($User.Prenom) $($User.Nom) ($($AccountInfo.DisplaySuffix))"
+            } else {
+                "$($User.Prenom) $($User.Nom)"
+            }
+
+            # Génère le mail
+            $UPN = "$SamAccount$DomainName"
+            
+            # Chemin de l'OU
+            $OUPath = Get-OUPath -Departement $User.Departement -Service $User.Service
+            
+            # Création de l'utilisateur dans AD
+            New-ADUser `
+                -Name              $DisplayName `
+                -GivenName         $User.Prenom `
+                -Surname           $User.Nom `
+                -SamAccountName    $SamAccount `
+                -UserPrincipalName $UPN `
+                -DisplayName       $DisplayName `
+                -EmailAddress      $UPN `
+                -Path              $OUPath `
+                -AccountPassword   $SecurePassword `
+                -Enabled           $true `
+                -ChangePasswordAtLogon $true `
+                -Department        $User.Departement `
+                -Title             $User.fonction `
+                -Company           $User.Societe `
+                -OfficePhone       $User.'Telephone fixe' `
+                -MobilePhone       $User.'Telephone portable' `
+                -ErrorAction       Stop
+
+            # Stocke le SamAccount pour la deuxième passe
+            $UserKey = "$($User.Prenom) $($User.Nom)"
+            $CreatedAccounts[$UserKey] = $SamAccount
         
-        Write-Host "[OK]" -ForegroundColor Green -NoNewline
-        Write-Host " $($User.Prenom) $($User.Nom)" -NoNewline
-        Write-Host " → SamAccount: " -NoNewline -ForegroundColor Gray
-        Write-Host "$SamAccount" -ForegroundColor Yellow
+            Write-Host "[OK]" -ForegroundColor Green -NoNewline
+            Write-Host " $($User.Prenom) $($User.Nom)" -NoNewline
+            Write-Host " → SamAccount: " -NoNewline -ForegroundColor Gray
+            Write-Host "$SamAccount" -ForegroundColor Yellow
         
-        $UsersCreated++
+            $UsersCreated++
         }
 
     } catch {
