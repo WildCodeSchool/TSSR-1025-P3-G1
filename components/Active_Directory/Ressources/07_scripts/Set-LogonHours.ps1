@@ -1,6 +1,6 @@
 # Restriction des horaires de connexion
 
-
+# Heures autorisees
 $heuresStandard = [byte[]](
     0,   0,   0,    # Dimanche  - bloque
     128, 255, 15,   # Lundi     - 07h-20h
@@ -11,6 +11,7 @@ $heuresStandard = [byte[]](
     0,   31,  0     # Samedi    - 08h-13h
 )
 
+# Liste des OUs (ADMINISTRATION_SYSTEMES_RESEAUX pas inclus car acces illimite)
 $ous = @(
     "OU=COMMERCIAL,OU=BilluUsers,DC=billu,DC=lan",
     "OU=COMMUNICATION,OU=BilluUsers,DC=billu,DC=lan",
@@ -25,6 +26,7 @@ $ous = @(
     "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan"
 )
 
+# Application des restrictions
 foreach ($ou in $ous) {
     Get-ADUser -Filter {Enabled -eq $true} -SearchBase $ou |
     ForEach-Object { Set-ADUser $_ -Replace @{logonHours = $heuresStandard} }
