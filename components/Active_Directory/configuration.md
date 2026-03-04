@@ -1336,48 +1336,7 @@ Le résultat doit afficher :
 ![img](Ressources/08_configuration_fsmo_img/26_fsmo_configuration.png)
 
 ---
-## 7. Relation de confiance avec Ecotech
 
-Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
-
-Depuis le `Server Manager`
-
-- Cliquer sur `Tools`
-- Cliquer sur `DNS`
-- Cliquer sur `DOM-AD-01`
-- Clique droit sur `New zone`
-- Cliquer sur `Next`
-- Cocher `Stub zone`
-- Cocher `To all DNS servers running on domain controllers in this forest: billu.lan`
-- Cliquer sur `Next` X2
-- Entrer le nom de domaine : `ecotech.local`
-- Cliquer sur `Next`
-- Entrer IP du DNS Ecotech : `10.20.20.20.6`
-- Cliquer sur `Next`
-
-![image_01](Ressources/configuration/01_config_adds.png)
-
----
-
-Depuis le `Server Manager`
-
-- Cliquer sur `Tools`
-- Cliquer sur `Active Directory Domains and Trusts`
-- Clique droit sur `billu.lan`
-- Cliquer sur `Properties`
-- Cliquer sur `Trusts`
-- Cliquer sur `New Trust`
-- Cliquer sur `Next`
-- Dans Name : `ecotech.local`
-- 
-
-
-
-
---- 
-## 7. Test et validation
-
----
 ## 7. Relation de confiance avec Ecotech
 
 Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
@@ -1411,7 +1370,27 @@ Depuis le `Server Manager`
 - Cliquer sur `New Trust`
 - Cliquer sur `Next`
 - Dans Name : `ecotech.local`
-- 
+
+![image](Ressources/configuration/02_config_adds.png)
+
+
+![image](Ressources/configuration/03_config_adds.png)
+
+
+![image](Ressources/configuration/04_config_adds.png)
+
+
+![image](Ressources/configuration/06_config_adds.png)
+
+
+![image](Ressources/configuration/07_config_adds.png)
+
+
+![image](Ressources/configuration/08_config_adds.png)
+
+
+![image](Ressources/configuration/09_config_adds.png)
+
 
 
 
