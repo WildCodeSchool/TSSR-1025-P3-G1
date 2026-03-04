@@ -1,8 +1,11 @@
-
-
+1. [1 ère configuration de WSUS](#1-1-ere-configuration-de-wsus) 
+2. [Création de groupes du WSUS activation de GPO ](#2-creation-de-groupes-du-wsus-activation-de-gpo) 
+3. [GPO WSUS ](#3-gpo-wsus) 
+4. [Création-de-groupe](#4-Création-de-groupe)
+5. [Approbation des MAJ](#5-approbation-des-maj)
 
 ---
-## 2. 1 ère configuration de WSUS
+## 1. 1 ère configuration de WSUS
 
 Depuis le `PC-ADMIN` ouvrir la console `WSUS` depuis le menu `Démarrer`
 
@@ -153,7 +156,21 @@ Indiquer le nom du groupe cible : `AD`
 ---
 ## 4 . Création de groupes 
 
+Ajouter des nouvelle vue de mise à jour :
 
+![image_11](Ressources/11_config_wsus.png)
+
+Par exemple : `windows10` `Windows Server` `Windows11`
+
+---
+## 5. Approbation des MAJ
+
+On sélectionne les MAJ a approuvé :
+
+- Clique droit : `approuve`
+
+![image_12](Ressources/12_config_wsus.png)
+Si MAJ PC comme dans l'exemple ci dessous .
 
 
 

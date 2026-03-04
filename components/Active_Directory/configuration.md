@@ -28,6 +28,8 @@
 5. [Jonction au domaine](#5-jonction-au-domaine)
 
 6. [Test et validation](#6-test-et-validation)
+7. [Relation de confiance avec ECOTECH](#7-relation-de-confiance-avec-ecotech)
+ 
 
 
 ## 1. Structure organisationnelle (OU)
@@ -1179,3 +1181,40 @@ id moncompte@billu.lan
 ## 6. Test et validation
 
 ---
+## 7. Relation de confiance avec Ecotech
+
+Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
+
+Depuis le `Server Manager`
+
+- Cliquer sur `Tools`
+- Cliquer sur `DNS`
+- Cliquer sur `DOM-AD-01`
+- Clique droit sur `New zone`
+- Cliquer sur `Next`
+- Cocher `Stub zone`
+- Cocher `To all DNS servers running on domain controllers in this forest: billu.lan`
+- Cliquer sur `Next` X2
+- Entrer le nom de domaine : `ecotech.local`
+- Cliquer sur `Next`
+- Entrer IP du DNS Ecotech : `10.20.20.20.6`
+- Cliquer sur `Next`
+
+![image_01](Ressources/Configuration/01_config_adds.png)
+
+---
+
+Depuis le `Server Manager`
+
+- Cliquer sur `Tools`
+- Cliquer sur `Active Directory Domains and Trusts`
+- Clique droit sur `billu.lan`
+- Cliquer sur `Properties`
+- Cliquer sur `Trusts`
+- Cliquer sur `New Trust`
+- Cliquer sur `Next`
+- Dans Name : `ecotech.local`
+- 
+
+
+
