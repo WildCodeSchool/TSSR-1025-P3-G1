@@ -129,8 +129,17 @@ $ServiceMapping = @{
 #region 03 - FONCTIONS UTILITAIRES
 #==========================================================
 
-# Remplace les caractères spéciaux/accentués pour les noms de compte
-function Clean-Name {
+# Normalise un nom pour comparaison (supprime accents, met en minuscules)
+# Utilisé pour comparer les noms CSV ↔ AD de façon robuste, indépendamment de l'encodage
+function Normalize-Name {
+    param([string]$Name)
+    $Name = $Name.ToLower().Trim()
+    $Name = $Name -replace "[éèêë]", "e" -replace "[àâäá]", "a" -replace "[ôö]", "o" `
+                  -replace "[ùûü]",  "u" -replace "[ïî]",   "i" -replace "[ç]",   "c"
+    return $Name
+}
+
+
     param([string]$Name)
 
     $Name = $Name -replace "[éèêë]", "e" -replace "[àâäá]", "a" -replace "[ôö]", "o" `
@@ -305,7 +314,9 @@ try {
 #==========================================================
 
 # Import du fichier CSV de mise à jour
-$SourceData   = Import-Csv -Path $SourceCSV -Delimiter ";" -Encoding UTF8
+# Le fichier est encodé en Windows-1252 (Latin-1) → utiliser "Default" et non "UTF8"
+# Si les noms accentués restent illisibles, essayez : -Encoding ([System.Text.Encoding]::GetEncoding(1252))
+$SourceData   = Import-Csv -Path $SourceCSV -Delimiter ";" -Encoding Default
 $SecurePassword = ConvertTo-SecureString -String $DefaultPassword -AsPlainText -Force
 
 # Filtre les lignes vides
@@ -317,10 +328,11 @@ $SourceData = $SourceData | Where-Object {
 Write-Host ""
 Write-Host "Utilisateurs dans le fichier RH mis à jour : $($SourceData.Count)" -ForegroundColor Cyan
 
-# Construit un dictionnaire "Prénom Nom" → ligne CSV pour les recherches rapides
+# Construit un dictionnaire normalisé "prenom nom" (sans accents, minuscules) → ligne CSV
+# La normalisation rend la comparaison robuste aux variations d'encodage
 $CSVIndex = @{}
 foreach ($Row in $SourceData) {
-    $Key = "$($Row.Prenom) $($Row.Nom)"
+    $Key = "$(Normalize-Name $Row.Prenom) $(Normalize-Name $Row.Nom)"
     # En cas de doublon dans le CSV, on garde la dernière occurrence
     $CSVIndex[$Key] = $Row
 }
@@ -350,7 +362,7 @@ $DepartsCount = 0
 
 foreach ($ADUser in $ADActiveUsers) {
 
-    $FullName = "$($ADUser.GivenName) $($ADUser.Surname)"
+    $FullName = "$(Normalize-Name $ADUser.GivenName) $(Normalize-Name $ADUser.Surname)"
 
     # Si l'utilisateur AD n'est pas présent dans le nouveau fichier RH → départ détecté
     if (-not $CSVIndex.ContainsKey($FullName)) {
@@ -415,7 +427,7 @@ foreach ($User in $SourceData) {
     if ($ExistingUser) {
         # Utilisateur existant → sera traité en phase 3
         # On indexe quand même son SamAccountName pour la phase managers
-        $AccountsIndex["$($User.Prenom) $($User.Nom)"] = $ExistingUser.SamAccountName
+        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $ExistingUser.SamAccountName
         continue
     }
 
@@ -447,7 +459,7 @@ foreach ($User in $SourceData) {
             -MobilePhone       $User.'Telephone portable' `
             -ErrorAction Stop
 
-        $AccountsIndex["$($User.Prenom) $($User.Nom)"] = $SamAccount
+        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $SamAccount
 
         Write-Host "[CRÉÉ]" -ForegroundColor Green -NoNewline
         Write-Host " $($User.Prenom) $($User.Nom)" -NoNewline
@@ -560,7 +572,7 @@ foreach ($User in $SourceData) {
         }
 
         # Indexation pour la phase 4 (managers)
-        $AccountsIndex[$UserKey] = $SamAccount
+        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $SamAccount
 
     } catch {
         Write-Host "[ERREUR MISE À JOUR]" -ForegroundColor Red -NoNewline
@@ -594,8 +606,8 @@ foreach ($User in $SourceData) {
     $UserKey    = "$($User.Prenom) $($User.Nom)"
     $ManagerKey = "$($User.'Manager-Prenom') $($User.'Manager-Nom')"
 
-    $SamAccount        = $AccountsIndex[$UserKey]
-    $ManagerSamAccount = $AccountsIndex[$ManagerKey]
+    $SamAccount        = $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"]
+    $ManagerSamAccount = $AccountsIndex["$(Normalize-Name $User.'Manager-Prenom') $(Normalize-Name $User.'Manager-Nom')"]
 
     if ($SamAccount -and $ManagerSamAccount) {
         try {
