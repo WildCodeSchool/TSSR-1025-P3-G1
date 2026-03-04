@@ -29,12 +29,18 @@
 
 5. [Jonction au domaine](#5-jonction-au-domaine)
 
+<<<<<<< HEAD
+6. [Test et validation](#6-test-et-validation)
+7. [Relation de confiance avec ECOTECH](#7-relation-de-confiance-avec-ecotech)
+ 
+=======
 6. [Transfert des rôles FSMO (PDC et RID)](#6-transfert-des-rôles-fsmo-pdc-et-rid)
    - [6.1 Prérequis et ajout du serveur](#61-prérequis-et-ajout-du-serveur)
    - [6.2 Installation d'Active Directory sur le serveur Core](#62-installation-dactive-directory-sur-le-serveur-core)
    - [6.3 Promotion en contrôleur de domaine](#63-promotion-en-contrôleur-de-domaine)
    - [6.4 Attribution des rôles FSMO](#64-attribution-des-rôles-fsmo)
    - [6.5 Vérification](#65-vérification)
+>>>>>>> main
 
 7. [Test et validation](#7-test-et-validation)
 
@@ -1330,6 +1336,7 @@ Le résultat doit afficher :
 ![img](Ressources/08_configuration_fsmo_img/26_fsmo_configuration.png)
 
 ---
+
 ## 7. Relation de confiance avec Ecotech
 
 Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
@@ -1349,7 +1356,7 @@ Depuis le `Server Manager`
 - Entrer IP du DNS Ecotech : `10.20.20.20.6`
 - Cliquer sur `Next`
 
-![image_01](Ressources/configuration/01_config_adds.png)
+![image_01](Ressources/Configuration/01_config_adds.png)
 
 ---
 
@@ -1363,12 +1370,27 @@ Depuis le `Server Manager`
 - Cliquer sur `New Trust`
 - Cliquer sur `Next`
 - Dans Name : `ecotech.local`
-- 
+
+![image](Ressources/configuration/02_config_adds.png)
+
+
+![image](Ressources/configuration/03_config_adds.png)
+
+
+![image](Ressources/configuration/04_config_adds.png)
+
+
+![image](Ressources/configuration/06_config_adds.png)
+
+
+![image](Ressources/configuration/07_config_adds.png)
+
+
+![image](Ressources/configuration/08_config_adds.png)
+
+
+![image](Ressources/configuration/09_config_adds.png)
 
 
 
 
---- 
-## 7. Test et validation
-
----

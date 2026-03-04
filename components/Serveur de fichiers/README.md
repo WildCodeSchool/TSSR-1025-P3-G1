@@ -73,8 +73,8 @@ Les objectifs de cette mise en place sont les suivants :
 La documentation du serveur de fichiers est organisée comme suit :
 
 - **README.md**  
-- **[installation.md](installation.md)** – Installation et préparation du serveur de fichiers (Server Core)  
-- **[configuration.md](configuration.md)** – Configuration des partages SMB et de l’Access-Based Enumeration  
+- **[installation.md](components/Serveur%20de%20fichiers/installation.md)** – Installation et préparation du serveur de fichiers (Server Core)  
+- **[configuration.md](components/Serveur%20de%20fichiers/configuration.md)** – Configuration des partages SMB et de l’Access-Based Enumeration  
 - **Ressources/**  
 
 ---

@@ -424,6 +424,8 @@ Le Sprint 3 s'organise en 4 phases successives sur 2 semaines, en respectant les
 
 ### 3.7 Synthèse
 
+![image3](Ressources/suivi_sprint3.png)
+
 
 
 ## 4. Sprint 4
