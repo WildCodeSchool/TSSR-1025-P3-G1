@@ -799,7 +799,7 @@ Register-ScheduledTask -TaskName "Restriction horaires de connexion" `
                        -Trigger $trigger `
                        -RunLevel Highest `
                        -User "BILLU\Administrateur" `
-                       -Password "TonMotDePasse"
+                       -Password "Azerty1*"
 ```
 
 ---
