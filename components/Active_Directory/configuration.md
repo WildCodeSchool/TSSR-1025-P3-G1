@@ -27,7 +27,9 @@
 
 5. [Jonction au domaine](#5-jonction-au-domaine)
 
-6. [Test et validation](#6-test-et-validation)
+6. Transfèrt des rôles PDC et RID
+
+7. [Test et validation](#6-test-et-validation)
 
 
 ## 1. Structure organisationnelle (OU)
