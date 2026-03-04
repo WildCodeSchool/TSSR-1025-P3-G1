@@ -1,6 +1,6 @@
 # Restriction des horaires de connexion
 
-# Heures autorisees (format AD)
+# Heures autorisees
 $heuresStandard = [byte[]](
     0,   0,   0,    # Dimanche  - bloque
     128, 255, 15,   # Lundi     - 07h-20h
@@ -16,7 +16,7 @@ if (-not (Get-ADGroup -Filter {Name -eq "GRP_LogonBypass"} -ErrorAction Silently
     New-ADGroup -Name "GRP_LogonBypass" -GroupScope Global -GroupCategory Security -Path "OU=BilluUsers,DC=billu,DC=lan" -Description "Utilisateurs avec bypass horaires"
 }
 
-# On recupere les comptes a ne pas toucher
+# Récupération des comptes à exclure
 $admins = Get-ADGroupMember -Identity "Domain Admins" -Recursive | Select-Object -ExpandProperty SamAccountName
 $bypass = Get-ADGroupMember -Identity "GRP_LogonBypass" -Recursive -ErrorAction SilentlyContinue | Select-Object -ExpandProperty SamAccountName
 
