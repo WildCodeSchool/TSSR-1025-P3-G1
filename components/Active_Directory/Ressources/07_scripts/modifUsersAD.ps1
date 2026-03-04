@@ -259,11 +259,15 @@ foreach ($User in $SourceData) {
         # NOUVEAU : On cherche si l'utilisateur existe déjà dans l'AD
         $PrenomEscaped = $User.Prenom -replace "'", "''"
         $NomEscaped = $User.Nom -replace "'", "''"
-        $ADUser = Get-ADUser -Filter "GivenName -eq '$PrenomEscaped' -and Surname -eq '$NomEscaped'" `
-                     -Properties * -ErrorAction SilentlyContinue
+        $ADUsers = @(Get-ADUser -Filter "GivenName -eq '$PrenomEscaped' -and Surname -eq '$NomEscaped'" `
+                     -Properties * -ErrorAction SilentlyContinue)
 
-        # Gestion des doublons (ex: Arjun Patel)
-        if ($ADUser -is [array]) { $ADUser = $ADUser[0] }
+        # Gestion des doublons : si plusieurs comptes trouvés, on prend le premier
+        if ($ADUsers.Count -gt 1) {
+            Write-Host "[AVERTISSEMENT]" -ForegroundColor Yellow -NoNewline
+            Write-Host " $($User.Prenom) $($User.Nom) → $($ADUsers.Count) comptes trouvés, mise à jour du premier" -ForegroundColor Yellow
+        }
+        $ADUser = if ($ADUsers.Count -ge 1) { $ADUsers[0] } else { $null }
 
         if ($ADUser) {
             # -----------------------------------------------
