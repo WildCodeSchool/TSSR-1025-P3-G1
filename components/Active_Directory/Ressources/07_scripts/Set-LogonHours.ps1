@@ -1,5 +1,5 @@
 # Restriction des horaires de connexion
-# Lun-Ven 07h-20h / Samedi 08h-13h / Dimanche bloque
+
 
 $heuresStandard = [byte[]](
     0,   0,   0,    # Dimanche  - bloque
