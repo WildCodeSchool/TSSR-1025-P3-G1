@@ -21,22 +21,17 @@
 #==========================================================
 
 # Emplacement du fichier CSV RH
-$SourceCSV = "C:\Scripts\rh_collaborateurs.csv"
+$SourceCSV = "C:\Users\Administrator\Documents\s04-a02-BillU-ListeRHCollaborateurs.csv"
 
 # Configuration AD
 $DomainDN     = "DC=billu,DC=lan"
 $DomainName   = "@billu.lan"
 
 # OU de destination pour les comptes désactivés
-$DisabledOU   = "OU=Desactives,OU=BilluUsers,$DomainDN"
+$DisabledOU   = "OU=UsersDeactived,$DomainDN"
 
 # Mot de passe par défaut pour les nouveaux comptes
 $DefaultPassword = "Azerty1*"
-
-# Champ utilisé comme identifiant unique RH (doit exister dans le CSV et dans AD)
-# On utilise l'EmployeeID pour identifier un collaborateur de manière fiable
-# (indépendant des changements de nom/prénom)
-$IDField = "EmployeeID"
 
 # Compteurs pour le résumé
 $UsersCreated    = 0
@@ -48,6 +43,7 @@ $ManagerErrors   = 0
 $ErrorsList      = @()
 
 # Stockage des comptes traités (pour la passe manager)
+# Clé = "Prenom Nom", Valeur = SamAccountName
 $CreatedAccounts = @{}
 
 #endregion
@@ -111,9 +107,8 @@ $ServiceMapping = @{
 
 # Correspondance entre colonnes CSV et attributs AD pour la détection des modifications
 # Format : "Colonne CSV" = "Attribut AD"
+# Note : Prenom et Nom sont gérés séparément (impact sur DisplayName et SamAccount)
 $AttributeMapping = @{
-    "Prenom"             = "GivenName"
-    "Nom"                = "Surname"
     "fonction"           = "Title"
     "Departement"        = "Department"
     "Societe"            = "Company"
@@ -270,32 +265,40 @@ Write-Host ""
 $SourceData     = Import-Csv -Path $SourceCSV -Delimiter ";" -Encoding UTF8
 $SecurePassword = ConvertTo-SecureString -String $DefaultPassword -AsPlainText -Force
 
-# Récupération de tous les utilisateurs AD actifs dans BilluUsers (avec EmployeeID)
+Write-Host "[INFO] $($SourceData.Count) ligne(s) chargée(s) depuis le CSV." -ForegroundColor Cyan
+
+# Récupération de tous les utilisateurs AD actifs dans BilluUsers (avec leurs attributs)
 $ADUsers = Get-ADUser -Filter * `
            -SearchBase "OU=BilluUsers,$DomainDN" `
-           -Properties SamAccountName, GivenName, Surname, EmployeeID, `
+           -Properties SamAccountName, GivenName, Surname, `
                        Department, Title, Company, OfficePhone, MobilePhone, `
                        Manager, DisplayName, EmailAddress, Enabled `
            -ErrorAction Stop
 
-# Indexation des utilisateurs AD par EmployeeID pour accès rapide
-$ADUsersById = @{}
+Write-Host "[INFO] $($ADUsers.Count) compte(s) trouvé(s) dans AD (OU=BilluUsers)." -ForegroundColor Cyan
+Write-Host ""
+
+# Indexation des utilisateurs AD par "Prenom Nom" (en minuscules pour comparaison fiable)
+$ADUsersByName = @{}
 foreach ($ADUser in $ADUsers) {
-    if (-not [string]::IsNullOrWhiteSpace($ADUser.EmployeeID)) {
-        $ADUsersById[$ADUser.EmployeeID] = $ADUser
+    $Key = "$($ADUser.GivenName) $($ADUser.Surname)".ToLower().Trim()
+    if (-not [string]::IsNullOrWhiteSpace($Key)) {
+        $ADUsersByName[$Key] = $ADUser
     }
 }
 
-# Indexation des collaborateurs RH par EmployeeID
-$RHUsersById = @{}
+# Indexation des collaborateurs RH par "Prenom Nom"
+$RHUsersByName = @{}
 foreach ($RHUser in $SourceData) {
-    if (-not [string]::IsNullOrWhiteSpace($RHUser.$IDField)) {
-        $RHUsersById[$RHUser.$IDField] = $RHUser
+    if ([string]::IsNullOrWhiteSpace($RHUser.Prenom) -or [string]::IsNullOrWhiteSpace($RHUser.Nom)) {
+        continue
     }
+    $Key = "$($RHUser.Prenom) $($RHUser.Nom)".ToLower().Trim()
+    $RHUsersByName[$Key] = $RHUser
 }
 
-Write-Host "Collaborateurs dans le fichier RH : $($RHUsersById.Count)" -ForegroundColor Cyan
-Write-Host "Comptes actifs dans AD             : $($ADUsersById.Count)" -ForegroundColor Cyan
+Write-Host "Collaborateurs identifiés dans le CSV RH : $($RHUsersByName.Count)" -ForegroundColor Cyan
+Write-Host "Comptes actifs indexés dans AD           : $($ADUsersByName.Count)"  -ForegroundColor Cyan
 Write-Host ""
 
 #endregion
@@ -306,13 +309,13 @@ Write-Host ""
 #==========================================================
 
 # Nouveaux collaborateurs : présents dans le CSV mais pas dans AD
-$NouveauxCollaborateurs = $RHUsersById.Keys | Where-Object { -not $ADUsersById.ContainsKey($_) }
+$NouveauxCollaborateurs = $RHUsersByName.Keys | Where-Object { -not $ADUsersByName.ContainsKey($_) }
 
-# Collaborateurs partis : présents dans AD mais absents du CSV
-$CollaborateursPartis = $ADUsersById.Keys | Where-Object { -not $RHUsersById.ContainsKey($_) }
+# Collaborateurs partis : présents dans AD (BilluUsers) mais absents du CSV
+$CollaborateursPartis = $ADUsersByName.Keys | Where-Object { -not $RHUsersByName.ContainsKey($_) }
 
-# Collaborateurs communs : présents des deux côtés (vérification de modifications)
-$CollaborateursCommuns = $RHUsersById.Keys | Where-Object { $ADUsersById.ContainsKey($_) }
+# Collaborateurs communs : présents des deux côtés (à vérifier pour modifications)
+$CollaborateursCommuns = $RHUsersByName.Keys | Where-Object { $ADUsersByName.ContainsKey($_) }
 
 Write-Host "Détection des changements :" -ForegroundColor Cyan
 Write-Host "  → Nouveaux collaborateurs : $($NouveauxCollaborateurs.Count)" -ForegroundColor Green
@@ -334,13 +337,9 @@ if ($NouveauxCollaborateurs.Count -gt 0) {
     Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Green
     Write-Host ""
 
-    foreach ($EmpID in $NouveauxCollaborateurs) {
+    foreach ($UserKey in $NouveauxCollaborateurs) {
 
-        $User = $RHUsersById[$EmpID]
-
-        if ([string]::IsNullOrWhiteSpace($User.Prenom) -or [string]::IsNullOrWhiteSpace($User.Nom)) {
-            continue
-        }
+        $User = $RHUsersByName[$UserKey]
 
         try {
             $SamAccount = Get-SamAccountName -Prenom $User.Prenom -Nom $User.Nom
@@ -359,7 +358,6 @@ if ($NouveauxCollaborateurs.Count -gt 0) {
                 -AccountPassword   $SecurePassword `
                 -Enabled           $true `
                 -ChangePasswordAtLogon $true `
-                -EmployeeID        $EmpID `
                 -Department        $User.Departement `
                 -Title             $User.Fonction `
                 -Company           $User.Societe `
@@ -368,8 +366,8 @@ if ($NouveauxCollaborateurs.Count -gt 0) {
                 -ErrorAction Stop
 
             # Stocke pour la passe manager
-            $UserKey                 = "$($User.Prenom) $($User.Nom)"
-            $CreatedAccounts[$UserKey] = $SamAccount
+            $DisplayKey                  = "$($User.Prenom) $($User.Nom)"
+            $CreatedAccounts[$DisplayKey] = $SamAccount
 
             Write-Host "[CRÉÉ]    " -ForegroundColor Green -NoNewline
             Write-Host "$($User.Prenom) $($User.Nom)" -NoNewline
@@ -408,9 +406,9 @@ if ($CollaborateursPartis.Count -gt 0) {
     Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Yellow
     Write-Host ""
 
-    foreach ($EmpID in $CollaborateursPartis) {
+    foreach ($UserKey in $CollaborateursPartis) {
 
-        $ADUser = $ADUsersById[$EmpID]
+        $ADUser = $ADUsersByName[$UserKey]
 
         try {
             Disable-DepartedUser -ADUser $ADUser -ErrorAction Stop
@@ -449,22 +447,21 @@ Write-Host "║              VÉRIFICATION DES MODIFICATIONS               ║" 
 Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
-foreach ($EmpID in $CollaborateursCommuns) {
+foreach ($UserKey in $CollaborateursCommuns) {
 
-    $RHUser = $RHUsersById[$EmpID]
-    $ADUser = $ADUsersById[$EmpID]
+    $RHUser = $RHUsersByName[$UserKey]
+    $ADUser = $ADUsersByName[$UserKey]
 
     $Modifications     = @{}
     $HasOUChange       = $false
     $UserHasChanges    = $false
 
-    # --- Vérification des attributs simples ---
+    # --- Vérification des attributs simples via le mapping ---
     foreach ($CSVField in $AttributeMapping.Keys) {
         $ADAttribute = $AttributeMapping[$CSVField]
         $ValCSV      = $RHUser.$CSVField
         $ValAD       = $ADUser.$ADAttribute
 
-        # Normalise les nulls
         if ([string]::IsNullOrWhiteSpace($ValCSV)) { $ValCSV = "" }
         if ([string]::IsNullOrWhiteSpace($ValAD))  { $ValAD  = "" }
 
@@ -474,9 +471,19 @@ foreach ($EmpID in $CollaborateursCommuns) {
         }
     }
 
+    # --- Vérification du prénom et du nom ---
+    if ($RHUser.Prenom -ne $ADUser.GivenName) {
+        $Modifications["GivenName"] = $RHUser.Prenom
+        $UserHasChanges = $true
+    }
+    if ($RHUser.Nom -ne $ADUser.Surname) {
+        $Modifications["Surname"] = $RHUser.Nom
+        $UserHasChanges = $true
+    }
+
     # --- Vérification du changement d'OU (département ou service) ---
     try {
-        $OUCible   = Get-OUPath -Departement $RHUser.Departement -Service $RHUser.Service
+        $OUCible    = Get-OUPath -Departement $RHUser.Departement -Service $RHUser.Service
         $OUActuelle = ($ADUser.DistinguishedName -split ",", 2)[1]
 
         if ($OUCible -ne $OUActuelle) {
@@ -491,23 +498,22 @@ foreach ($EmpID in $CollaborateursCommuns) {
     if ($UserHasChanges) {
 
         try {
-            # Mise à jour des attributs modifiés
             if ($Modifications.Count -gt 0) {
 
                 $SetParams = @{ Identity = $ADUser.DistinguishedName }
 
-                if ($Modifications.ContainsKey("GivenName"))    { $SetParams["GivenName"]    = $Modifications["GivenName"] }
-                if ($Modifications.ContainsKey("Surname"))      { $SetParams["Surname"]      = $Modifications["Surname"] }
-                if ($Modifications.ContainsKey("Title"))        { $SetParams["Title"]        = $Modifications["Title"] }
-                if ($Modifications.ContainsKey("Department"))   { $SetParams["Department"]   = $Modifications["Department"] }
-                if ($Modifications.ContainsKey("Company"))      { $SetParams["Company"]      = $Modifications["Company"] }
-                if ($Modifications.ContainsKey("OfficePhone"))  { $SetParams["OfficePhone"]  = $Modifications["OfficePhone"] }
-                if ($Modifications.ContainsKey("MobilePhone"))  { $SetParams["MobilePhone"]  = $Modifications["MobilePhone"] }
+                if ($Modifications.ContainsKey("GivenName"))   { $SetParams["GivenName"]   = $Modifications["GivenName"] }
+                if ($Modifications.ContainsKey("Surname"))     { $SetParams["Surname"]     = $Modifications["Surname"] }
+                if ($Modifications.ContainsKey("Title"))       { $SetParams["Title"]       = $Modifications["Title"] }
+                if ($Modifications.ContainsKey("Department"))  { $SetParams["Department"]  = $Modifications["Department"] }
+                if ($Modifications.ContainsKey("Company"))     { $SetParams["Company"]     = $Modifications["Company"] }
+                if ($Modifications.ContainsKey("OfficePhone")) { $SetParams["OfficePhone"] = $Modifications["OfficePhone"] }
+                if ($Modifications.ContainsKey("MobilePhone")) { $SetParams["MobilePhone"] = $Modifications["MobilePhone"] }
 
-                # Mise à jour du DisplayName si le prénom ou nom a changé
+                # Mise à jour du DisplayName si prénom ou nom a changé
                 if ($Modifications.ContainsKey("GivenName") -or $Modifications.ContainsKey("Surname")) {
-                    $NewPrenom              = if ($Modifications.ContainsKey("GivenName")) { $Modifications["GivenName"] } else { $ADUser.GivenName }
-                    $NewNom                 = if ($Modifications.ContainsKey("Surname"))   { $Modifications["Surname"]  } else { $ADUser.Surname }
+                    $NewPrenom               = if ($Modifications.ContainsKey("GivenName")) { $Modifications["GivenName"] } else { $ADUser.GivenName }
+                    $NewNom                  = if ($Modifications.ContainsKey("Surname"))   { $Modifications["Surname"]  } else { $ADUser.Surname }
                     $SetParams["DisplayName"] = "$NewPrenom $NewNom"
                 }
 
@@ -521,7 +527,6 @@ foreach ($EmpID in $CollaborateursCommuns) {
                               -ErrorAction Stop
             }
 
-            # Construction du résumé des champs modifiés
             $DetailChanges = ($Modifications.Keys + $(if ($HasOUChange) { @("OU") } else { @() })) -join ", "
 
             Write-Host "[MODIFIÉ]  " -ForegroundColor Cyan -NoNewline
@@ -563,39 +568,39 @@ Write-Host ""
 # On recharge les utilisateurs AD pour avoir les DN à jour (après déplacements éventuels)
 $ADUsersRefresh = Get-ADUser -Filter * `
                   -SearchBase "OU=BilluUsers,$DomainDN" `
-                  -Properties EmployeeID, Manager `
+                  -Properties GivenName, Surname, Manager `
                   -ErrorAction Stop
 
-$ADUsersByIdRefresh = @{}
+$ADUsersByNameRefresh = @{}
 foreach ($U in $ADUsersRefresh) {
-    if (-not [string]::IsNullOrWhiteSpace($U.EmployeeID)) {
-        $ADUsersByIdRefresh[$U.EmployeeID] = $U
+    $Key = "$($U.GivenName) $($U.Surname)".ToLower().Trim()
+    if (-not [string]::IsNullOrWhiteSpace($Key)) {
+        $ADUsersByNameRefresh[$Key] = $U
     }
 }
 
-foreach ($EmpID in $RHUsersById.Keys) {
+foreach ($RHUser in $SourceData) {
 
-    $RHUser = $RHUsersById[$EmpID]
-
-    # Ignore si pas de manager renseigné dans le CSV
-    if ([string]::IsNullOrWhiteSpace($RHUser.'Manager-ID')) {
+    # Ignore si pas de manager renseigné
+    if ([string]::IsNullOrWhiteSpace($RHUser.'Manager-Prenom') -or
+        [string]::IsNullOrWhiteSpace($RHUser.'Manager-Nom')) {
         continue
     }
 
-    $ManagerID = $RHUser.'Manager-ID'
+    $UserKey    = "$($RHUser.Prenom) $($RHUser.Nom)".ToLower().Trim()
+    $ManagerKey = "$($RHUser.'Manager-Prenom') $($RHUser.'Manager-Nom')".ToLower().Trim()
 
-    # Ignore si l'utilisateur ou le manager n'existe pas dans AD
-    if (-not $ADUsersByIdRefresh.ContainsKey($EmpID) -or
-        -not $ADUsersByIdRefresh.ContainsKey($ManagerID)) {
+    if (-not $ADUsersByNameRefresh.ContainsKey($UserKey) -or
+        -not $ADUsersByNameRefresh.ContainsKey($ManagerKey)) {
         $ManagerErrors++
         continue
     }
 
     try {
-        $ADUser    = $ADUsersByIdRefresh[$EmpID]
-        $ADManager = $ADUsersByIdRefresh[$ManagerID]
+        $ADUser    = $ADUsersByNameRefresh[$UserKey]
+        $ADManager = $ADUsersByNameRefresh[$ManagerKey]
 
-        # Vérifie si le manager a changé
+        # Mise à jour uniquement si le manager a changé
         if ($ADUser.Manager -ne $ADManager.DistinguishedName) {
             Set-ADUser -Identity $ADUser.DistinguishedName `
                        -Manager $ADManager.DistinguishedName `
@@ -627,7 +632,7 @@ Write-Host "╔═════════════════════�
 Write-Host "║                        RÉSUMÉ                             ║" -ForegroundColor Cyan
 Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Collaborateurs dans le fichier RH  : $($RHUsersById.Count)"  -ForegroundColor White
+Write-Host "Collaborateurs dans le fichier RH  : $($RHUsersByName.Count)"  -ForegroundColor White
 Write-Host ""
 Write-Host "  [+] Comptes créés (arrivées)      : $UsersCreated"          -ForegroundColor Green
 Write-Host "  [-] Comptes désactivés (départs)  : $UsersDisabled"         -ForegroundColor Yellow
