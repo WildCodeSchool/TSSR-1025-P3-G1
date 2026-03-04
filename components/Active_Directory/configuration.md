@@ -1,41 +1,50 @@
+# Configuration Active Directory – billu.lan
+
 # Sommaire
 
 1. [Structure organisationnelle (OU)](#1-structure-organisationnelle-ou)
    - [1.1 Arborescence des OU](#11-arborescence-des-ou)
       - [1.1.1 Sous-OU de BilluComputers](#111-sous-ou-de-billucomputers)
       - [1.1.2 Sous-OU de BilluUsers](#112-sous-ou-de-billuusers)
-   - [1.2 Création des OU](#12-creation-des-ou)
-   - [1.3 Création des sous-OU](#13-creation-des-sous-ou)
+   - [1.2 Création des OU](#12-création-des-ou)
+   - [1.3 Création des sous-OU](#13-création-des-sous-ou)
       - [1.3.1 Sous-OU de BilluComputers](#131-sous-ou-de-billucomputers)
       - [1.3.2 Sous-OU de BilluUsers](#132-sous-ou-de-billuusers)
 
-2. [Création des utilisateurs](#2-creation-des-utilisateurs)
-   - [2.1 Préparation du fichier CSV](#21-preparation-du-fichier-csv)
+2. [Création des utilisateurs](#2-création-des-utilisateurs)
+   - [2.1 Préparation du fichier CSV](#21-préparation-du-fichier-csv)
    - [2.2 Configuration du script](#22-configuration-du-script)
-   - [2.3 Exécution du script](#23-execution-du-script)
-   - [2.4 Vérification](#24-verification)
+   - [2.3 Exécution du script](#23-exécution-du-script)
+   - [2.4 Vérification](#24-vérification)
 
-3. [Création des groupes](#3-creation-des-groupes)
-   - [3.1 Arborescence des groupes de sécurité](#31-arborescence-des-groupes-de-securite)
-   - [3.2 Création d’un groupe](#32-creation-dun-groupe)
-   - [3.3 Liste des groupes à créer](#33-liste-des-groupes-a-creer)
+3. [Création des groupes](#3-création-des-groupes)
+   - [3.1 Arborescence des groupes de sécurité](#31-arborescence-des-groupes-de-sécurité)
+   - [3.2 Création d'un groupe](#32-création-dun-groupe)
+   - [3.3 Liste des groupes à créer](#33-liste-des-groupes-à-créer)
 
-4. [Stratégies de groupe (GPO)](#4-strategies-de-groupe-gpo)
-   - [4.1 Création de GPO](#41-creation-de-gpo)
-   - [4.2 GPO de sécurité](#42-gpo-de-securite)
+4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
+   - [4.1 Création de GPO](#41-création-de-gpo)
+   - [4.2 GPO de sécurité](#42-gpo-de-sécurité)
    - [4.3 GPO standard](#43-gpo-standard)
 
 5. [Jonction au domaine](#5-jonction-au-domaine)
 
-6. Transfèrt des rôles PDC et RID
+6. [Transfert des rôles FSMO (PDC et RID)](#6-transfert-des-rôles-fsmo-pdc-et-rid)
+   - [6.1 Prérequis et ajout du serveur](#61-prérequis-et-ajout-du-serveur)
+   - [6.2 Installation d'Active Directory sur le serveur Core](#62-installation-dactive-directory-sur-le-serveur-core)
+   - [6.3 Promotion en contrôleur de domaine](#63-promotion-en-contrôleur-de-domaine)
+   - [6.4 Attribution des rôles FSMO](#64-attribution-des-rôles-fsmo)
+   - [6.5 Vérification](#65-vérification)
 
-7. [Test et validation](#6-test-et-validation)
+7. [Test et validation](#7-test-et-validation)
 
+---
 
 ## 1. Structure organisationnelle (OU)
 
 L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été conçue selon une approche fonctionnelle. La structure repose sur trois **OU** principales permettant une séparation claire des objets Active Directory par type et fonction.
-#### 1.1 Arborescence des OU
+
+### 1.1 Arborescence des OU
 
 | OU                 | Chemin DN                         | Objets contenus                                                  |
 | ------------------ | --------------------------------- | ---------------------------------------------------------------- |
@@ -43,7 +52,7 @@ L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été con�
 | **BilluUsers**     | OU=BilluUsers,DC=billu,DC=lan     | Comptes utilisateurs (tous services confondus)                   |
 | **BilluSecurity**  | OU=BilluSecurity,DC=billu,DC=lan  | Groupes de sécurité, groupes de distribution, comptes de service |
 
-#### 1.1.1 Arborescense des sous-OU de BilluComputers
+#### 1.1.1 Sous-OU de BilluComputers
 
 | Sous-OU           | Chemin DN                                          | Service                                |
 | ----------------- | -------------------------------------------------- | -------------------------------------- |
@@ -57,7 +66,7 @@ L'arborescence des Unités d'Organisation (OU) du domaine billu.lan a été con�
 | **RH**            | OU=RH,OU=BilluComputers,DC=billu,DC=lan            | Ressources Humaines                    |
 | **DSI**           | OU=DSI,OU=BilluComputers,DC=billu,DC=lan           | Direction des Systèmes d'Information   |
 
-#### 1.1.2 Arborescence des sous-OU de BilluUsers
+#### 1.1.2 Sous-OU de BilluUsers
 
 | Sous-OU           | Chemin DN                                      | Service                                |
 | ----------------- | ---------------------------------------------- | -------------------------------------- |
@@ -78,90 +87,89 @@ Dans le Server Manager ==> Dashboard :
 
 ![image01](Ressources/Screenshots-Installation/01_creation_ou.png)
 
-- Dans le volet de gauche , clic droit sur **"billu.lan"**
+- Dans le volet de gauche, clic droit sur **"billu.lan"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
 ![image02](Ressources/Screenshots-Installation/02_creation_ou.png)
 
-
-Dans la fênetre qui s'ouvre :
+Dans la fenêtre qui s'ouvre :
 - Case **"Name"** : **"BilluComputers"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
 ![image03](Ressources/Screenshots-Installation/03_creation_ou.png)
 
-**"OU"** BilluComputers à été créé.
+**"OU"** BilluComputers a été créé.
 
-Même procédure pour les autres **"OU"**
+Même procédure pour les autres **"OU"** :
 - Case **"Name"** : **"BilluUsers"**
 - Case **"Name"** : **"BilluSecurity"**
 
 ![image04](Ressources/Screenshots-Installation/04_creation_ou.png)
 
-Voila nos **"OU"** de créés dans la forêt de **"billu.lan"**.
+Voilà nos **"OU"** créées dans la forêt de **"billu.lan"**.
 
-#### 1.3 Création des sous-OU
-#### 1.3.1 Création des sous-OU de BilluComputers
+### 1.3 Création des sous-OU
 
-- Dans le volet de gauche , clic droit sur **"billuComputers"**
+#### 1.3.1 Sous-OU de BilluComputers
+
+- Dans le volet de gauche, clic droit sur **"BilluComputers"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
 ![image01](Ressources/Screenshots-Installation/01-sous_ou_billucomputers.png)
 
-
-Dans la fênetre qui s'ouvre :
+Dans la fenêtre qui s'ouvre :
 - Case **"Name"** : **"DEV"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
 ![image02](Ressources/Screenshots-Installation/2-sous_ou_billucomputers.png)
 
-La **"SOUS-OU"** **"DEV"** a été créé dans **"OU"** BilluComputers.
+La **"SOUS-OU"** **"DEV"** a été créée dans l'**"OU"** BilluComputers.
 
-Même procédure pour les autres **"SOUS-OU"**
+Même procédure pour les autres **"SOUS-OU"** :
 - Case **"Name"** : **"COMMERCIAL"**
 - Case **"Name"** : **"COMMUNICATION"**
 - Case **"Name"** : **"JURIDIQUE"**
--  Case **"Name"** : **"DIRECTION"**
--  Case **"Name"** : **"COMPTABILITE"**
--  Case **"Name"** : **"QHSE"**
--  Case **"Name"** : **"RH"**
--  Case **"Name"** : **"DSI"**
+- Case **"Name"** : **"DIRECTION"**
+- Case **"Name"** : **"COMPTABILITE"**
+- Case **"Name"** : **"QHSE"**
+- Case **"Name"** : **"RH"**
+- Case **"Name"** : **"DSI"**
 
 ![image03](Ressources/Screenshots-Installation/03-sous_ou_billucomputers.png)
-Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluComputers"**.
 
-#### 1.3.2 Création des sous-OU de BilluUsers
+Voilà nos **"SOUS-OU"** créées dans l'**"OU"** **"BilluComputers"**.
 
-- Dans le volet de gauche , clic droit sur **"billuUsers"**
+#### 1.3.2 Sous-OU de BilluUsers
+
+- Dans le volet de gauche, clic droit sur **"BilluUsers"**
 - Sélectionner **"New"** ==> **"Organizational Unit"**
 
 ![image01](Ressources/Screenshots-Installation/01-sous_ou_billuUsers.png)
 
-
-Dans la fênetre qui s'ouvre :
+Dans la fenêtre qui s'ouvre :
 - Case **"Name"** : **"COMMERCIAL"**
 - Cocher **"Protect container from accidental deletion"**
 - Cliquer sur **"OK"**
 
 ![image02](Ressources/Screenshots-Installation/02-sous_ou_billuUsers.png)
 
-La **"SOUS-OU"** **"COMMERCIAL"** a été créé dans **"OU"** BilluUsers.
+La **"SOUS-OU"** **"COMMERCIAL"** a été créée dans l'**"OU"** BilluUsers.
 
-Même procédure pour les autres **"SOUS-OU"**
--  Case **"Name"** : **"COMMUNICATION"**
--  Case **"Name"** : **"COMPTABILITE"**
--  Case **"Name"** : **"DEV"**
--  Case **"Name"** : **"DIRECTION"**
--  Case **"Name"** : **"DSI"**
--  Case **"Name"** : **"JURIDIQUE"**
--  Case **"Name"** : **"QHSE"**
--  Case **"Name"** : **"RH"**
+Même procédure pour les autres **"SOUS-OU"** :
+- Case **"Name"** : **"COMMUNICATION"**
+- Case **"Name"** : **"COMPTABILITE"**
+- Case **"Name"** : **"DEV"**
+- Case **"Name"** : **"DIRECTION"**
+- Case **"Name"** : **"DSI"**
+- Case **"Name"** : **"JURIDIQUE"**
+- Case **"Name"** : **"QHSE"**
+- Case **"Name"** : **"RH"**
 
 ![image03](Ressources/Screenshots-Installation/03-sous_ou_billuUsers.png)
 
-Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
+Voilà nos **"SOUS-OU"** créées dans l'**"OU"** **"BilluUsers"**.
 
 ---
 
@@ -169,7 +177,7 @@ Voilà nos **"SOUS-OU"** de créés dans **"OU"** **"BilluUsers"**.
 
 La création des utilisateurs est automatisée via un script PowerShell qui importe les données depuis un fichier CSV.
 
-#### 2.1 Préparation du fichier CSV
+### 2.1 Préparation du fichier CSV
 
 Le fichier CSV doit respecter le format suivant :
 - **Délimiteur** : point-virgule ( ; )
@@ -198,7 +206,7 @@ Sophie;Lefebvre;DSI;Support;Technicien Support;BillU;01 23 45 67 90;;Jean;Dupont
 | Manager-Prenom | Prénom du manager | Non |
 | Manager-Nom | Nom du manager | Non |
 
-#### 2.2 Configuration du script
+### 2.2 Configuration du script
 
 Modifier les variables suivantes au début du script selon votre environnement :
 
@@ -213,7 +221,7 @@ $DefaultPassword = "Azerty1*"               # Mot de passe par défaut
 
 Le script utilise des tables de correspondance pour mapper les noms vers les OU. Si un nouveau département ou service est ajouté, il doit être référencé dans les hashtables `$DepartementMapping` et `$ServiceMapping` du script.
 
-#### 2.3 Exécution du script
+### 2.3 Exécution du script
 
 1. Ouvrir **PowerShell en tant qu'administrateur**
 2. Se placer dans le répertoire du script :
@@ -237,19 +245,18 @@ Le script effectue automatiquement les actions suivantes :
 - Attribution du **mot de passe par défaut** (changement obligatoire à la première connexion)
 - Attribution du **manager** si renseigné dans le CSV (en 2e passe)
 
-#### 2.4 Vérification
+### 2.4 Vérification
 
 **Via l'interface graphique :**
 1. Ouvrir **Active Directory Users and Computers**
 2. Naviguer vers `billu.lan > BilluUsers`
 3. Vérifier que les utilisateurs sont placés dans les bonnes OU
 
-
-
 ---
-# 3. Création des groupes
 
-## 3.1. Arborescence des groupes de sécurité
+## 3. Création des groupes
+
+### 3.1 Arborescence des groupes de sécurité
 
 Tous les groupes doivent être créés dans l'arborescence suivante :
 
@@ -259,16 +266,16 @@ OU=BilluSecurity
       └── Groupes GRP_SVC_*
 ```
 
-## 3.2. Comment créer un groupe ?
+### 3.2 Création d'un groupe
 
-### Nomenclature
+**Nomenclature :**
 
 | Préfixe | Description |
 |---------|-------------|
 | `GRP_DEP_` | Groupe de département (contient les groupes de services) |
 | `GRP_SVC_` | Groupe de service (contient les utilisateurs) |
 
-### Procédure de création
+**Procédure de création :**
 
 Dans Active Directory Users and Computers :
 
@@ -286,11 +293,9 @@ Dans Active Directory Users and Computers :
 - Répéter l'opération pour chaque groupe à créer (voir liste ci-dessous)
 - Une fois les groupes créés, ajouter les membres de chaque service dans le groupe correspondant
 
----
+### 3.3 Liste des groupes à créer
 
-## 3.3. Liste des groupes à créer
-
-### Groupes de départements
+**Groupes de départements :**
 
 ```
 GRP_DEP_COMMERCIAL_USERS
@@ -306,7 +311,7 @@ GRP_DEP_RH_USERS
 GRP_SEC_ADMIN_USERS
 ```
 
-### Services COMMERCIAL
+**Services COMMERCIAL :**
 
 ```
 GRP_SVC_ADMINISTRATION_DES_VENTES_USERS
@@ -315,7 +320,7 @@ GRP_SVC_SERVICE_ACHAT_USERS
 GRP_SVC_SERVICE_CLIENT_USERS
 ```
 
-### Services COMMUNICATION
+**Services COMMUNICATION :**
 
 ```
 GRP_SVC_COMMUNICATION_INTERNE_USERS
@@ -323,7 +328,7 @@ GRP_SVC_GESTION_DES_MARQUES_USERS
 GRP_SVC_RELATIONS_MEDIA_USERS
 ```
 
-### Services COMPTABILITÉ
+**Services COMPTABILITÉ :**
 
 ```
 GRP_SVC_FINANCE_USERS
@@ -331,7 +336,7 @@ GRP_SVC_FISCALITE_USERS
 GRP_SVC_SERVICE_COMPTABILITE_USERS
 ```
 
-### Services DÉVELOPPEMENT
+**Services DÉVELOPPEMENT :**
 
 ```
 GRP_SVC_ANALYSE_CONCEPTION_USERS
@@ -340,13 +345,13 @@ GRP_SVC_RECHERCHE_PROTOTYPAGE_USERS
 GRP_SVC_TESTS_QUALITE_USERS
 ```
 
-### Services DIRECTION
+**Services DIRECTION :**
 
 ```
 GRP_SVC_DIRECTION_USERS
 ```
 
-### Services DSI
+**Services DSI :**
 
 ```
 GRP_SVC_ADMIN_USERS
@@ -356,7 +361,7 @@ GRP_SVC_EXPLOITATION_USERS
 GRP_SVC_SUPPORT_USERS
 ```
 
-### Services JURIDIQUE
+**Services JURIDIQUE :**
 
 ```
 GRP_SVC_DROITS_DES_SOCIETES_USERS
@@ -364,7 +369,7 @@ GRP_SVC_PROPRIETES_INTELLECTUELLES_USERS
 GRP_SVC_PROTECTION_DONNEES_CONFORMITES_USERS
 ```
 
-### Services QHSE
+**Services QHSE :**
 
 ```
 GRP_SVC_CERTIFICATION_USERS
@@ -372,60 +377,67 @@ GRP_SVC_CONTROLE_QUALITE_USERS
 GRP_SVC_GESTION_ENVIRONNEMENTALE_USERS
 ```
 
-### Services RESSOURCES HUMAINES
+**Services RESSOURCES HUMAINES :**
 
 ```
 GRP_SVC_RH_USERS
 ```
+
+---
+
 ## 4. Stratégies de groupe (GPO)
 
 ### 4.1 Création de GPO
 
- **Cette partie de création de GPO est à titre d'exemple, suivre l'exemple pour créer chaque GPO du chapitre 4.2 et 4.3**
+**Cette partie est à titre d'exemple. Suivre cette procédure pour créer chaque GPO des chapitres 4.2 et 4.3.**
 
 #### 4.1.1 Accès au menu des GPO
-- Dans `Server Manager` cliquer sur `Tools` et `Group Policy Management`
+
+- Dans `Server Manager`, cliquer sur `Tools` puis `Group Policy Management`
 
 ![img](Ressources/06_gpo/01_GPO.png)
 
 #### 4.1.2 Création d'une GPO
-1) Faire `Clic droit` sur `GRoup Policy Object`
-2) Sélectionner `New`
+
+1. Faire `Clic droit` sur `Group Policy Objects`
+2. Sélectionner `New`
 
 ![img](Ressources/06_gpo/02_GPO.png)
 
 #### 4.1.3 Nommage de la GPO
+
 - Entrer le nom de la GPO en suivant la convention de nommage
 
 ![img](Ressources/06_gpo/03_GPO.png)
 
 #### 4.1.4 Accès à l'éditeur de GPO
-1) Faire `Clic droit` sur la GPO créée
-2) Sélectionner `Edit...` pour faire apparaitre la console `Group Policy Management Editor`
+
+1. Faire `Clic droit` sur la GPO créée
+2. Sélectionner `Edit...` pour faire apparaître la console `Group Policy Management Editor`
 
 ![img](Ressources/06_gpo/04_GPO.png)
 
 #### 4.1.5 Navigation dans les paramètres de la GPO
 
-1) Naviguer dans le menu pour trouver l'emplacement du paramètre
-2) Double-cliquer pour ouvrir un paramètre et l'éditer
+1. Naviguer dans le menu pour trouver l'emplacement du paramètre
+2. Double-cliquer pour ouvrir un paramètre et l'éditer
 
 ![img](Ressources/06_gpo/05_GPO.png)
 
 #### 4.1.6 Portée de la GPO
 
-1) Sélectionner l'onglet **Scope**
-2) Choisir l'OU de **Liaison** (Links)
-3) Choisir le ou les groupes/Utilisateurs/Ordinateurs pour le filtrage de la GPO.
+1. Sélectionner l'onglet **Scope**
+2. Choisir l'OU de **Liaison** (Links)
+3. Choisir le ou les groupes/Utilisateurs/Ordinateurs pour le filtrage de la GPO
 
-- La GPO sera appliquée à l'OU de liaison ainsi qu'au filtrage ajouté. 
+> La GPO sera appliquée à l'OU de liaison en tenant compte du filtrage ajouté.
 
 ![img](Ressources/06_gpo/06_GPO.png)
 
 #### 4.1.7 Statut de la GPO
 
-1) Sélectionner l'onglet **Détails**
-2) Ajuster le statut de la GPO
+1. Sélectionner l'onglet **Détails**
+2. Ajuster le statut de la GPO
 
 ![img](Ressources/06_gpo/07_GPO.png)
 
@@ -446,7 +458,7 @@ gpresult /r
 gpresult /h rapport_gpo.html
 ```
 
----  
+---
 
 ### 4.2 GPO de sécurité
 
@@ -465,7 +477,7 @@ gpresult /h rapport_gpo.html
 | Maximum password age | `90 days` | Renouvellement obligatoire tous les 90 jours |
 | Minimum password age | `1 day` | Empêche le changement immédiat du mot de passe |
 | Minimum password length | `12 characters` | Longueur minimale requise |
-| Minimum password length audit | `12 characters` | Audit de longueur minimale des mots de passe | 
+| Minimum password length audit | `12 characters` | Audit de longueur minimale des mots de passe |
 | Password must meet complexity requirements | `Enabled` | Doit contenir : majuscules, minuscules, chiffres et caractères spéciaux |
 | Store passwords using reversible encryption | `Disabled` | Stockage sécurisé des mots de passe |
 
@@ -473,7 +485,7 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | Racine du domaine `BillU.local` |
+| Liaison | Racine du domaine `billu.lan` |
 | Filtrage | Authenticated Users |
 | Cible | Domain Controllers et tous les comptes du domaine |
 | Statut | User configuration settings disabled |
@@ -501,7 +513,7 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | Racine du domaine `BillU.local` |
+| Liaison | Racine du domaine `billu.lan` |
 | Filtrage | Authenticated Users |
 | Cible | Domain Controllers et tous les comptes du domaine |
 | Statut | User configuration settings disabled |
@@ -521,14 +533,14 @@ gpresult /h rapport_gpo.html
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Turn off Windows Installer | `Enabled` > `For non-managed applications only` | Autorise seulement les programmes approuvés | 
+| Turn off Windows Installer | `Enabled` > `For non-managed applications only` | Autorise seulement les programmes approuvés |
 | Prohibit User Installs | `Enabled` > `Hide User Installs` | Empêche les installations per-user |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers > Tous les départements` | 
+| Liaison | `billu.lan > BilluComputers > Tous les départements` |
 | Filtrage | Tous les groupes de départements (sauf la DSI) |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
@@ -552,14 +564,14 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-#### 4.2.6 Blocage du panneau de configuration
+#### 4.2.5 Blocage du panneau de configuration
 
 **Nom :** `PROD_USERS_RestrictionControlPanel`
 
@@ -576,14 +588,14 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements sauf la DSI` |
 | Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-#### 4.2.7 Restriction des périphériques amovibles
+#### 4.2.6 Restriction des périphériques amovibles
 
 **Nom :** `PROD_USERS_RestrictionRemoveDevices`
 
@@ -600,14 +612,14 @@ gpresult /h rapport_gpo.html
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers > Tous les départements sauf la DSI` |
+| Liaison | `billu.lan > BilluComputers > Tous les départements sauf la DSI` |
 | Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-#### 4.2.8 Gestion du pare-feu
+#### 4.2.7 Gestion du pare-feu
 
 **Nom :** `PROD_COMPUTERS_Firewall`
 
@@ -615,8 +627,6 @@ gpresult /h rapport_gpo.html
 > Computer Configuration > Policies > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security > Windows Defender Firewall with Advanced Security
 
 Clic droit > **Properties**
-
-**Paramètres :**
 
 **Domain Profile :**
 
@@ -646,14 +656,14 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers > Tous les départements sauf la DSI` |
+| Liaison | `billu.lan > BilluComputers > Tous les départements sauf la DSI` |
 | Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
 
 ---
 
-#### 4.2.9 Écran de veille avec mot de passe
+#### 4.2.8 Écran de veille avec mot de passe
 
 **Nom :** `PROD_USERS_ScreenSaver`
 
@@ -666,21 +676,21 @@ Clic droit > **Properties**
 |-----------|--------|------|
 | Enable screen saver | `Enabled` | Active l'écran de veille |
 | Password protect the screen saver | `Enabled` | Demande le mot de passe à la sortie |
-| Screen saver timeout | `Enabled` > `900` | Définit le délai d'activation |
+| Screen saver timeout | `Enabled` > `900` | Définit le délai d'activation (15 minutes) |
 | Prevent changing screen saver | `Enabled` | Empêche la modification des paramètres |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-#### 4.2.10 Bureau à distance sécurisé
+#### 4.2.9 Bureau à distance sécurisé
 
 **Nom :** `PROD_USERS_RDP`
 
@@ -697,66 +707,110 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements sauf la DSI` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
----  
+---
 
-### 4.2.12 Accès aux postes d’administration – utilisateurs autorisés
+#### 4.2.10 Accès aux postes d'administration – utilisateurs autorisés
 
 **Nom :** `PROD_USERS_ConnectPCAdministration`
 
-**Objectif :**  
-Restreindre l’accès local aux postes d’administration afin que seuls les administrateurs autorisés puissent s’y connecter.
+**Objectif :** Restreindre l'accès local aux postes d'administration afin que seuls les administrateurs autorisés puissent s'y connecter.
 
 **Chemin de configuration :**
-
 > Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > User Rights Assignment
 
 **Paramètres :**
 
-|Paramètre|Valeur|Note|
-|---|---|---|
-|Allow log on locally|`BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators`|Autorise uniquement les administrateurs à ouvrir une session locale|
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Allow log on locally | `BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators` | Autorise uniquement les administrateurs à ouvrir une session locale |
 
 **Portée :**
 
-|Propriété|Valeur|
-|---|---|
-|Liaison|OU `BilluComputers`|
-|Filtrage de sécurité|Groupes administrateurs uniquement|
-|Cible|Ordinateurs|
-|Statut|User configuration settings disabled|
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | OU `BilluComputers` |
+| Filtrage de sécurité | Groupes administrateurs uniquement |
+| Cible | Ordinateurs |
+| Statut | User configuration settings disabled |
 
 ---
 
-### 4.2.13 Accès local au VLAN DSI – utilisateurs autorisés
+#### 4.2.11 Accès local au VLAN DSI – utilisateurs autorisés
 
 **Nom :** `PROD_USERS_ConnectVLANDSI`
 
-**Objectif :**  
-Autoriser l’accès local aux postes du VLAN DSI uniquement aux équipes habilitées et aux administrateurs.
+**Objectif :** Autoriser l'accès local aux postes du VLAN DSI uniquement aux équipes habilitées et aux administrateurs.
 
 **Chemin de configuration :**
-
 > Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > User Rights Assignment
 
 **Paramètres :**
 
-|Paramètre|Valeur|Note|
-|---|---|---|
-|Allow log on locally|`BILLU\GRP_DEP_DSI`, `BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators`|Accès limité aux équipes DSI et administrateurs|
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Allow log on locally | `BILLU\GRP_DEP_DSI`, `BILLU\GRP_SEC_ADMIN`, `BUILTIN\Administrators` | Accès limité aux équipes DSI et administrateurs |
 
 **Portée :**
 
-|Propriété|Valeur|
-|---|---|
-|Liaison|OU `DSI`|
-|Filtrage de sécurité|Groupes DSI et sécurité|
-|Cible|Ordinateurs|
-|Statut|User configuration settings disabled|
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | OU `DSI` |
+| Filtrage de sécurité | Groupes DSI et sécurité |
+| Cible | Ordinateurs |
+| Statut | User configuration settings disabled |
+
+---
+
+#### 4.2.12 Restriction des horaires de connexion
+
+**Nom :** `PROD_COMPUTER_LogonRestriction`
+
+**Chemin de configuration :**
+> Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
+
+**Paramètres :**
+
+| Paramètre | Valeur | Note |
+|-----------|--------|------|
+| Network Security : Force logoff when logon hours expire | `Define this policy Setting` > `Enabled` | Déconnecte les sessions hors horaires autorisés |
+
+**Portée :**
+
+| Propriété | Valeur |
+|-----------|--------|
+| Liaison | `billu.lan > BilluComputers` |
+| Filtrage | Domain Computers |
+| Cible | Computer |
+| Statut | User configuration settings disabled |
+
+**Commandes PowerShell pour appliquer les restrictions d'horaires aux utilisateurs :**
+
+```powershell
+$bytes = (Get-ADUser "logon-account" -Properties logonHours).logonHours
+$ous = @(
+    "OU=COMMERCIAL,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=COMMUNICATION,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DEV,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DIRECTION,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=EXPLOITATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=SUPPORT,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=JURIDIQUE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=QHSE,OU=BilluUsers,DC=billu,DC=lan",
+    "OU=RH,OU=BilluUsers,DC=billu,DC=lan"
+)
+
+foreach ($ou in $ous) {
+    Get-ADUser -Filter * -SearchBase $ou |
+    ForEach-Object { Set-ADUser $_ -Replace @{logonHours = $bytes} }
+}
+```
 
 ---
 
@@ -774,13 +828,13 @@ Autoriser l’accès local aux postes du VLAN DSI uniquement aux équipes habili
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
 | Desktop Wallpaper | `\\DOM-AD-01\share\wallpaper.jpg` | Chemin du fichier image |
-| Wallpaper Style | `Fill` |  |
+| Wallpaper Style | `Fill` | |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements ` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
@@ -800,7 +854,7 @@ Clic droit > **New** > **Mapped Drive**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Action | `Create` |  |
+| Action | `Create` | |
 | Location | `\\DOM-AD-01\share` | Chemin du partage réseau |
 | Reconnect | `Enabled` | Reconnecte le lecteur à chaque ouverture de session |
 | Label as | `Documents` | Nom d'affichage du lecteur |
@@ -812,7 +866,7 @@ Clic droit > **New** > **Mapped Drive**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
@@ -830,22 +884,22 @@ Clic droit > **New** > **Mapped Drive**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Turn off the display (on battery) | `Enabled` > `300` | Active le paramètre sur secteur et éteint l'écran après 5 minutes |
+| Turn off the display (on battery) | `Enabled` > `300` | Éteint l'écran après 5 minutes sur batterie |
 
 > Computer Configuration > Policies > Administrative Templates > System > Power Management > Sleep Settings
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Specify the system sleep timeout (plugged in) | `Enabled` > `900` | Active la mise en veille sur secteur |
+| Specify the system sleep timeout (plugged in) | `Enabled` > `900` | Mise en veille sur secteur après 15 minutes |
 | Require a password when a computer wakes (plugged in) | `Enabled` | Demande le mot de passe au réveil |
-| Specify the system sleep timeout (on battery) | `Enabled` > `900` | Active la mise en veille sur secteur |
+| Specify the system sleep timeout (on battery) | `Enabled` > `900` | Mise en veille sur batterie après 15 minutes |
 | Require a password when a computer wakes (on battery) | `Enabled` | Demande le mot de passe au réveil |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluComputers > Tous les départements` |
+| Liaison | `billu.lan > BilluComputers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Computers |
 | Statut | User configuration settings disabled |
@@ -865,15 +919,15 @@ Clic droit > **New** > **Package**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
-| Package path | `\\DOM-AD-01\share\software\7z2501-x64.msi` | Chemin de fichier MSI 7zip |
-| Deployment method | `Published` | L'application apparaît dans "Programmes et fonctionnalités" > "Installer un programme à partir du réseau" - l'utilisateur doit l'installer manuellement |
+| Package path | `\\DOM-AD-01\share\software\7z2501-x64.msi` | Chemin du fichier MSI 7zip |
+| Deployment method | `Published` | L'application apparaît dans "Programmes et fonctionnalités" > "Installer un programme à partir du réseau" – installation manuelle par l'utilisateur |
 | Installation user interface options | `Basic` | |
 
 **Portée :**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
@@ -884,12 +938,10 @@ Clic droit > **New** > **Package**
 
 **Nom :** `PROD_USERS_FolderRedirection`
 
-**Chemin de configuration :**
+**Chemin de configuration – Documents :**
 > User Configuration > Policies > Windows Settings > Folder Redirection > Documents
 
 Clic droit > **Properties**
-
-**Paramètres - Documents :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -899,8 +951,7 @@ Clic droit > **Properties**
 | Grant the user exclusive rights to Documents | `Enabled` | Droits NTFS exclusifs |
 | Move the contents of Documents to the new location | `Enabled` | Déplace les fichiers existants |
 
-**Paramètres - Desktop :**
-
+**Chemin de configuration – Desktop :**
 > User Configuration > Policies > Windows Settings > Folder Redirection > Desktop
 
 | Paramètre | Valeur | Note |
@@ -914,28 +965,26 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements` |
 | Filtrage | Tous les groupes de départements |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-#### 4.3.6 Configuration du navigateur
+#### 4.3.6 Configuration du navigateur Firefox
 
-**Fichier requis pour la configuration de la GPO :**
+**Fichiers requis pour la configuration de la GPO :**
 
-1) Aller sur le lien github : https://github.com/mozilla/policy-templates/releases
-2) Télécharger la dernière version des policy_templates
-3) Copier les fichiers `firefox.admx` et `mozilla.admx` dans le dossier `C:\Windows\PolicyDefinitions`
-4) Copier le contenu du dossier `en-US` (`firefox.adml` et `mozilla.adml`) dans le dossier `C:\Windows\PolicyDefinitions\en-US`
+1. Aller sur le lien GitHub : https://github.com/mozilla/policy-templates/releases
+2. Télécharger la dernière version des `policy_templates`
+3. Copier les fichiers `firefox.admx` et `mozilla.admx` dans `C:\Windows\PolicyDefinitions`
+4. Copier les fichiers `firefox.adml` et `mozilla.adml` (dossier `en-US`) dans `C:\Windows\PolicyDefinitions\en-US`
 
 **Nom :** `PROD_USERS_Firefox`
 
 **Chemin de configuration :**
 > User Configuration > Policies > Administrative Templates > Mozilla > Firefox > Homepage
-
-**Paramètres :**
 
 | Paramètre | Valeur | Note |
 |-----------|--------|------|
@@ -954,12 +1003,12 @@ Clic droit > **Properties**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers > Tous les départements sauf la DSI` |
+| Liaison | `billu.lan > BilluUsers > Tous les départements sauf la DSI` |
 | Filtrage | Tous les groupes de départements sauf la DSI |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
----  
+---
 
 #### 4.3.7 Déploiement de GLPI Agent
 
@@ -998,7 +1047,7 @@ Clic droit > **New** > **Folder**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
+| Liaison | `billu.lan > BilluUsers` |
 | Filtrage | Authenticated Users |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
@@ -1028,73 +1077,16 @@ Clic droit > **New** > **Mapped Drive**
 
 | Propriété | Valeur |
 |-----------|--------|
-| Liaison | `BillU > BilluUsers` |
+| Liaison | `billu.lan > BilluUsers` |
 | Filtrage | Authenticated Users |
 | Cible | Users |
 | Statut | Computer configuration settings disabled |
 
 ---
 
-**Portée :**
-
-| Propriété | Valeur |
-|-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | |
-| Cible | Computers |
-| Statut | User configuration settings disabled |
-
----  
-
-**Nom :** `PROD_COMPUTER_LogonRestriction`
-
-**Chemin de configuration :**
-> Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
-
-**Paramètres :**
-
-| Paramètre | Valeur | Note |
-|-----------|--------|------|
-| Network Security : Force logoff when logon hours expire | `Define this policy Setting` > `Enabled` | Crée le mappage du lecteur |
-
-
-**Portée :**
-
-| Propriété | Valeur |
-|-----------|--------|
-| Liaison | `BillU > BilluComputers` |
-| Filtrage | Domain Computers |
-| Cible | Computer |
-| Statut | User configuration settings disabled |
-
-**Commandes à exécuter pour appliquer la politique de restriction d'horaire aux utilisateurs**
-
-```
-$bytes = (Get-ADUser "logon-account" -Properties logonHours).logonHours
-$ous = @(
-    "OU=COMMERCIAL,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=COMMUNICATION,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DEV,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DIRECTION,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=DEVELOPPEMENT_INTEGRATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=EXPLOITATION,OU=DSI,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=SUPPORT,OU=DSI,OU=BilluUsers,DC=billu,DC=lan"
-    "OU=JURIDIQUE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=QHSE,OU=BilluUsers,DC=billu,DC=lan",
-    "OU=RH,OU=BilluUsers,DC=billu,DC=lan"
-)
-
-foreach ($ou in $ous) {
-    Get-ADUser -Filter * -SearchBase $ou |
-    ForEach-Object { Set-ADUser $_ -Replace @{logonHours = $bytes} }
-}
-```
----
-
 ## 5. Jonction au domaine
 
-### 1. Joindre Ubuntu/Debian à un domaine Active Directory
+### 5.1 Joindre Ubuntu/Debian à un domaine Active Directory
 
 #### Prérequis
 
@@ -1102,7 +1094,7 @@ foreach ($ou in $ous) {
 - L'heure du serveur doit être synchronisée avec le DC (Kerberos est sensible au décalage horaire)
 - Un compte AD avec les droits de jonction au domaine
 
-#### 1.1. Installation des paquets
+#### 5.1.1 Installation des paquets
 
 ```bash
 sudo apt update
@@ -1128,9 +1120,8 @@ Ou éditer manuellement le fichier `/etc/krb5.conf` :
     .billu.lan = BILLU.LAN
     billu.lan = BILLU.LAN
 ```
----
 
-#### 1.2. Découverte du domaine
+#### 5.1.2 Découverte du domaine
 
 Voir le DNS actuellement configuré :
 ```bash
@@ -1146,7 +1137,7 @@ sudo nano /etc/resolv.conf
 ```
 nameserver 172.16.12.1   # IP de votre DC
 search billu.lan
-````
+```
 
 ```bash
 realm discover billu.lan
@@ -1154,9 +1145,7 @@ realm discover billu.lan
 
 La commande doit retourner les informations du domaine. Si rien n'apparaît, vérifiez votre configuration DNS.
 
----
-
-#### 1.3. Jonction au domaine
+#### 5.1.3 Jonction au domaine
 
 ```bash
 sudo realm join --user=Administrator billu.lan
@@ -1164,9 +1153,7 @@ sudo realm join --user=Administrator billu.lan
 
 Entrez le mot de passe du compte AD quand il est demandé.
 
----
-
-#### 1.4. Vérification
+#### 5.1.4 Vérification
 
 ```bash
 # Vérifier que la jonction est réussie
@@ -1176,8 +1163,185 @@ realm list
 id moncompte@billu.lan
 ```
 
+---
+
+## 6. Transfert des rôles FSMO (PDC et RID)
+
+Cette section décrit la procédure de déploiement d'un second contrôleur de domaine (Server Core) et le transfert des rôles FSMO PDC Emulator et RID Master vers ce nouveau serveur.
+
+### 6.1 Prérequis et ajout du serveur
+
+#### 6.1.1 Configuration IP du serveur Core
+
+Dans une console PowerShell, entrer les commandes suivantes :
+
+1. Vérifier l'index de l'adaptateur :
+```powershell
+Get-NetAdapter
+```
+
+> Adapter la valeur de `InterfaceIndex` selon le résultat obtenu.
+
+2. Supprimer l'ancienne IP et route :
+```powershell
+Remove-NetIPAddress -InterfaceIndex 1 -Confirm:$false
+Remove-NetRoute -InterfaceIndex 1 -Confirm:$false
+```
+
+3. Appliquer la nouvelle configuration :
+```powershell
+New-NetIPAddress -InterfaceIndex 1 -IPAddress "172.16.12.6" -PrefixLength 28 -DefaultGateway "172.16.12.14"
+```
+
+4. Configuration du DNS :
+```powershell
+Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
+```
+
+#### 6.1.2 Jonction du serveur Core au domaine
+
+1. Choisir l'option **1** dans sconfig
+
+![img](Ressources/configuration_img/01_fsmo_configuration.png)
+
+2. Ajouter le serveur dans le domaine :
+    - Entrer `D` pour sélectionner Domain
+    - Entrer `billu.lan`
+    - Entrer le nom d'un utilisateur autorisé : `Administrator`
+    - Entrer son mot de passe
+    - Changer le nom de la machine par : `DOM-AD-PDC-01`
+    - Entrer le mot de passe du serveur Core
+    - Redémarrer en appuyant sur `Y`
+
+![img](Ressources/configuration_img/02_fsmo_configuration.png)
+
+#### 6.1.3 Ajout du serveur dans le Server Manager
+
+Depuis le serveur graphique :
+
+1. Cliquer sur `Manage` puis `Add Servers`
+
+![img](Ressources/configuration_img/03_fsmo_configuration.png)
+
+2. Cliquer sur `Find Now`
+3. Sélectionner le serveur à ajouter
+4. Vérifier qu'il apparaît dans la liste **Selected**
+
+![img](Ressources/configuration_img/04_fsmo_configuration.png)
+
+Le serveur doit apparaître dans la liste `All Servers`.
+
+![img](Ressources/configuration_img/05_fsmo_configuration.png)
 
 ---
-## 6. Test et validation
+
+### 6.2 Installation d'Active Directory sur le serveur Core
+
+- Faire `clic droit` sur le serveur **PDC** dans la liste `All Servers`
+
+![img](Ressources/configuration_img/06_fsmo_configuration.png)
+
+1. Cliquer sur `Next` jusqu'à la sélection des serveurs
+2. Sélectionner le serveur PDC
+
+![img](Ressources/configuration_img/07_fsmo_configuration.png)
+
+3. Cocher **Active Directory Domain Services**
+
+![img](Ressources/configuration_img/08_fsmo_configuration.png)
+
+4. Cliquer sur `Add Features`
+
+![img](Ressources/configuration_img/09_fsmo_configuration.png)
+
+5. Faire `Next` jusqu'à l'étape `Confirmation`
+6. Vérifier les informations et cliquer sur `Install`
+
+![img](Ressources/configuration_img/10_fsmo_configuration.png)
+
+7. Attendre la confirmation de l'installation
+
+![img](Ressources/configuration_img/11_fsmo_configuration.png)
+
+---
+
+### 6.3 Promotion en contrôleur de domaine
+
+1. Cliquer sur le drapeau
+2. Cliquer sur `Promote this server to a domain controller`
+
+![img](Ressources/configuration_img/12_fsmo_configuration.png)
+
+3. Sélectionner `Add a domain controller to an existing domain`
+4. Cliquer sur `Change` et entrer les credentials Administrator
+
+![img](Ressources/configuration_img/13_fsmo_configuration.png)
+
+5. Cocher `Domain Name System (DNS) server` et `Global Catalog (GC)`
+6. Définir un mot de passe DSRM
+
+![img](Ressources/configuration_img/14_fsmo_configuration.png)
+
+7. Cliquer sur `Next` jusqu'à `Prerequisites Check` puis sur `Install`
+
+![img](Ressources/configuration_img/17_fsmo_configuration.png)
+
+8. Attendre la confirmation de la configuration
+
+![img](Ressources/configuration_img/18_fsmo_configuration.png)
+
+9. **Redémarrer le serveur Core**
+
+---
+
+### 6.4 Attribution des rôles FSMO
+
+1. Dans le **Server Manager**, sélectionner `AD DS`
+2. Faire `Clic droit` sur le serveur **PDC**
+3. Sélectionner `Active Directory Users and Computers`
+
+![img](Ressources/configuration_img/19_fsmo_configuration.png)
+
+Dans la console `Active Directory Users and Computers` :
+
+1. Faire `Clic droit` sur le domaine
+2. Cliquer sur `Operations Masters`
+
+![img](Ressources/configuration_img/19_fsmo_configuration1.png)
+
+3. Sélectionner l'onglet `PDC`
+4. Cliquer sur `Changer`
+
+![img](Ressources/configuration_img/20_fsmo_configuration.png)
+
+5. Sélectionner `Yes` pour transférer le rôle PDC Emulator sur le serveur Core
+
+![img](Ressources/configuration_img/21_fsmo_configuration.png)
+
+#### Transfert du rôle RID Master
+
+La procédure est identique, depuis la même fenêtre `Operations Masters` :
+
+1. Sélectionner l'onglet `RID`
+2. Cliquer sur `Changer`
+3. Sélectionner `Yes` pour confirmer le transfert du rôle RID Master sur le serveur Core
+
+---
+
+### 6.5 Vérification
+
+Exécuter la commande suivante dans PowerShell pour confirmer le transfert des rôles :
+
+```powershell
+Get-ADDomain | Select-Object PDCEmulator, RIDMaster, InfrastructureMaster
+```
+
+Le serveur Core (`DOM-AD-PDC-01`) doit apparaître comme détenteur des rôles PDC Emulator et RID Master.
+
+![img](Ressources/configuration_img/23_fsmo_configuration.png)
+
+---
+
+## 7. Test et validation
 
 ---
