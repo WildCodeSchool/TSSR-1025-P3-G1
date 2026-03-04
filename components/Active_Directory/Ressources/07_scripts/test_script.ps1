@@ -2,12 +2,15 @@
 # Auteur : Christian
 #
 # Ce script gère :
-#   - Les nouveaux collaborateurs     → Création du compte AD
-#   - Les départs de collaborateurs   → Désactivation du compte (jamais supprimé)
+#   - Les nouveaux collaborateurs      → Création du compte AD
+#   - Les départs de collaborateurs    → Désactivation + déplacement dans Disabled_Users (jamais supprimé)
 #   - Les modifications d'informations → Mise à jour des attributs AD
-#   - Les changements hiérarchiques   → Mise à jour du manager
-#   - Les changements d'OU            → Déplacement automatique si département/service modifié
-#   - Les nouvelles OUs               → Création automatique si inexistantes
+#   - Les changements hiérarchiques    → Mise à jour du manager
+#   - Les changements d'OU             → Déplacement automatique si département/service modifié
+#   - Les nouvelles OUs                → Création automatique si inexistantes
+#
+# IMPORTANT : La correspondance CSV ↔ AD se fait par SamAccountName (ASCII pur),
+#             ce qui évite tout problème d'encodage sur les caractères accentués.
 
 # Sommaire
 # 01 - VARIABLES
@@ -40,7 +43,7 @@ $DefaultPassword = "Azerty1*"
 $BaseOU = "OU=BilluUsers,$DomainDN"
 
 # OU de destination pour les comptes désactivés (départs)
-# Sera créée automatiquement si elle n'existe pas
+# Créée automatiquement si elle n'existe pas
 $DisabledOU = "OU=Disabled_Users,$DomainDN"
 
 # Compteurs pour le résumé final
@@ -51,7 +54,7 @@ $UsersSkipped  = 0
 $ManagerErrors = 0
 $ErrorsList    = @()
 
-# Stockage des SamAccountName pour la phase d'attribution des managers
+# Stockage SamAccountName pour la phase 4 (managers)
 $AccountsIndex = @{}
 
 #endregion
@@ -62,7 +65,7 @@ $AccountsIndex = @{}
 #==========================================================
 
 # Mapping Département (nom RH) → nom OU dans l'AD
-# Contient les anciens noms ET les nouveaux noms issus du fichier RH mis à jour
+# Contient les anciens noms ET les nouveaux noms (renommages RH entre les deux fichiers)
 $DepartementMapping = @{
     # Noms d'origine (fichier s01)
     "Service Commercial"                   = "COMMERCIAL"
@@ -75,7 +78,7 @@ $DepartementMapping = @{
     "QHSE"                                 = "QHSE"
     "Service recrutement"                  = "RH"
 
-    # Noms mis à jour (fichier s04 - renommages RH)
+    # Noms mis à jour (fichier s04 — renommages RH)
     "Département Commercial"               = "COMMERCIAL"
     "Département dev logiciel"             = "DEV"
     "Direction des ressources humaines"    = "RH"
@@ -129,17 +132,9 @@ $ServiceMapping = @{
 #region 03 - FONCTIONS UTILITAIRES
 #==========================================================
 
-# Normalise un nom pour comparaison (supprime accents, met en minuscules)
-# Utilisé pour comparer les noms CSV ↔ AD de façon robuste, indépendamment de l'encodage
-function Normalize-Name {
-    param([string]$Name)
-    $Name = $Name.ToLower().Trim()
-    $Name = $Name -replace "[éèêë]", "e" -replace "[àâäá]", "a" -replace "[ôö]", "o" `
-                  -replace "[ùûü]",  "u" -replace "[ïî]",   "i" -replace "[ç]",   "c"
-    return $Name
-}
-
-
+# Remplace les caractères accentués et supprime apostrophes/espaces/tirets
+# Résultat toujours en ASCII pur → utilisé pour construire les SamAccountName
+function Clean-Name {
     param([string]$Name)
 
     $Name = $Name -replace "[éèêë]", "e" -replace "[àâäá]", "a" -replace "[ôö]", "o" `
@@ -147,46 +142,44 @@ function Normalize-Name {
                   -replace "[ÉÈÊË]", "E" -replace "[ÀÂÄÁ]", "A" -replace "[ÔÖ]",  "O" `
                   -replace "[ÙÛÜ]",  "U" -replace "[ÏÎ]",   "I" -replace "[Ç]",   "C"
 
-    # Supprime les apostrophes, espaces et tirets
     $Name = $Name -replace "[''\s-]", ""
-
     return $Name
 }
 
-# Génère un SamAccountName unique de la forme prenom.nom
+# Calcule le SamAccountName attendu pour un prénom/nom SANS interroger l'AD
+# Logique identique à createUsersAD.ps1 → permet de retrouver un compte existant de façon fiable
+function Get-ExpectedSam {
+    param([string]$Prenom, [string]$Nom)
+
+    $Sam = "$(Clean-Name $Prenom).$(Clean-Name $Nom)".ToLower()
+    if ($Sam.Length -gt 20) { $Sam = $Sam.Substring(0, 20) }
+    return $Sam
+}
+
+# Génère un SamAccountName unique (avec suffixe numérique si doublon) — pour les nouvelles créations
 function Get-SamAccountName {
     param([string]$Prenom, [string]$Nom)
 
-    $PrenomClean = Clean-Name -Name $Prenom
-    $NomClean    = Clean-Name -Name $Nom
-    $SamAccount  = "$PrenomClean.$NomClean".ToLower()
+    $Sam     = Get-ExpectedSam -Prenom $Prenom -Nom $Nom
+    $Counter = 2
+    $Final   = $Sam
 
-    if ($SamAccount.Length -gt 20) {
-        $SamAccount = $SamAccount.Substring(0, 20)
-    }
-
-    # Si le compte existe déjà, incrémente un suffixe numérique
-    $Counter          = 2
-    $FinalSamAccount  = $SamAccount
-
-    while (Get-ADUser -Filter "SamAccountName -eq '$FinalSamAccount'" -ErrorAction SilentlyContinue) {
-        $FinalSamAccount = "$SamAccount$Counter"
-        if ($FinalSamAccount.Length -gt 20) {
-            $BaseLength      = 20 - $Counter.ToString().Length
-            $FinalSamAccount = $SamAccount.Substring(0, $BaseLength) + $Counter
+    while (Get-ADUser -Filter "SamAccountName -eq '$Final'" -ErrorAction SilentlyContinue) {
+        $Final = "$Sam$Counter"
+        if ($Final.Length -gt 20) {
+            $Final = $Sam.Substring(0, 20 - $Counter.ToString().Length) + $Counter
         }
         $Counter++
     }
 
-    return $FinalSamAccount
+    return $Final
 }
 
-# Construit le chemin OU cible (ex: OU=FINANCE,OU=COMPTABILITE,OU=BilluUsers,DC=billu,DC=lan)
+# Construit le chemin OU cible
 function Get-OUPath {
     param([string]$Departement, [string]$Service)
 
     $DeptOU = $DepartementMapping[$Departement]
-
     if ([string]::IsNullOrWhiteSpace($DeptOU)) {
         throw "Département '$Departement' non trouvé dans le mapping"
     }
@@ -202,17 +195,13 @@ function Get-OUPath {
     return "OU=$DeptOU,OU=BilluUsers,$DomainDN"
 }
 
-# Vérifie l'existence d'une OU et la crée (avec ses parents) si nécessaire
+# Vérifie qu'une OU existe, et la crée (ainsi que ses parents) si nécessaire
 function Ensure-OU {
     param([string]$OUPath)
 
-    # Découpe le chemin OU en segments (ex: OU=FINANCE, OU=COMPTABILITE, OU=BilluUsers, DC=billu, DC=lan)
     $Segments = $OUPath -split ",(?=OU=|DC=)"
 
-    # Reconstruit les chemins de bas en haut pour créer les OUs parentes en premier
     for ($i = $Segments.Count - 1; $i -ge 0; $i--) {
-
-        # On ne traite que les segments OU=
         if ($Segments[$i] -notmatch "^OU=") { continue }
 
         $CurrentPath = ($Segments[$i..($Segments.Count - 1)]) -join ","
@@ -221,40 +210,16 @@ function Ensure-OU {
 
         try {
             Get-ADOrganizationalUnit -Identity $CurrentPath -ErrorAction Stop | Out-Null
-            # OU déjà présente, on continue
         } catch {
-            # OU absente → création
             try {
-                New-ADOrganizationalUnit -Name $OUName -Path $ParentPath -ProtectedFromAccidentalDeletion $false -ErrorAction Stop
+                New-ADOrganizationalUnit -Name $OUName -Path $ParentPath `
+                    -ProtectedFromAccidentalDeletion $false -ErrorAction Stop
                 Write-Host "  [OU CRÉÉE] $CurrentPath" -ForegroundColor Magenta
             } catch {
-                Write-Host "  [ERREUR OU] Impossible de créer '$OUName' sous '$ParentPath' : $($_.Exception.Message)" -ForegroundColor Red
+                Write-Host "  [ERREUR OU] '$OUName' sous '$ParentPath' : $($_.Exception.Message)" -ForegroundColor Red
             }
         }
     }
-}
-
-# Recherche un utilisateur AD par prénom et nom (dans BilluUsers ET Disabled_Users)
-function Find-ADUser {
-    param([string]$Prenom, [string]$Nom)
-
-    # Recherche d'abord dans BilluUsers (comptes actifs)
-    $User = Get-ADUser -Filter "GivenName -eq '$Prenom' -and Surname -eq '$Nom'" `
-        -SearchBase $BaseOU `
-        -Properties GivenName, Surname, SamAccountName, Department, Title, Company, `
-                    OfficePhone, MobilePhone, Enabled, DistinguishedName, Manager `
-        -ErrorAction SilentlyContinue
-
-    # Si non trouvé, cherche dans tout le domaine (peut être dans Disabled_Users)
-    if (-not $User) {
-        $User = Get-ADUser -Filter "GivenName -eq '$Prenom' -and Surname -eq '$Nom'" `
-            -SearchBase $DomainDN `
-            -Properties GivenName, Surname, SamAccountName, Department, Title, Company, `
-                        OfficePhone, MobilePhone, Enabled, DistinguishedName, Manager `
-            -ErrorAction SilentlyContinue
-    }
-
-    return $User
 }
 
 #endregion
@@ -270,7 +235,6 @@ Write-Host "║  Script de mise à jour des utilisateurs Active Directory  ║" 
 Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
-# Vérification du fichier CSV
 Write-Host "[VÉRIFICATION] Fichier CSV ($SourceCSV)..." -NoNewline
 if (-not (Test-Path $SourceCSV)) {
     Write-Host " ERREUR" -ForegroundColor Red
@@ -279,7 +243,6 @@ if (-not (Test-Path $SourceCSV)) {
 }
 Write-Host " OK" -ForegroundColor Green
 
-# Vérification de l'OU BilluUsers (doit exister - lancez d'abord createUsersAD.ps1)
 Write-Host "[VÉRIFICATION] OU BilluUsers..." -NoNewline
 try {
     Get-ADOrganizationalUnit -Identity $BaseOU -ErrorAction Stop | Out-Null
@@ -290,7 +253,6 @@ try {
     exit 1
 }
 
-# Vérification / Création de l'OU Disabled_Users
 Write-Host "[VÉRIFICATION] OU Disabled_Users..." -NoNewline
 try {
     Get-ADOrganizationalUnit -Identity $DisabledOU -ErrorAction Stop | Out-Null
@@ -301,7 +263,7 @@ try {
             -ProtectedFromAccidentalDeletion $false -ErrorAction Stop
         Write-Host " CRÉÉE" -ForegroundColor Yellow
     } catch {
-        Write-Host " ERREUR - $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host " ERREUR — $($_.Exception.Message)" -ForegroundColor Red
         exit 1
     }
 }
@@ -313,10 +275,8 @@ try {
 #region 05 - DONNÉES CSV
 #==========================================================
 
-# Import du fichier CSV de mise à jour
-# Le fichier est encodé en Windows-1252 (Latin-1) → utiliser "Default" et non "UTF8"
-# Si les noms accentués restent illisibles, essayez : -Encoding ([System.Text.Encoding]::GetEncoding(1252))
-$SourceData   = Import-Csv -Path $SourceCSV -Delimiter ";" -Encoding Default
+# Le fichier CSV est encodé en Windows-1252 (Latin-1), PAS en UTF-8 → utiliser "Default"
+$SourceData     = Import-Csv -Path $SourceCSV -Delimiter ";" -Encoding Default
 $SecurePassword = ConvertTo-SecureString -String $DefaultPassword -AsPlainText -Force
 
 # Filtre les lignes vides
@@ -328,13 +288,11 @@ $SourceData = $SourceData | Where-Object {
 Write-Host ""
 Write-Host "Utilisateurs dans le fichier RH mis à jour : $($SourceData.Count)" -ForegroundColor Cyan
 
-# Construit un dictionnaire normalisé "prenom nom" (sans accents, minuscules) → ligne CSV
-# La normalisation rend la comparaison robuste aux variations d'encodage
+# Index CSV par SamAccountName calculé (ASCII pur, indépendant de tout encodage)
 $CSVIndex = @{}
 foreach ($Row in $SourceData) {
-    $Key = "$(Normalize-Name $Row.Prenom) $(Normalize-Name $Row.Nom)"
-    # En cas de doublon dans le CSV, on garde la dernière occurrence
-    $CSVIndex[$Key] = $Row
+    $Sam = Get-ExpectedSam -Prenom $Row.Prenom -Nom $Row.Nom
+    $CSVIndex[$Sam] = $Row
 }
 
 #endregion
@@ -352,37 +310,31 @@ Write-Host ""
 Write-Host "Recherche des collaborateurs absents du nouveau fichier RH..." -ForegroundColor Gray
 Write-Host ""
 
-# Récupère tous les utilisateurs actifs sous BilluUsers
 $ADActiveUsers = Get-ADUser -Filter * `
     -SearchBase $BaseOU `
-    -Properties GivenName, Surname, Enabled, DistinguishedName `
+    -Properties SamAccountName, GivenName, Surname, Enabled, DistinguishedName `
     -ErrorAction SilentlyContinue
 
 $DepartsCount = 0
 
 foreach ($ADUser in $ADActiveUsers) {
 
-    $FullName = "$(Normalize-Name $ADUser.GivenName) $(Normalize-Name $ADUser.Surname)"
-
-    # Si l'utilisateur AD n'est pas présent dans le nouveau fichier RH → départ détecté
-    if (-not $CSVIndex.ContainsKey($FullName)) {
+    # Comparaison par SamAccountName : ASCII pur, aucun problème d'encodage possible
+    if (-not $CSVIndex.ContainsKey($ADUser.SamAccountName)) {
 
         try {
-            # 1. Désactive le compte
             Disable-ADAccount -Identity $ADUser.SamAccountName -ErrorAction Stop
 
-            # 2. Ajoute une description horodatée
             Set-ADUser -Identity $ADUser.SamAccountName `
                 -Description "DEPART - Compte désactivé le $(Get-Date -Format 'dd/MM/yyyy') - Traitement RH automatique" `
                 -ErrorAction Stop
 
-            # 3. Déplace vers l'OU Disabled_Users
             Move-ADObject -Identity $ADUser.DistinguishedName `
                 -TargetPath $DisabledOU `
                 -ErrorAction Stop
 
             Write-Host "[DÉSACTIVÉ]" -ForegroundColor Yellow -NoNewline
-            Write-Host " $FullName" -NoNewline
+            Write-Host " $($ADUser.GivenName) $($ADUser.Surname)" -NoNewline
             Write-Host " ($($ADUser.SamAccountName))" -ForegroundColor Gray -NoNewline
             Write-Host " → Déplacé dans Disabled_Users" -ForegroundColor DarkYellow
 
@@ -391,10 +343,10 @@ foreach ($ADUser in $ADActiveUsers) {
 
         } catch {
             Write-Host "[ERREUR DÉSACTIVATION]" -ForegroundColor Red -NoNewline
-            Write-Host " $FullName → $($_.Exception.Message)" -ForegroundColor Red
+            Write-Host " $($ADUser.GivenName) $($ADUser.Surname) → $($_.Exception.Message)" -ForegroundColor Red
 
             $ErrorsList += [PSCustomObject]@{
-                Utilisateur = $FullName
+                Utilisateur = "$($ADUser.GivenName) $($ADUser.Surname)"
                 Phase       = "Désactivation"
                 Erreur      = $_.Exception.Message
             }
@@ -421,23 +373,24 @@ Write-Host ""
 
 foreach ($User in $SourceData) {
 
-    # Vérifie si l'utilisateur existe déjà dans AD
-    $ExistingUser = Find-ADUser -Prenom $User.Prenom -Nom $User.Nom
+    $ExpectedSam  = Get-ExpectedSam -Prenom $User.Prenom -Nom $User.Nom
+    $ExistingUser = Get-ADUser -Filter "SamAccountName -eq '$ExpectedSam'" `
+        -Properties SamAccountName, Department, Title, Company, OfficePhone, MobilePhone, `
+                    Enabled, DistinguishedName, Manager `
+        -ErrorAction SilentlyContinue
 
     if ($ExistingUser) {
-        # Utilisateur existant → sera traité en phase 3
-        # On indexe quand même son SamAccountName pour la phase managers
-        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $ExistingUser.SamAccountName
+        # Déjà dans l'AD → traité en phase 3
+        $AccountsIndex[$ExpectedSam] = $ExistingUser.SamAccountName
         continue
     }
 
-    # Utilisateur introuvable dans l'AD → nouvel arrivant, on crée le compte
+    # Introuvable dans l'AD → nouvel arrivant
     try {
         $SamAccount = Get-SamAccountName -Prenom $User.Prenom -Nom $User.Nom
         $UPN        = "$SamAccount$DomainName"
         $OUPath     = Get-OUPath -Departement $User.Departement -Service $User.Service
 
-        # Crée les OUs si elles n'existent pas encore
         Ensure-OU -OUPath $OUPath
 
         New-ADUser `
@@ -459,7 +412,7 @@ foreach ($User in $SourceData) {
             -MobilePhone       $User.'Telephone portable' `
             -ErrorAction Stop
 
-        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $SamAccount
+        $AccountsIndex[$ExpectedSam] = $SamAccount
 
         Write-Host "[CRÉÉ]" -ForegroundColor Green -NoNewline
         Write-Host " $($User.Prenom) $($User.Nom)" -NoNewline
@@ -496,39 +449,42 @@ Write-Host ""
 
 foreach ($User in $SourceData) {
 
-    $ExistingUser = Find-ADUser -Prenom $User.Prenom -Nom $User.Nom
+    $ExpectedSam  = Get-ExpectedSam -Prenom $User.Prenom -Nom $User.Nom
 
-    # Ignore les nouveaux arrivants (déjà traités en phase 2)
+    # Ignore les nouveaux arrivants (pas encore dans l'index au moment de la phase 2)
+    if (-not $AccountsIndex.ContainsKey($ExpectedSam)) { continue }
+
+    $ExistingUser = Get-ADUser -Filter "SamAccountName -eq '$ExpectedSam'" `
+        -Properties SamAccountName, Department, Title, Company, OfficePhone, MobilePhone, `
+                    Enabled, DistinguishedName, Manager `
+        -ErrorAction SilentlyContinue
+
     if (-not $ExistingUser) { continue }
 
     $SamAccount = $ExistingUser.SamAccountName
-    $UserKey    = "$($User.Prenom) $($User.Nom)"
     $Changes    = @()
 
     try {
-        # --- Calcul du chemin OU cible ---
         $NewOUPath = Get-OUPath -Departement $User.Departement -Service $User.Service
         Ensure-OU -OUPath $NewOUPath
 
-        # --- Construction des attributs à modifier ---
         $UpdateParams = @{}
 
         if ($ExistingUser.Department -ne $User.Departement) {
             $UpdateParams["Department"] = $User.Departement
-            $Changes += "Département: '$($ExistingUser.Department)' → '$($User.Departement)'"
+            $Changes += "Département → '$($User.Departement)'"
         }
 
         if ($ExistingUser.Title -ne $User.fonction) {
             $UpdateParams["Title"] = $User.fonction
-            $Changes += "Fonction: '$($ExistingUser.Title)' → '$($User.fonction)'"
+            $Changes += "Fonction → '$($User.fonction)'"
         }
 
         if ($ExistingUser.Company -ne $User.Societe) {
             $UpdateParams["Company"] = $User.Societe
-            $Changes += "Société: '$($ExistingUser.Company)' → '$($User.Societe)'"
+            $Changes += "Société → '$($User.Societe)'"
         }
 
-        # Mise à jour des téléphones si la valeur est renseignée (différente de '-')
         $NewFixe   = $User.'Telephone fixe'
         $NewMobile = $User.'Telephone portable'
 
@@ -542,44 +498,37 @@ foreach ($User in $SourceData) {
             $Changes += "Tél. mobile mis à jour"
         }
 
-        # --- Application des modifications d'attributs ---
         if ($UpdateParams.Count -gt 0) {
             Set-ADUser -Identity $SamAccount @UpdateParams -ErrorAction Stop
         }
 
-        # --- Déplacement d'OU si nécessaire ---
-        # On extrait l'OU courante depuis le DN (on enlève le CN=xxx, en tête)
+        # Déplacement d'OU si nécessaire
         $CurrentOU = $ExistingUser.DistinguishedName -replace "^CN=[^,]+,", ""
         if ($CurrentOU -ne $NewOUPath) {
             Move-ADObject -Identity $ExistingUser.DistinguishedName `
-                -TargetPath $NewOUPath `
-                -ErrorAction Stop
-            $Changes += "OU: '$CurrentOU' → '$NewOUPath'"
+                -TargetPath $NewOUPath -ErrorAction Stop
+            $Changes += "OU déplacé"
         }
 
-        # --- Réactivation si le compte était désactivé (ex: réintégration) ---
+        # Réactivation si compte désactivé (ex : réintégration)
         if (-not $ExistingUser.Enabled) {
             Enable-ADAccount -Identity $SamAccount -ErrorAction Stop
             $Changes += "Compte RÉACTIVÉ"
         }
 
-        # --- Affichage du résultat ---
         if ($Changes.Count -gt 0) {
             Write-Host "[MIS À JOUR]" -ForegroundColor Cyan -NoNewline
-            Write-Host " $UserKey" -NoNewline
+            Write-Host " $($User.Prenom) $($User.Nom)" -NoNewline
             Write-Host " → $($Changes -join ' | ')" -ForegroundColor Gray
             $UsersUpdated++
         }
 
-        # Indexation pour la phase 4 (managers)
-        $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"] = $SamAccount
-
     } catch {
         Write-Host "[ERREUR MISE À JOUR]" -ForegroundColor Red -NoNewline
-        Write-Host " $UserKey → $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host " $($User.Prenom) $($User.Nom) → $($_.Exception.Message)" -ForegroundColor Red
 
         $ErrorsList += [PSCustomObject]@{
-            Utilisateur = $UserKey
+            Utilisateur = "$($User.Prenom) $($User.Nom)"
             Phase       = "Mise à jour"
             Erreur      = $_.Exception.Message
         }
@@ -599,33 +548,31 @@ Write-Host ""
 
 foreach ($User in $SourceData) {
 
-    # Ignore si aucun manager renseigné
     if ([string]::IsNullOrWhiteSpace($User.'Manager-Prenom') -or
         [string]::IsNullOrWhiteSpace($User.'Manager-Nom')) { continue }
 
-    $UserKey    = "$($User.Prenom) $($User.Nom)"
-    $ManagerKey = "$($User.'Manager-Prenom') $($User.'Manager-Nom')"
+    $UserSam    = Get-ExpectedSam -Prenom $User.Prenom -Nom $User.Nom
+    $ManagerSam = Get-ExpectedSam -Prenom $User.'Manager-Prenom' -Nom $User.'Manager-Nom'
 
-    $SamAccount        = $AccountsIndex["$(Normalize-Name $User.Prenom) $(Normalize-Name $User.Nom)"]
-    $ManagerSamAccount = $AccountsIndex["$(Normalize-Name $User.'Manager-Prenom') $(Normalize-Name $User.'Manager-Nom')"]
+    $SamAccount        = $AccountsIndex[$UserSam]
+    $ManagerSamAccount = $AccountsIndex[$ManagerSam]
 
     if ($SamAccount -and $ManagerSamAccount) {
         try {
             $ManagerAD = Get-ADUser -Identity $ManagerSamAccount -ErrorAction Stop
             Set-ADUser -Identity $SamAccount -Manager $ManagerAD.DistinguishedName -ErrorAction Stop
-            Write-Host "  [OK] $UserKey" -ForegroundColor Gray -NoNewline
-            Write-Host " → Manager: $ManagerKey" -ForegroundColor DarkGray
+            Write-Host "  [OK] $($User.Prenom) $($User.Nom)" -ForegroundColor Gray -NoNewline
+            Write-Host " → Manager: $($User.'Manager-Prenom') $($User.'Manager-Nom')" -ForegroundColor DarkGray
         } catch {
-            Write-Host "  [ERREUR MANAGER] $UserKey → $($_.Exception.Message)" -ForegroundColor DarkRed
+            Write-Host "  [ERREUR MANAGER] $($User.Prenom) $($User.Nom) → $($_.Exception.Message)" -ForegroundColor DarkRed
             $ManagerErrors++
         }
     } else {
-        # Manager ou utilisateur introuvable dans l'index
         if (-not $SamAccount) {
-            Write-Host "  [AVERTISSEMENT] Utilisateur '$UserKey' non trouvé dans l'index." -ForegroundColor DarkYellow
+            Write-Host "  [AVERTISSEMENT] Utilisateur '$($User.Prenom) $($User.Nom)' non trouvé dans l'index." -ForegroundColor DarkYellow
         }
         if (-not $ManagerSamAccount) {
-            Write-Host "  [AVERTISSEMENT] Manager '$ManagerKey' non trouvé pour '$UserKey'." -ForegroundColor DarkYellow
+            Write-Host "  [AVERTISSEMENT] Manager '$($User.'Manager-Prenom') $($User.'Manager-Nom')' introuvable pour '$($User.Prenom) $($User.Nom)'." -ForegroundColor DarkYellow
         }
         $ManagerErrors++
     }
