@@ -1154,7 +1154,29 @@ Cette section décrit la procédure de déploiement d'un second contrôleur de d
 
 ### 6.1 Prérequis et ajout du serveur
 
-#### 6.1.1 Configuration IP du serveur Core
+#### 6.1.1 Configuration du clavier en AZERTY
+
+Par défaut, Windows Server Core démarre avec un clavier en QWERTY. Avant toute autre opération, passer le clavier en AZERTY de façon permanente dans une console PowerShell :
+
+```powershell
+# Passer le clavier en AZERTY (français)
+Set-WinUserLanguageList -LanguageList fr-FR -Force
+
+# Appliquer le changement au niveau système (pour tous les utilisateurs)
+Set-WinSystemLocale fr-FR
+```
+
+Redémarrer le serveur pour que la configuration soit définitive :
+
+```powershell
+Restart-Computer
+```
+
+> Une fois redémarré, ouvrir une nouvelle session PowerShell : le clavier est désormais en AZERTY.
+
+---
+
+#### 6.1.2 Configuration IP du serveur Core
 
 Dans une console PowerShell, entrer les commandes suivantes :
 
@@ -1181,7 +1203,7 @@ New-NetIPAddress -InterfaceIndex 1 -IPAddress "172.16.12.6" -PrefixLength 28 -De
 Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 ```
 
-#### 6.1.2 Jonction du serveur Core au domaine
+#### 6.1.3 Jonction du serveur Core au domaine
 
 1. Choisir l'option **1** dans sconfig
 
@@ -1198,7 +1220,7 @@ Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 
 ![img](Ressources/08_configuration_fsmo_img/02_fsmo_configuration.png)
 
-#### 6.1.3 Ajout du serveur dans le Server Manager
+#### 6.1.4 Ajout du serveur dans le Server Manager
 
 Depuis le serveur graphique :
 
@@ -1321,7 +1343,48 @@ Une fois le serveur prêt, procéder au transfert du rôle :
 
 ---
 
-### 6.5 Vérification
+### 6.5 Configuration NTP sur le PDC Emulator
+
+Le PDC Emulator étant la source de temps autoritaire du domaine Active Directory, il doit être configuré pour se synchroniser sur des serveurs NTP externes. Les autres contrôleurs de domaine et les machines membres se synchroniseront automatiquement sur lui.
+
+#### 6.5.1 Configurer la source de temps externe
+
+Dans une console PowerShell sur `DOM-AD-PDC-01`, exécuter :
+
+```cmd
+w32tm /config /manualpeerlist:"0.fr.pool.ntp.org,0x8 1.fr.pool.ntp.org,0x8 2.fr.pool.ntp.org,0x8" /syncfromflags:manual /reliable:YES /update
+```
+
+> Le paramètre `/reliable:YES` est indispensable : il désigne ce serveur comme source de temps fiable pour l'ensemble du domaine.
+
+#### 6.5.2 Redémarrer le service W32Time
+
+```cmd
+net stop w32time && net start w32time
+```
+
+#### 6.5.3 Forcer une synchronisation immédiate
+
+```cmd
+w32tm /resync /force
+```
+
+#### 6.5.4 Vérifier la configuration
+
+```cmd
+w32tm /query /status
+```
+
+Contrôler les éléments suivants dans la sortie :
+
+- **Source** → doit afficher l'un des serveurs du pool NTP (ex: `1.fr.pool.ntp.org,0x8`)
+- **Stratum** → doit afficher `2`
+- **Leap Indicator** → doit afficher `0 (no warning)`
+- **Last Successful Sync Time** → doit afficher une heure récente
+
+---
+
+### 6.6 Vérification
 
 Exécuter la commande suivante dans PowerShell pour confirmer le transfert des deux rôles :
 
