@@ -27,22 +27,19 @@
    - [4.2 GPO de sécurité](#42-gpo-de-sécurité)
    - [4.3 GPO standard](#43-gpo-standard)
 
-5. [Jonction au domaine](#5-jonction-au-domaine)
+5. [Tâche planifiée – Restriction des horaires de connexion](#5-tâche-planifiée--restriction-des-horaires-de-connexion)
 
-<<<<<<< HEAD
-6. [Test et validation](#6-test-et-validation)
-7. [Relation de confiance avec ECOTECH](#7-relation-de-confiance-avec-ecotech)
- 
-=======
-6. [Transfert des rôles FSMO (PDC et RID)](#6-transfert-des-rôles-fsmo-pdc-et-rid)
-   - [6.1 Prérequis et ajout du serveur](#61-prérequis-et-ajout-du-serveur)
-   - [6.2 Installation d'Active Directory sur le serveur Core](#62-installation-dactive-directory-sur-le-serveur-core)
-   - [6.3 Promotion en contrôleur de domaine](#63-promotion-en-contrôleur-de-domaine)
-   - [6.4 Attribution des rôles FSMO](#64-attribution-des-rôles-fsmo)
-   - [6.5 Vérification](#65-vérification)
->>>>>>> main
+6. [Jonction au domaine](#6-jonction-au-domaine)
 
-7. [Test et validation](#7-test-et-validation)
+7. [Transfert des rôles FSMO (PDC et RID)](#7-transfert-des-rôles-fsmo-pdc-et-rid)
+   - [7.1 Prérequis et ajout du serveur](#71-prérequis-et-ajout-du-serveur)
+   - [7.2 Installation d'Active Directory sur le serveur Core](#72-installation-dactive-directory-sur-le-serveur-core)
+   - [7.3 Promotion en contrôleur de domaine](#73-promotion-en-contrôleur-de-domaine)
+   - [7.4 Attribution des rôles FSMO](#74-attribution-des-rôles-fsmo)
+   - [7.5 Configuration NTP sur le PDC Emulator](#75-configuration-ntp-sur-le-pdc-emulator)
+   - [7.6 Vérification](#76-vérification)
+
+8. [Relation de confiance avec Ecotech](#8-relation-de-confiance-avec-ecotech)
 
 ---
 
@@ -790,10 +787,7 @@ Clic droit > **Properties**
 | Cible | Computer |
 | Statut | User configuration settings disabled |
 
-
-**Tâche planifiée :**
-
-
+**Tâche planifiée :** Voir section 5
 
 ---
 
@@ -1067,9 +1061,75 @@ Clic droit > **New** > **Mapped Drive**
 
 ---
 
-## 5. Jonction au domaine
+## 5. Tâche planifiée – Restriction des horaires de connexion
 
-### 5.1 Joindre Ubuntu/Debian à un domaine Active Directory
+1) Ouvrir le menu **Démarrer**
+2) Écrire `task scheduler`
+
+![img](Ressources/09_configuration_task_scheduler/01_logonhours_taskmanager.png)
+
+1) Faire `Clic Droit` sur **Task Scheduler Library**
+2) Cliquer sur `Create Task...`
+
+![img](Ressources/09_configuration_task_scheduler/02_logonhours_taskmanager.png)
+
+1) Entrer le nom de la tâche planifiée : `AD_LogonHoursRestriction`
+2) Sélectionner `Run Whether user is logged on or not`
+3) Cocher `Run with highest privileges`
+4) Sélectionner **Windows Server 2022**
+
+![img](Ressources/09_configuration_task_scheduler/03_logonhours_taskmanager.png)
+
+1) Sélectionner l'onglet **Triggers**
+2) Cliquer sur `New`
+
+![img](Ressources/09_configuration_task_scheduler/04_logonhours_taskmanager.png)
+
+1) Choisir **On a schedule**
+2) Sélectionner la date de commencement ainsi que l'heure
+3) Choisir `Daily` et entrer la valeur `1`
+4) Cocher `Enabled`
+
+![img](Ressources/09_configuration_task_scheduler/05_logonhours_taskmanager.png)
+
+1) Sélectionner l'onglet `Actions`
+2) Cliquer sur `New`
+
+![img](Ressources/09_configuration_task_scheduler/06_logonhours_taskmanager.png)
+
+1) Choisir l'action `Start a program`
+2) Entrer le chemin de PowerShell dans `Program/script` :
+```
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+```
+3) Ajouter les paramètres et chemin du script dans `Add arguments` :
+```
+-NonInteractive -ExecutionPolicy Bypass -File "\\DOM-FS-01\departements\DSI\scripts\AD_LogonHoursRestriction.ps1"
+```
+
+![img](Ressources/09_configuration_task_scheduler/07_logonhours_taskmanager.png)
+
+1) Sélectionner l'onglet `Settings`
+2) Cocher `If the task fails, restart every` et choisir `1 minute`
+3) Pour `Stop the task if it run longer than:`, choisir `1 hour`
+4) Sélectionner `Do not start a new instance`
+
+![img](Ressources/09_configuration_task_scheduler/08_logonhours_taskmanager.png)
+
+1) Entrer un utilisateur ayant les permissions d'effectuer cette tâche (Administrator)
+2) Entrer le mot de passe
+
+![img](Ressources/09_configuration_task_scheduler/09_logonhours_taskmanager.png)
+
+- Vérifier que la tâche planifiée apparaît dans la liste.
+
+![img](Ressources/09_configuration_task_scheduler/10_logonhours_taskmanager.png)
+
+---
+
+## 6. Jonction au domaine
+
+### 6.1 Joindre Ubuntu/Debian à un domaine Active Directory
 
 #### Prérequis
 
@@ -1077,7 +1137,7 @@ Clic droit > **New** > **Mapped Drive**
 - L'heure du serveur doit être synchronisée avec le DC (Kerberos est sensible au décalage horaire)
 - Un compte AD avec les droits de jonction au domaine
 
-#### 5.1.1 Installation des paquets
+#### 6.1.1 Installation des paquets
 
 ```bash
 sudo apt update
@@ -1104,7 +1164,7 @@ Ou éditer manuellement le fichier `/etc/krb5.conf` :
     billu.lan = BILLU.LAN
 ```
 
-#### 5.1.2 Découverte du domaine
+#### 6.1.2 Découverte du domaine
 
 Voir le DNS actuellement configuré :
 ```bash
@@ -1128,7 +1188,7 @@ realm discover billu.lan
 
 La commande doit retourner les informations du domaine. Si rien n'apparaît, vérifiez votre configuration DNS.
 
-#### 5.1.3 Jonction au domaine
+#### 6.1.3 Jonction au domaine
 
 ```bash
 sudo realm join --user=Administrator billu.lan
@@ -1136,7 +1196,7 @@ sudo realm join --user=Administrator billu.lan
 
 Entrez le mot de passe du compte AD quand il est demandé.
 
-#### 5.1.4 Vérification
+#### 6.1.4 Vérification
 
 ```bash
 # Vérifier que la jonction est réussie
@@ -1148,13 +1208,13 @@ id moncompte@billu.lan
 
 ---
 
-## 6. Transfert des rôles FSMO (PDC et RID)
+## 7. Transfert des rôles FSMO (PDC et RID)
 
 Cette section décrit la procédure de déploiement d'un second contrôleur de domaine (Server Core) et le transfert des rôles FSMO PDC Emulator et RID Master vers ce nouveau serveur.
 
-### 6.1 Prérequis et ajout du serveur
+### 7.1 Prérequis et ajout du serveur
 
-#### 6.1.1 Configuration du clavier en AZERTY
+#### 7.1.1 Configuration du clavier en AZERTY
 
 Par défaut, Windows Server Core démarre avec un clavier en QWERTY. Avant toute autre opération, passer le clavier en AZERTY de façon permanente dans une console PowerShell :
 
@@ -1176,7 +1236,7 @@ Restart-Computer
 
 ---
 
-#### 6.1.2 Configuration IP du serveur Core
+#### 7.1.2 Configuration IP du serveur Core
 
 Dans une console PowerShell, entrer les commandes suivantes :
 
@@ -1203,7 +1263,7 @@ New-NetIPAddress -InterfaceIndex 1 -IPAddress "172.16.12.6" -PrefixLength 28 -De
 Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 ```
 
-#### 6.1.3 Jonction du serveur Core au domaine
+#### 7.1.3 Jonction du serveur Core au domaine
 
 1. Choisir l'option **1** dans sconfig
 
@@ -1220,7 +1280,7 @@ Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 
 ![img](Ressources/08_configuration_fsmo_img/02_fsmo_configuration.png)
 
-#### 6.1.4 Ajout du serveur dans le Server Manager
+#### 7.1.4 Ajout du serveur dans le Server Manager
 
 Depuis le serveur graphique :
 
@@ -1240,7 +1300,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 6.2 Installation d'Active Directory sur le serveur Core
+### 7.2 Installation d'Active Directory sur le serveur Core
 
 - Faire `clic droit` sur le serveur **PDC** dans la liste `All Servers`
 
@@ -1270,7 +1330,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 6.3 Promotion en contrôleur de domaine
+### 7.3 Promotion en contrôleur de domaine
 
 1. Cliquer sur le drapeau
 2. Cliquer sur `Promote this server to a domain controller`
@@ -1299,7 +1359,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 6.4 Attribution des rôles FSMO
+### 7.4 Attribution des rôles FSMO
 
 1. Dans le **Server Manager**, sélectionner `AD DS`
 2. Faire `Clic droit` sur le serveur **PDC**
@@ -1325,7 +1385,7 @@ Dans la console `Active Directory Users and Computers` :
 
 #### Transfert du rôle RID Master
 
-Le rôle RID Master est transféré sur un second serveur Core dédié (`DOM-AD-RID-01`). La procédure de déploiement de ce serveur (config IP, jonction au domaine, installation AD DS, promotion DC) est identique à celle décrite aux étapes 6.1 à 6.3 en adaptant le nom de machine à `DOM-AD-RID-01`.
+Le rôle RID Master est transféré sur un second serveur Core dédié (`DOM-AD-RID-01`). La procédure de déploiement de ce serveur (config IP, jonction au domaine, installation AD DS, promotion DC) est identique à celle décrite aux étapes 7.1 à 7.3 en adaptant le nom de machine à `DOM-AD-RID-01`.
 
 Une fois le serveur prêt, procéder au transfert du rôle :
 
@@ -1343,11 +1403,11 @@ Une fois le serveur prêt, procéder au transfert du rôle :
 
 ---
 
-### 6.5 Configuration NTP sur le PDC Emulator
+### 7.5 Configuration NTP sur le PDC Emulator
 
 Le PDC Emulator étant la source de temps autoritaire du domaine Active Directory, il doit être configuré pour se synchroniser sur des serveurs NTP externes. Les autres contrôleurs de domaine et les machines membres se synchroniseront automatiquement sur lui.
 
-#### 6.5.1 Configurer la source de temps externe
+#### 7.5.1 Configurer la source de temps externe
 
 Dans une console PowerShell sur `DOM-AD-PDC-01`, exécuter :
 
@@ -1357,19 +1417,19 @@ w32tm /config /manualpeerlist:"0.fr.pool.ntp.org,0x8 1.fr.pool.ntp.org,0x8 2.fr.
 
 > Le paramètre `/reliable:YES` est indispensable : il désigne ce serveur comme source de temps fiable pour l'ensemble du domaine.
 
-#### 6.5.2 Redémarrer le service W32Time
+#### 7.5.2 Redémarrer le service W32Time
 
 ```cmd
 net stop w32time && net start w32time
 ```
 
-#### 6.5.3 Forcer une synchronisation immédiate
+#### 7.5.3 Forcer une synchronisation immédiate
 
 ```cmd
 w32tm /resync /force
 ```
 
-#### 6.5.4 Vérifier la configuration
+#### 7.5.4 Vérifier la configuration
 
 ```cmd
 w32tm /query /status
@@ -1384,7 +1444,7 @@ Contrôler les éléments suivants dans la sortie :
 
 ---
 
-### 6.6 Vérification
+### 7.6 Vérification
 
 Exécuter la commande suivante dans PowerShell pour confirmer le transfert des deux rôles :
 
@@ -1400,9 +1460,9 @@ Le résultat doit afficher :
 
 ---
 
-## 7. Relation de confiance avec Ecotech
+## 8. Relation de confiance avec Ecotech
 
-Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
+Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
 
 Depuis le `Server Manager`
 
@@ -1453,7 +1513,3 @@ Depuis le `Server Manager`
 
 
 ![image](Ressources/configuration/09_config_adds.png)
-
-
-
-
