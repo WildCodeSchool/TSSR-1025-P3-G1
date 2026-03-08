@@ -191,7 +191,7 @@ La solution Microsoft LAPS (Local Administrator Password Solution) a été dépl
 
 Cela limite fortement les attaques de propagation latérale.
 
-**/!\ LE LOGICIEL N'A PAS ÉTÉ CONFIGURÉ /!\ 
+**/!\ LE LOGICIEL N'A PAS ÉTÉ CONFIGURÉ /!\**
 
 ---
 
