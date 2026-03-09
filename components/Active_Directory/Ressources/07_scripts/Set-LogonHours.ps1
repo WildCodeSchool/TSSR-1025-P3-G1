@@ -2,14 +2,15 @@
 
 # Heures autorisees
 $heuresStandard = [byte[]](
-    0,   0,   0,    # Dimanche  - bloque
-    128, 255, 15,   # Lundi     - 07h-20h
-    128, 255, 15,   # Mardi     - 07h-20h
-    128, 255, 15,   # Mercredi  - 07h-20h
-    128, 255, 15,   # Jeudi     - 07h-20h
-    128, 255, 15,   # Vendredi  - 07h-20h
-    0,   31,  0     # Samedi    - 08h-13h
+    0,   0,   0,    # Dimanche  - bloqué
+    192, 255, 7,    # Lundi     - 07h-20h (local UTC+1)
+    192, 255, 7,    # Mardi     - 07h-20h
+    192, 255, 7,    # Mercredi  - 07h-20h
+    192, 255, 7,    # Jeudi     - 07h-20h
+    192, 255, 7,    # Vendredi  - 07h-20h
+    128, 15,  0     # Samedi    - 08h-13h (local UTC+1)
 )
+
 
 # Liste des OUs (ADMINISTRATION_SYSTEMES_RESEAUX pas inclus car acces illimite)
 $ous = @(
