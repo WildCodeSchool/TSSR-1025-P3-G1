@@ -17,29 +17,33 @@
    - [2.3 Exécution du script](#23-exécution-du-script)
    - [2.4 Vérification](#24-vérification)
 
-3. [Création des groupes](#3-création-des-groupes)
-   - [3.1 Arborescence des groupes de sécurité](#31-arborescence-des-groupes-de-sécurité)
-   - [3.2 Création d'un groupe](#32-création-dun-groupe)
-   - [3.3 Liste des groupes à créer](#33-liste-des-groupes-à-créer)
+3. [Déplacement automatique des objets AD](#3.déplacement-automatique-des-objets-ad)
+    - [3.1 Explication du script](#31-explication-du-script)
+    - [3.2 Automatisation par AT](#32-automatisation-par-at)
 
-4. [Stratégies de groupe (GPO)](#4-stratégies-de-groupe-gpo)
-   - [4.1 Création de GPO](#41-création-de-gpo)
-   - [4.2 GPO de sécurité](#42-gpo-de-sécurité)
-   - [4.3 GPO standard](#43-gpo-standard)
+4. [Création des groupes](#4-création-des-groupes)
+   - [4.1 Arborescence des groupes de sécurité](#41-arborescence-des-groupes-de-sécurité)
+   - [4.2 Création d'un groupe](#42-création-dun-groupe)
+   - [4.3 Liste des groupes à créer](#43-liste-des-groupes-à-créer)
 
-5. [Tâche planifiée – Restriction des horaires de connexion](#5-tâche-planifiée--restriction-des-horaires-de-connexion)
+5. [Stratégies de groupe (GPO)](#5-stratégies-de-groupe-gpo)
+   - [5.1 Création de GPO](#51-création-de-gpo)
+   - [5.2 GPO de sécurité](#52-gpo-de-sécurité)
+   - [5.3 GPO standard](#53-gpo-standard)
 
-6. [Jonction au domaine](#6-jonction-au-domaine)
+6. [Tâche planifiée – Restriction des horaires de connexion](#6-tâche-planifiée--restriction-des-horaires-de-connexion)
 
-7. [Transfert des rôles FSMO (PDC et RID)](#7-transfert-des-rôles-fsmo-pdc-et-rid)
-   - [7.1 Prérequis et ajout du serveur](#71-prérequis-et-ajout-du-serveur)
-   - [7.2 Installation d'Active Directory sur le serveur Core](#72-installation-dactive-directory-sur-le-serveur-core)
-   - [7.3 Promotion en contrôleur de domaine](#73-promotion-en-contrôleur-de-domaine)
-   - [7.4 Attribution des rôles FSMO](#74-attribution-des-rôles-fsmo)
-   - [7.5 Configuration NTP sur le PDC Emulator](#75-configuration-ntp-sur-le-pdc-emulator)
-   - [7.6 Vérification](#76-vérification)
+7. [Jonction au domaine](#7-jonction-au-domaine)
 
-8. [Relation de confiance avec Ecotech](#8-relation-de-confiance-avec-ecotech)
+8. [Transfert des rôles FSMO (PDC et RID)](#8-transfert-des-rôles-fsmo-pdc-et-rid)
+   - [8.1 Prérequis et ajout du serveur](#81-prérequis-et-ajout-du-serveur)
+   - [8.2 Installation d'Active Directory sur le serveur Core](#82-installation-dactive-directory-sur-le-serveur-core)
+   - [8.3 Promotion en contrôleur de domaine](#83-promotion-en-contrôleur-de-domaine)
+   - [8.4 Attribution des rôles FSMO](#84-attribution-des-rôles-fsmo)
+   - [8.5 Configuration NTP sur le PDC Emulator](#85-configuration-ntp-sur-le-pdc-emulator)
+   - [8.6 Vérification](#86-vérification)
+
+9. [Relation de confiance avec Ecotech](#9-relation-de-confiance-avec-ecotech)
 
 ---
 
@@ -257,9 +261,17 @@ Le script effectue automatiquement les actions suivantes :
 
 ---
 
-## 3. Création des groupes
+## 3. Déplacement automatique des objets AD
 
-### 3.1 Arborescence des groupes de sécurité
+### 3.1 Explication du script
+Vous pouvez allez consulter la doc sur le script ici : [Documentation du script](../Active_Directory/Script_Move_Object_AD_Configuration.md)
+### 3.2 Automatisation par AT
+
+---
+
+## 4. Création des groupes
+
+### 4.1 Arborescence des groupes de sécurité
 
 Tous les groupes doivent être créés dans l'arborescence suivante :
 
@@ -269,7 +281,7 @@ OU=BilluSecurity
       └── Groupes GRP_SVC_*
 ```
 
-### 3.2 Création d'un groupe
+### 4.2 Création d'un groupe
 
 **Nomenclature :**
 
@@ -296,7 +308,7 @@ Dans Active Directory Users and Computers :
 - Répéter l'opération pour chaque groupe à créer (voir liste ci-dessous)
 - Une fois les groupes créés, ajouter les membres de chaque service dans le groupe correspondant
 
-### 3.3 Liste des groupes à créer
+### 4.3 Liste des groupes à créer
 
 **Groupes de départements :**
 
@@ -388,46 +400,46 @@ GRP_SVC_RH_USERS
 
 ---
 
-## 4. Stratégies de groupe (GPO)
+## 5. Stratégies de groupe (GPO)
 
-### 4.1 Création de GPO
+### 5.1 Création de GPO
 
-**Cette partie est à titre d'exemple. Suivre cette procédure pour créer chaque GPO des chapitres 4.2 et 4.3.**
+**Cette partie est à titre d'exemple. Suivre cette procédure pour créer chaque GPO des chapitres 5.2 et 5.3.**
 
-#### 4.1.1 Accès au menu des GPO
+#### 5.1.1 Accès au menu des GPO
 
 - Dans `Server Manager`, cliquer sur `Tools` puis `Group Policy Management`
 
 ![img](Ressources/06_gpo/01_GPO.png)
 
-#### 4.1.2 Création d'une GPO
+#### 5.1.2 Création d'une GPO
 
 1. Faire `Clic droit` sur `Group Policy Objects`
 2. Sélectionner `New`
 
 ![img](Ressources/06_gpo/02_GPO.png)
 
-#### 4.1.3 Nommage de la GPO
+#### 5.1.3 Nommage de la GPO
 
 - Entrer le nom de la GPO en suivant la convention de nommage
 
 ![img](Ressources/06_gpo/03_GPO.png)
 
-#### 4.1.4 Accès à l'éditeur de GPO
+#### 5.1.4 Accès à l'éditeur de GPO
 
 1. Faire `Clic droit` sur la GPO créée
 2. Sélectionner `Edit...` pour faire apparaître la console `Group Policy Management Editor`
 
 ![img](Ressources/06_gpo/04_GPO.png)
 
-#### 4.1.5 Navigation dans les paramètres de la GPO
+#### 5.1.5 Navigation dans les paramètres de la GPO
 
 1. Naviguer dans le menu pour trouver l'emplacement du paramètre
 2. Double-cliquer pour ouvrir un paramètre et l'éditer
 
 ![img](Ressources/06_gpo/05_GPO.png)
 
-#### 4.1.6 Portée de la GPO
+#### 5.1.6 Portée de la GPO
 
 1. Sélectionner l'onglet **Scope**
 2. Choisir l'OU de **Liaison** (Links)
@@ -437,14 +449,14 @@ GRP_SVC_RH_USERS
 
 ![img](Ressources/06_gpo/06_GPO.png)
 
-#### 4.1.7 Statut de la GPO
+#### 5.1.7 Statut de la GPO
 
 1. Sélectionner l'onglet **Détails**
 2. Ajuster le statut de la GPO
 
 ![img](Ressources/06_gpo/07_GPO.png)
 
-#### 4.1.8 Vérification de l'application des GPO
+#### 5.1.8 Vérification de l'application des GPO
 
 **Forcer la mise à jour des GPO sur un ordinateur :**
 ```cmd
@@ -463,9 +475,9 @@ gpresult /h rapport_gpo.html
 
 ---
 
-### 4.2 GPO de sécurité
+### 5.2 GPO de sécurité
 
-#### 4.2.1 Politique de mot de passe
+#### 5.2.1 Politique de mot de passe
 
 **Nom :** `Default Domain Policy`
 
@@ -497,7 +509,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.2 Verrouillage de compte
+#### 5.2.2 Verrouillage de compte
 
 **Nom :** `Default Domain Policy`
 
@@ -525,7 +537,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.3 Restriction d'installation de logiciels
+#### 5.2.3 Restriction d'installation de logiciels
 
 **Nom :** `PROD_COMPUTERS_RestrictionSoftwareInstall`
 
@@ -550,7 +562,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.4 Blocage de l'accès à la base de registre
+#### 5.2.4 Blocage de l'accès à la base de registre
 
 **Nom :** `PROD_USERS_BlockBaseRegistry`
 
@@ -574,7 +586,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.5 Blocage du panneau de configuration
+#### 5.2.5 Blocage du panneau de configuration
 
 **Nom :** `PROD_USERS_RestrictionControlPanel`
 
@@ -598,7 +610,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.6 Restriction des périphériques amovibles
+#### 5.2.6 Restriction des périphériques amovibles
 
 **Nom :** `PROD_USERS_RestrictionRemoveDevices`
 
@@ -622,7 +634,7 @@ gpresult /h rapport_gpo.html
 
 ---
 
-#### 4.2.7 Gestion du pare-feu
+#### 5.2.7 Gestion du pare-feu
 
 **Nom :** `PROD_COMPUTERS_Firewall`
 
@@ -666,7 +678,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.2.8 Écran de veille avec mot de passe
+#### 5.2.8 Écran de veille avec mot de passe
 
 **Nom :** `PROD_USERS_ScreenSaver`
 
@@ -693,7 +705,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.2.9 Bureau à distance sécurisé
+#### 5.2.9 Bureau à distance sécurisé
 
 **Nom :** `PROD_USERS_RDP`
 
@@ -717,7 +729,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.2.10 Accès aux postes d'administration – utilisateurs autorisés
+#### 5.2.10 Accès aux postes d'administration – utilisateurs autorisés
 
 **Nom :** `PROD_USERS_ConnectPCAdministration`
 
@@ -743,7 +755,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.2.11 Accès local au VLAN DSI – utilisateurs autorisés
+#### 5.2.11 Accès local au VLAN DSI – utilisateurs autorisés
 
 **Nom :** `PROD_USERS_ConnectVLANDSI`
 
@@ -769,7 +781,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.2.12 Restriction des horaires de connexion
+#### 5.2.12 Restriction des horaires de connexion
 **Nom :** `PROD_COMPUTER_LogonRestriction`
 **Chemin de configuration :**
 > Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
@@ -791,9 +803,9 @@ Clic droit > **Properties**
 
 ---
 
-### 4.3 GPO standard
+### 5.3 GPO standard
 
-#### 4.3.1 Fond d'écran
+#### 5.3.1 Fond d'écran
 
 **Nom :** `PROD_USERS_Wallpaper`
 
@@ -818,7 +830,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.3.2 Mappage de lecteurs réseau
+#### 5.3.2 Mappage de lecteurs réseau
 
 **Nom :** `PROD_USERS_Drives`
 
@@ -850,7 +862,7 @@ Clic droit > **New** > **Mapped Drive**
 
 ---
 
-#### 4.3.3 Gestion de l'alimentation
+#### 5.3.3 Gestion de l'alimentation
 
 **Nom :** `PROD_COMPUTERS_PowerSaving`
 
@@ -883,7 +895,7 @@ Clic droit > **New** > **Mapped Drive**
 
 ---
 
-#### 4.3.4 Déploiement de logiciels
+#### 5.3.4 Déploiement de logiciels
 
 **Nom :** `PROD_USERS_Software_7zip`
 
@@ -911,7 +923,7 @@ Clic droit > **New** > **Package**
 
 ---
 
-#### 4.3.5 Redirection de dossiers
+#### 5.3.5 Redirection de dossiers
 
 **Nom :** `PROD_USERS_FolderRedirection`
 
@@ -949,7 +961,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.3.6 Configuration du navigateur Firefox
+#### 5.3.6 Configuration du navigateur Firefox
 
 **Fichiers requis pour la configuration de la GPO :**
 
@@ -987,7 +999,7 @@ Clic droit > **Properties**
 
 ---
 
-#### 4.3.7 Déploiement de GLPI Agent
+#### 5.3.7 Déploiement de GLPI Agent
 
 **Nom :** `PROD_COMPUTERS_GLPI_Agent`
 
@@ -1004,7 +1016,7 @@ Onglet **PowerShell Scripts** > **Add...**
 
 ---
 
-#### 4.3.8 Création automatique du dossier HOME
+#### 5.3.8 Création automatique du dossier HOME
 
 **Nom :** `GPO-FS-HOME-CREATE`
 
@@ -1031,7 +1043,7 @@ Clic droit > **New** > **Folder**
 
 ---
 
-#### 4.3.9 Mappage du lecteur HOME
+#### 5.3.9 Mappage du lecteur HOME
 
 **Nom :** `GPO-FS-HOME-I`
 
@@ -1061,7 +1073,7 @@ Clic droit > **New** > **Mapped Drive**
 
 ---
 
-## 5. Tâche planifiée – Restriction des horaires de connexion
+## 6. Tâche planifiée – Restriction des horaires de connexion
 
 1) Ouvrir le menu **Démarrer**
 2) Écrire `task scheduler`
@@ -1090,7 +1102,7 @@ Clic droit > **New** > **Mapped Drive**
 3) Choisir `Daily` et entrer la valeur `1`
 4) Cocher `Enabled`
 
-![img](Ressources/09_configuration_task_scheduler/05_logonhours_taskmanager.png)
+![img](Ressources/09_configuration_task_scheduler/06_logonhours_taskmanager.png)
 
 1) Sélectionner l'onglet `Actions`
 2) Cliquer sur `New`
@@ -1127,9 +1139,9 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
 ---
 
-## 6. Jonction au domaine
+## 7. Jonction au domaine
 
-### 6.1 Joindre Ubuntu/Debian à un domaine Active Directory
+### 7.1 Joindre Ubuntu/Debian à un domaine Active Directory
 
 #### Prérequis
 
@@ -1137,7 +1149,7 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 - L'heure du serveur doit être synchronisée avec le DC (Kerberos est sensible au décalage horaire)
 - Un compte AD avec les droits de jonction au domaine
 
-#### 6.1.1 Installation des paquets
+#### 7.1.1 Installation des paquets
 
 ```bash
 sudo apt update
@@ -1164,7 +1176,7 @@ Ou éditer manuellement le fichier `/etc/krb5.conf` :
     billu.lan = BILLU.LAN
 ```
 
-#### 6.1.2 Découverte du domaine
+#### 7.1.2 Découverte du domaine
 
 Voir le DNS actuellement configuré :
 ```bash
@@ -1188,7 +1200,7 @@ realm discover billu.lan
 
 La commande doit retourner les informations du domaine. Si rien n'apparaît, vérifiez votre configuration DNS.
 
-#### 6.1.3 Jonction au domaine
+#### 7.1.3 Jonction au domaine
 
 ```bash
 sudo realm join --user=Administrator billu.lan
@@ -1196,7 +1208,7 @@ sudo realm join --user=Administrator billu.lan
 
 Entrez le mot de passe du compte AD quand il est demandé.
 
-#### 6.1.4 Vérification
+#### 7.1.4 Vérification
 
 ```bash
 # Vérifier que la jonction est réussie
@@ -1208,13 +1220,13 @@ id moncompte@billu.lan
 
 ---
 
-## 7. Transfert des rôles FSMO (PDC et RID)
+## 8. Transfert des rôles FSMO (PDC et RID)
 
 Cette section décrit la procédure de déploiement d'un second contrôleur de domaine (Server Core) et le transfert des rôles FSMO PDC Emulator et RID Master vers ce nouveau serveur.
 
-### 7.1 Prérequis et ajout du serveur
+### 8.1 Prérequis et ajout du serveur
 
-#### 7.1.1 Configuration du clavier en AZERTY
+#### 8.1.1 Configuration du clavier en AZERTY
 
 Par défaut, Windows Server Core démarre avec un clavier en QWERTY. Avant toute autre opération, passer le clavier en AZERTY de façon permanente dans une console PowerShell :
 
@@ -1236,7 +1248,7 @@ Restart-Computer
 
 ---
 
-#### 7.1.2 Configuration IP du serveur Core
+#### 8.1.2 Configuration IP du serveur Core
 
 Dans une console PowerShell, entrer les commandes suivantes :
 
@@ -1263,7 +1275,7 @@ New-NetIPAddress -InterfaceIndex 1 -IPAddress "172.16.12.6" -PrefixLength 28 -De
 Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 ```
 
-#### 7.1.3 Jonction du serveur Core au domaine
+#### 8.1.3 Jonction du serveur Core au domaine
 
 1. Choisir l'option **1** dans sconfig
 
@@ -1280,7 +1292,7 @@ Set-DnsClientServerAddress -InterfaceIndex 1 -ServerAddresses "172.16.12.1"
 
 ![img](Ressources/08_configuration_fsmo_img/02_fsmo_configuration.png)
 
-#### 7.1.4 Ajout du serveur dans le Server Manager
+#### 8.1.4 Ajout du serveur dans le Server Manager
 
 Depuis le serveur graphique :
 
@@ -1300,7 +1312,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 7.2 Installation d'Active Directory sur le serveur Core
+### 8.2 Installation d'Active Directory sur le serveur Core
 
 - Faire `clic droit` sur le serveur **PDC** dans la liste `All Servers`
 
@@ -1330,7 +1342,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 7.3 Promotion en contrôleur de domaine
+### 8.3 Promotion en contrôleur de domaine
 
 1. Cliquer sur le drapeau
 2. Cliquer sur `Promote this server to a domain controller`
@@ -1359,7 +1371,7 @@ Le serveur doit apparaître dans la liste `All Servers`.
 
 ---
 
-### 7.4 Attribution des rôles FSMO
+### 8.4 Attribution des rôles FSMO
 
 1. Dans le **Server Manager**, sélectionner `AD DS`
 2. Faire `Clic droit` sur le serveur **PDC**
@@ -1403,11 +1415,11 @@ Une fois le serveur prêt, procéder au transfert du rôle :
 
 ---
 
-### 7.5 Configuration NTP sur le PDC Emulator
+### 8.5 Configuration NTP sur le PDC Emulator
 
 Le PDC Emulator étant la source de temps autoritaire du domaine Active Directory, il doit être configuré pour se synchroniser sur des serveurs NTP externes. Les autres contrôleurs de domaine et les machines membres se synchroniseront automatiquement sur lui.
 
-#### 7.5.1 Configurer la source de temps externe
+#### 8.5.1 Configurer la source de temps externe
 
 Dans une console PowerShell sur `DOM-AD-PDC-01`, exécuter :
 
@@ -1417,19 +1429,19 @@ w32tm /config /manualpeerlist:"0.fr.pool.ntp.org,0x8 1.fr.pool.ntp.org,0x8 2.fr.
 
 > Le paramètre `/reliable:YES` est indispensable : il désigne ce serveur comme source de temps fiable pour l'ensemble du domaine.
 
-#### 7.5.2 Redémarrer le service W32Time
+#### 8.5.2 Redémarrer le service W32Time
 
 ```cmd
 net stop w32time && net start w32time
 ```
 
-#### 7.5.3 Forcer une synchronisation immédiate
+#### 8.5.3 Forcer une synchronisation immédiate
 
 ```cmd
 w32tm /resync /force
 ```
 
-#### 7.5.4 Vérifier la configuration
+#### 8.5.4 Vérifier la configuration
 
 ```cmd
 w32tm /query /status
@@ -1444,7 +1456,7 @@ Contrôler les éléments suivants dans la sortie :
 
 ---
 
-### 7.6 Vérification
+### 8.6 Vérification
 
 Exécuter la commande suivante dans PowerShell pour confirmer le transfert des deux rôles :
 
@@ -1460,7 +1472,7 @@ Le résultat doit afficher :
 
 ---
 
-## 8. Relation de confiance avec Ecotech
+## 9. Relation de confiance avec Ecotech
 
 Un partenariat entre les sociétés **BillU** et **EcoTechSolutions** vient d'être signé.
 
