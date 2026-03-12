@@ -106,7 +106,134 @@ Convention :
 | PC-COM-01 | Commercial |
 | PC-DSI-01 | DSI |
 
+#### COMMERCIAL
 
+|Service|Code|Exemple|
+|---|---|---|
+|Département Commercial|COMMER|PC-COMMER-001|
+|Administration des ventes|ADV|PC-ADV-001|
+|B2B|B2B|PC-B2B-001|
+|Service achat|SA|PC-SA-001|
+|Service client|SCL|PC-SCL-001|
+
+---
+
+#### COMMUNICATION
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département Communication|COMMU|PC-COMMU-001|
+|Communication interne|CI|PC-CI-001|
+|Gestion des marques|GDM|PC-GDM-001|
+|Relation média|RM|PC-RM-001|
+
+---
+
+#### COMPTABILITÉ
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département Comptabilité|COMPT|PC-COMPT-001|
+|Finance|FIN|PC-FIN-001|
+|Fiscalité|FIS|PC-FIS-001|
+|Service comptabilité|SCO|PC-SCO-001|
+
+---
+
+#### DÉVELOPPEMENT
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département Développement|DEV|PC-DEV-001|
+|Analyse conception|AC|PC-AC-001|
+|Développement|DV|PC-DV-001|
+|Recherche et prototypage|RP|PC-RP-001|
+|Tests qualité|TQ|PC-TQ-001|
+
+---
+
+#### DIRECTION
+
+|Service|Code|Exemple|
+|---|---|---|
+|Direction|DIR|PC-DIR-001|
+
+---
+
+#### DSI
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département DSI|DSI|PC-DSI-001|
+|Administration systèmes et réseaux|ASR|PC-ASR-001|
+|Développement intégration|DI|PC-DI-001|
+|Exploitation|EXP|PC-EXP-001|
+|Support|SUP|PC-SUP-001|
+
+---
+
+#### JURIDIQUE
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département juridique|JUR|PC-JUR-001|
+|Droits des sociétés|DDS|PC-DDS-001|
+|Propriété intellectuelle|PI|PC-PI-001|
+|Protection des données et conformité|PDC|PC-PDC-001|
+
+---
+
+#### QHSE
+
+|Service|Code|Exemple|
+|---|---|---|
+|Département QHSE|QHSE|PC-QHSE-001|
+|Certification|CER|PC-CER-001|
+|Contrôle qualité|CQ|PC-CQ-001|
+|Gestion environnementale|GE|PC-GE-001|
+
+---
+
+#### RESSOURCES HUMAINES
+
+|Service|Code|Exemple|
+|---|---|---|
+|Ressources humaines|RH|PC-RH-001|
+
+---
+
+### Numérotation
+
+La numérotation est séquentielle sur **3 chiffres**.
+
+Exemples :
+
+```
+001  
+002  
+003  
+...
+```
+
+Exemple de machines :
+
+```
+PC-DEV-001  
+PC-DEV-002  
+PC-DEV-003
+```
+
+---
+
+#### Exemples complets
+
+|Machine|Description|
+|---|---|
+|PC-ADV-001|Poste Administration des ventes|
+|PC-ASR-002|Poste Administrateur système|
+|PC-RH-001|Poste service RH|
+|PC-FIN-003|Poste service finance|
+|PC-SUP-001|Poste support IT|
 ---
 
 ## 6. Nommage des utilisateurs Active Directory

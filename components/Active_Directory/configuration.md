@@ -267,6 +267,146 @@ Le script effectue automatiquement les actions suivantes :
 Vous pouvez allez consulter la doc sur le script ici : [Documentation du script](../Active_Directory/Script_Move_Object_AD_Configuration.md)
 ### 3.2 Automatisation par AT
 
+Afin d'automatiser le déplacement des objets ordinateurs dans les bonnes unités d'organisation de l'Active Directory, le script PowerShell est exécuté automatiquement via le Planificateur de tâches Windows (Task Scheduler).
+
+Cette automatisation permet d'exécuter régulièrement le script afin de vérifier si de nouveaux ordinateurs ont été ajoutés dans l'Active Directory et de les déplacer automatiquement dans l'OU correspondant à leur service.
+
+---
+
+#### Création de la tâche planifiée
+
+Le planificateur de tâches Windows est utilisé pour exécuter automatiquement le script.
+
+Pour ouvrir le planificateur :
+
+```
+taskschd.msc
+```
+
+Puis naviguer vers :
+
+```
+Task Scheduler Library → Create Task
+```
+
+---
+
+#### Onglet General
+
+Cet onglet permet de définir les informations principales de la tâche et les paramètres de sécurité.
+
+##### Name
+
+Nom de la tâche :
+
+```
+Automatisation déplacement ordinateurs AD
+```
+
+Ce nom permet d'identifier facilement la tâche dans le planificateur.
+
+##### Security options
+
+Compte utilisé pour exécuter la tâche :
+
+```
+BILLU\Administrator
+```
+
+> Le compte doit disposer des droits nécessaires pour modifier les objets Active Directory.
+
+ **Options configurées**
+
+| Option | Description |
+|---|---|
+| **Run whether user is logged on or not** | Permet d'exécuter la tâche même si aucun utilisateur n'est connecté sur le serveur. |
+| **Run with highest privileges** | Permet d'exécuter la tâche avec les privilèges administrateur nécessaires pour accéder à Active Directory et déplacer les objets ordinateurs. |
+
+---
+
+#### Onglet Triggers
+
+Cet onglet permet de définir quand la tâche doit être exécutée. Un déclencheur est ajouté avec la configuration suivante.
+
+##### Begin the task
+
+```
+On a schedule
+```
+
+La tâche est déclenchée selon un planning.
+
+##### Settings
+
+La tâche est configurée pour s'exécuter quotidiennement :
+
+```
+Daily — 02:00
+```
+
+> Cette heure correspond généralement à une période de faible activité sur le réseau.
+
+##### Advanced settings
+
+Pour faciliter les tests, la tâche est répétée automatiquement :
+
+```
+Repeat task every : 15 minutes
+For a duration of  : Indefinitely
+```
+
+> **Note :** En production, cette répétition peut être supprimée afin de limiter l'exécution à une fois par jour.
+
+---
+
+#### Onglet Actions
+
+Cet onglet définit le programme qui sera exécuté par la tâche. Une nouvelle action est configurée.
+
+##### Action
+
+```
+Start a program
+```
+
+##### Program/script
+
+```
+powershell.exe
+```
+
+Le planificateur lance PowerShell afin d'exécuter le script.
+
+##### Add arguments
+
+```
+-ExecutionPolicy Bypass -File "\\DOM-FS-01\departements\DSI\scripts\Move_Object_AD.ps1"
+```
+
+| Paramètre | Description |
+|---|---|
+| `ExecutionPolicy Bypass` | Permet d'exécuter le script même si la politique d'exécution PowerShell est restrictive. |
+| `-File` | Indique le script PowerShell à exécuter. |
+
+---
+
+#### Onglet Conditions
+
+Cet onglet permet de définir les conditions nécessaires à l'exécution de la tâche.
+
+Pour un serveur, certaines options ne sont pas nécessaires. Les options liées à l'alimentation électrique peuvent être laissées désactivées.
+
+---
+
+#### Onglet Settings
+
+Cet onglet définit le comportement de la tâche. Les options suivantes sont activées.
+
+| Option | Description |
+|---|---|
+| **Allow task to be run on demand** | Permet d'exécuter la tâche manuellement depuis le planificateur pour effectuer des tests. |
+| **Run task as soon as possible after a scheduled start is missed** | Si le serveur était arrêté au moment de l'exécution prévue, la tâche sera exécutée dès que possible. |
+| **If the task is already running** | Valeur : `Do not start a new instance` — évite que plusieurs instances du script s'exécutent en même temps. |
 ---
 
 ## 4. Création des groupes
