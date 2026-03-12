@@ -16,6 +16,15 @@
    - [2.2 Configuration du script](#22-configuration-du-script)
    - [2.3 Exécution du script](#23-exécution-du-script)
    - [2.4 Vérification](#24-vérification)
+   - [2.5 Synchronisation et modification des utilisateurs](#25-synchronisation-et-modification-des-utilisateurs)
+      - [2.5.1 Préparation du fichier CSV](#251-préparation-du-fichier-csv)
+      - [2.5.2 Configuration du script](#252-configuration-du-script)
+      - [2.5.3 Exécution du script](#253-exécution-du-script)
+      - [2.5.4 Vérification](#254-vérification)
+   - [2.6 Féminisation des postes](#26-féminisation-des-postes)
+      - [2.6.1 Configuration du script](#261-configuration-du-script)
+      - [2.6.2 Exécution du script](#262-exécution-du-script)
+      - [2.6.3 Vérification](#263-vérification)
 
 3. [Déplacement automatique des objets AD](#3.déplacement-automatique-des-objets-ad)
     - [3.1 Explication du script](#31-explication-du-script)
@@ -261,6 +270,166 @@ Le script effectue automatiquement les actions suivantes :
 
 ---
 
+## 2.5 Synchronisation et modification des utilisateurs
+
+Lors d'une mise à jour du fichier RH (arrivées, départs, changements de service), la synchronisation des comptes Active Directory est automatisée via le script `modifUsersAD.ps1`. Ce script compare le fichier CSV fourni par les RH avec les comptes existants dans l'AD et applique les modifications nécessaires.
+
+**Le script gère trois cas :**
+
+| Cas | Action |
+|-----|--------|
+| Utilisateur présent dans le CSV et dans l'AD | Mise à jour des attributs (département, service, fonction, téléphones) et déplacement dans la bonne OU si nécessaire |
+| Utilisateur présent dans le CSV mais absent de l'AD | Création du compte avec placement dans la bonne OU |
+| Utilisateur présent dans l'AD mais absent du CSV | Désactivation du compte et déplacement vers `OU=UsersDeactived` |
+
+### 2.5.1 Préparation du fichier CSV
+
+Le fichier CSV de synchronisation doit respecter le format suivant :
+- **Délimiteur** : virgule ( , )
+- **Encodage** : UTF-8
+
+**Colonnes du fichier CSV :**
+
+| Colonne | Description | Obligatoire |
+|---------|-------------|-------------|
+| Civilité | Civilité de l'utilisateur (M. ou Mme) | Oui |
+| Prenom | Prénom de l'utilisateur | Oui |
+| Nom | Nom de famille | Oui |
+| Departement | Département (doit correspondre au mapping) | Oui |
+| Service | Service dans le département | Oui |
+| fonction | Poste/fonction | Oui |
+| Societe | Nom de la société | Oui |
+| Telephone fixe | Numéro de téléphone fixe (peut être vide ou `-`) | Non |
+| Telephone portable | Numéro de téléphone portable | Non |
+| Manager-Prenom | Prénom du manager | Non |
+| Manager-Nom | Nom du manager | Non |
+
+> **Note :** Les champs téléphone peuvent contenir un tiret `-` pour indiquer l'absence de numéro. Le script gère ce cas automatiquement.
+
+### 2.5.2 Configuration du script
+
+Modifier les variables suivantes au début du script selon votre environnement :
+
+```powershell
+$SourceCSV       = "C:\Users\Administrator\Documents\s04-a02-BillU-ListeRHCollaborateurs.csv"
+$DomainDN        = "DC=billu,DC=lan"
+$DomainName      = "@billu.lan"
+$DefaultPassword = "Azerty1*"
+```
+
+**Points importants :**
+
+- Le script utilise deux méthodes de recherche AD pour gérer les noms avec caractères spéciaux (apostrophes, tirets) : `LDAPFilter` en priorité, puis `Where-Object`.
+- Si un nouveau département ou service apparaît dans le CSV, il doit être ajouté dans les hashtables `$DepartementMapping` et `$ServiceMapping` du script.
+- Les comptes désactivés sont déplacés vers `OU=UsersDeactived,DC=billu,DC=lan`.
+
+### 2.5.3 Exécution du script
+
+1. Ouvrir **PowerShell en tant qu'administrateur**
+2. Exécuter le script :
+
+```powershell
+.\modifUsersAD.ps1
+```
+
+**Le script affiche en temps réel :**
+
+| Indicateur | Couleur | Signification |
+|------------|---------|---------------|
+| `[MAJ]` | Cyan | Compte mis à jour |
+| `[CRÉÉ]` | Vert | Nouveau compte créé |
+| `[DÉPLACÉ]` | Magenta | Compte déplacé vers une nouvelle OU |
+| `[DÉSACTIVÉ]` | Jaune | Compte désactivé et déplacé vers UsersDeactived |
+| `[DOUBLON]` | Magenta | Plusieurs comptes trouvés, utilisation du compte actif |
+| `[ERREUR]` | Rouge | Erreur lors du traitement |
+
+**À la fin de l'exécution, un résumé est affiché :**
+
+```
+Utilisateurs traités       : 220
+Utilisateurs créés         : 8
+Utilisateurs mis à jour    : 207
+Utilisateurs désactivés    : 10
+Utilisateurs ignorés       : 0
+Erreurs manager            : 0
+```
+
+### 2.5.4 Vérification
+
+**Via l'interface graphique :**
+1. Ouvrir **Active Directory Users and Computers**
+2. Naviguer vers `billu.lan > BilluUsers`
+3. Vérifier que les utilisateurs sont placés dans les bonnes OU
+4. Naviguer vers `billu.lan > UsersDeactived` pour vérifier les comptes désactivés
+
+---
+
+## 2.6 Féminisation des postes
+
+Suite à une demande RH, les intitulés de poste des collaboratrices (Mme) doivent être mis à jour avec leur forme féminine dans l'Active Directory. Cette opération est automatisée via le script `feminisationPosteAD.ps1`.
+
+Le script lit le fichier CSV RH, filtre les utilisatrices identifiées par la civilité `Mme`, et met à jour l'attribut `Title` de leur compte AD avec la forme féminine correspondante définie dans une table de mapping.
+
+**Le script gère trois cas :**
+
+| Cas | Indicateur | Action |
+|-----|------------|--------|
+| Titre à féminiser | `[MAJ]` | Mise à jour du Title dans l'AD |
+| Titre déjà féminisé | `[DÉJÀ OK]` | Aucune modification |
+| Fonction absente du mapping | `[MAPPING MANQUANT]` | Signalement dans le résumé |
+
+### 2.6.1 Configuration du script
+
+Modifier les variables suivantes au début du script :
+
+```powershell
+$SourceCSV = "C:\Users\Administrator\Documents\s04-a02-BillU-ListeRHCollaborateurs.csv"
+$DomainDN  = "DC=billu,DC=lan"
+```
+
+**Extrait de la table de féminisation :**
+
+```powershell
+$FeminisationMapping = @{
+    "Développeur"                       = "Développeuse"
+    "Technicien HSE"                    = "Technicienne HSE"
+    "Directeur des ressources humaines" = "Directrice des ressources humaines"
+    "Auditeur"                          = "Auditrice"
+    "Rédacteur"                         = "Rédactrice"
+    "Testeur"                           = "Testeuse"
+    # ...
+}
+```
+
+> Si une nouvelle fonction apparaît dans le CSV, elle doit être ajoutée à la hashtable `$FeminisationMapping` du script avec sa forme féminine correspondante.
+
+### 2.6.2 Exécution du script
+
+1. Ouvrir **PowerShell en tant qu'administrateur**
+2. Exécuter le script :
+
+```powershell
+.\feminisationPosteAD.ps1
+```
+
+**À la fin de l'exécution, un résumé est affiché :**
+
+```
+Femmes traitées            : 85
+Postes féminisés           : 72
+Déjà féminisés             : 13
+Ignorés / Erreurs          : 0
+```
+
+### 2.6.3 Vérification
+
+**Via l'interface graphique :**
+1. Ouvrir **Active Directory Users and Computers**
+2. Double-cliquer sur le compte d'une collaboratrice
+3. Onglet **"General"** → vérifier le champ **"Job Title"**
+
+---
+
 ## 3. Déplacement automatique des objets AD
 
 ### 3.1 Explication du script
@@ -407,6 +576,8 @@ Cet onglet définit le comportement de la tâche. Les options suivantes sont act
 | **Allow task to be run on demand** | Permet d'exécuter la tâche manuellement depuis le planificateur pour effectuer des tests. |
 | **Run task as soon as possible after a scheduled start is missed** | Si le serveur était arrêté au moment de l'exécution prévue, la tâche sera exécutée dès que possible. |
 | **If the task is already running** | Valeur : `Do not start a new instance` — évite que plusieurs instances du script s'exécutent en même temps. |
+
+
 ---
 
 ## 4. Création des groupes
@@ -1665,3 +1836,22 @@ Depuis le `Server Manager`
 
 
 ![image](Ressources/configuration/09_config_adds.png)
+
+- Connexion en RDP autoriser sur notre Serveur de fichiers 'DOM-FS-01'
+
+- Se mettre en Powershell depuis le serveur de fichiers "DOM-FS-01"
+
+On doit activer le `rdp`
+
+```powershell
+cscript C:\Windows\System32\Scregedit.wsf /ar 0
+```
+
+On ajoute le Groupe Admin `ECOTECH`
+
+```powershell
+net localgroup "Remote Desktop Users" "ECOTECH\eco-bdx-gx-gxc" /add
+```
+
+
+
