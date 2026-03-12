@@ -66,7 +66,7 @@ $ServiceMapping = @{
     # COMMUNICATION
     "Relation Médias"                      = "RELATION_MEDIAS"
     "Communication interne"                = "COMMUNICATION_INTERNE"
-    "Gestion des marques"                  = "GESTION_MARQUES"
+    "Gestion des marques"                  = "GESTION_DES_MARQUES"
 
     # COMPTABILITE
     "Finance"                              = "FINANCE"
