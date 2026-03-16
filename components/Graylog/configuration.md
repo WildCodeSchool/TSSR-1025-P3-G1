@@ -636,4 +636,21 @@ systemctl status rsyslog
 
 ---
 
+###### Stream 9 : Serveur WSUS
+**Paramètres du Stream :**
+- **Title :** DOM-WSUS-01
+- **Description :** Serveur WSUS
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-WSUS-01
+- **Description :** Serveur WSUS
+
+---
+
 **Note :** Après la création de chaque stream, ne pas oublier de cliquer sur le bouton Lecture pour l'activer.
