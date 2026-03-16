@@ -108,7 +108,7 @@ ping -c 3 172.16.12.1
 
 # Test du port LDAP (INDISPENSABLE)
 nc -zv 172.16.12.1 389
-# Attendu : Connection to 172.16.12.1 389 port [tcp/ldap] succeeded!
+# Attendu : Connection to 172.16.12.1 389 port [tcp/ldap] open
 ```
 
 ### 1.7 Création de l'utilisateur de service mail dans Active Directory
