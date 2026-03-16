@@ -619,4 +619,21 @@ systemctl status rsyslog
 
 ---
 
+###### Stream 8 : Serveur Web Externe
+**Paramètres du Stream :**
+- **Title :** DOM-WEBEXT-01
+- **Description :** Serveur Web Externe
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-WEBEXT-01
+- **Description :** Serveur Web Externe
+
+---
+
 **Note :** Après la création de chaque stream, ne pas oublier de cliquer sur le bouton Lecture pour l'activer.
