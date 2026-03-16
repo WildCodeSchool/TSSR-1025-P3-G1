@@ -585,4 +585,38 @@ systemctl status rsyslog
 
 ---
 
+###### Stream 7 : Serveur Active Directory PDC
+**Paramètres du Stream :**
+- **Title :** DOM-AD-PDC-01
+- **Description :** Serveur Active Directory PDC
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-AD-PDC-01
+- **Description :** Serveur Active Directory PDC
+
+---
+
+###### Stream 8 : Serveur Active Directory RID
+**Paramètres du Stream :**
+- **Title :** DOM-AD-RID-01
+- **Description :** Serveur Active Directory RID
+- **Add Collaborator :** 
+    - **Un Administrateur** `DOM Admin`
+    - Sélectionner `Manager` 
+    - Cliquer sur **Add Collaborator**
+
+**Paramètres de la règle de routage :**
+- **Field :** source
+- **Type :** Contain
+- **Value :** DOM-AD-RID-01
+- **Description :** Serveur Active Directory RID
+
+---
+
 **Note :** Après la création de chaque stream, ne pas oublier de cliquer sur le bouton Lecture pour l'activer.
