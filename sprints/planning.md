@@ -525,22 +525,215 @@ Tâches :
 - Une solution VOIP interne est fonctionnelle
 - L’administration AD est partiellement automatisée
 
+Parfait, je te remplis **uniquement la partie Sprint 5** de ton `planning.md` en respectant exactement la structure existante  et en restant cohérent avec ce que tu as déjà fait.
+
+---
+
 ## 5. Sprint 5
 
 ### 5.1 Liste des objectifs principaux
 
+* FIREWALL – Gestion du traffic commun inter-entreprises
+* SÉCURITÉ – Audit de la surface d’attaque Active Directory
+* ACTIVE DIRECTORY – Gestion des objets AD
+* SÉCURITÉ D’ACCÈS – Restriction d’utilisation via GPO
+* ACTIVE DIRECTORY – Mise en place d’une gestion AD commune
+* AD – Gestion des rôles FSMO
+* SÉCURITÉ – Pentesting de l’infrastructure
+
+---
+
 ### 5.2 Liste des tâches de chaque objectifs
+
+#### Objectif 1 – Firewall (Gestion du traffic commun)
+
+Tâches :
+
+* Analyse des flux nécessaires entre les deux entreprises
+* Création des alias de ports (AD, RDP, SSH, etc.)
+* Mise en place des règles firewall inter-entreprises
+* Tests de connectivité (ping, services AD, accès distant)
+* Ajustement des règles
+* Documentation
+
+---
+
+#### Objectif 2 – Audit surface d’attaque AD
+
+Tâches :
+
+* Installation de l’outil PingCastle
+* Lancement de l’audit Active Directory
+* Analyse des résultats
+* Identification des vulnérabilités
+* Documentation
+
+---
+
+#### Objectif 3 – Active Directory – Gestion des objets AD
+
+Tâches :
+
+* Analyse de la structure existante
+* Mise en place / amélioration du script de gestion des objets
+* Automatisation via tâche planifiée
+* Tests de fonctionnement
+* Documentation
+
+---
+
+#### Objectif 4 – Sécurité d’accès – Restriction d’utilisation
+
+Tâches :
+
+* Création des GPO de restriction
+* Application des GPO sur les OU cibles
+* Mise en place de tâches planifiées si nécessaire
+* Tests sur postes utilisateurs
+* Documentation
+
+---
+
+#### Objectif 5 – Active Directory – Gestion AD commune
+
+Tâches :
+
+* Analyse de l’architecture inter-entreprises
+* Configuration DNS nécessaire
+* Mise en place d’une relation AD (trust ou accès distant)
+* Tests d’accès inter-domaines
+* Documentation
+
+---
+
+#### Objectif 6 – AD – Rôles FSMO
+
+Tâches :
+
+* Identification des rôles FSMO
+* Vérification de leur répartition
+* Transfert ou validation des rôles
+* Tests de fonctionnement
+* Documentation
+
+---
+
+#### Objectif 7 – Pentesting
+
+Tâches :
+
+* Installation d’une machine Kali Linux
+* Mise en place de l’environnement de test
+* Scan réseau (nmap)
+* Enumération (enum4linux, outils AD)
+* Analyse des résultats
+* Documentation
+
+---
 
 ### 5.3 Organisation chronologique
 
+Jour 1 :
+
+* Analyse des objectifs
+* Organisation du sprint
+* Début configuration firewall
+
+Jour 2 :
+
+* Mise en place des règles firewall
+* Tests de communication inter-entreprises
+
+Jour 3 :
+
+* Lancement de l’audit Active Directory (PingCastle)
+* Début gestion des objets AD
+
+Jour 4 :
+
+* Mise en place des GPO de restriction
+* Tests utilisateurs
+
+Jour 5 :
+
+* Configuration de la gestion AD commune
+* Tests d’accès inter-domaines
+
+Jour 6 :
+
+* Gestion et validation des rôles FSMO
+* Vérifications globales AD
+
+Jour 7 :
+
+* Installation environnement de pentest (Kali Linux)
+* Début des scans réseau
+
+Jour 8 :
+
+* Analyse des résultats du pentest
+* Corrections mineures
+
+Jour 9 :
+
+* Mise à jour documentation
+* Tests globaux
+
+Jour 10 :
+
+* Préparation présentation
+* Revue de sprint
+
+---
+
 ### 5.4 Prérequis
+
+* Infrastructure réseau fonctionnelle (VLAN, routage, firewall)
+* Active Directory opérationnel
+* Accès aux ressources de l’autre entreprise
+* Plan d’adressage connu
+* Outils :
+
+  * pfSense
+  * Windows Server
+  * Kali Linux
+  * PingCastle
+  * GitHub / Obsidian
+
+---
 
 ### 5.5 Estimation du temps par objectifs
 
+| Objectif                   | Charge estimée |
+| -------------------------- | -------------- |
+| Firewall inter-entreprises | 4 JH           |
+| Audit AD                   | 2 JH           |
+| Gestion objets AD          | 2 JH           |
+| GPO sécurité               | 2 JH           |
+| AD commune                 | 3 JH           |
+| Rôles FSMO                 | 1.5 JH         |
+| Pentesting                 | 3.5 JH         |
+| **Total estimé**           | **18 JH**      |
+
+---
+
 ### 5.6 Estimation du temps par tâches
+
+*(Détail non réalisé – estimation globale par objectif utilisée)*
+
+---
 
 ### 5.7 Synthèse
 
+* Les flux inter-entreprises sont contrôlés et fonctionnels
+* La surface d’attaque Active Directory est identifiée
+* La gestion des objets AD est améliorée et automatisée
+* Des restrictions de sécurité sont appliquées via GPO
+* Une base de gestion AD commune est mise en place
+* Les rôles FSMO sont vérifiés et maîtrisés
+* Une première approche de pentesting est réalisée
+
+---
 
 ## 6. Sprint 6
 
