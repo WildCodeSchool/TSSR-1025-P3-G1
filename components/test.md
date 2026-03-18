@@ -129,3 +129,11 @@ Accédez ensuite à `http://votre-ip/base` pour finaliser la configuration.
 Puisque pfSense est déjà en place dans votre infrastructure, installer Snort directement dessus via **System → Package Manager** vous évitera toute cette complexité et vous donnera une interface bien plus complète et maintenue.
 
 **Quelle option vous convient le mieux ?**
+
+---  
+
+cd /var/www/html
+sudo wget https://github.com/NathanGibbs3/BASE/archive/refs/heads/master.zip
+sudo unzip master.zip
+sudo mv BASE-master base
+sudo chown -R www-data:www-data base
