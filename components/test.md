@@ -132,8 +132,26 @@ Puisque pfSense est déjà en place dans votre infrastructure, installer Snort d
 
 ---  
 
+Non, je ne suis pas sûr à 100% de cette URL ! Laissez-moi vérifier.L'URL que j'avais donnée était incorrecte, désolé ! Le projet BASE est maintenu sur GitHub par NathanGibbs3. Voici la bonne commande pour le télécharger :
+
+```bash
+cd /var/www/html
+sudo git clone https://github.com/NathanGibbs3/BASE.git base
+sudo chown -R www-data:www-data base
+```
+
+Ou via le téléchargement direct depuis GitHub :
+
+```bash
 cd /var/www/html
 sudo wget https://github.com/NathanGibbs3/BASE/archive/refs/heads/master.zip
 sudo unzip master.zip
 sudo mv BASE-master base
 sudo chown -R www-data:www-data base
+```
+
+Ensuite accédez à `http://votre-ip/base` pour finaliser la configuration.
+
+---
+
+Cela dit, je vous rappelle que l'option la plus simple reste **Snort directement dans pfSense** via le Package Manager — ça évite toute cette installation manuelle et c'est bien mieux maintenu. Vous souhaitez continuer avec BASE ou tenter la voie pfSense ? 🔍
