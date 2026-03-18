@@ -10,7 +10,6 @@ Seuls les éléments **complètement fonctionnels** (statut "Terminé") sont lis
   
 ## 2. Tableau de synthèse  
   
-## 2. Tableau de synthèse
 
 | ID | Nom Proxmox | Nom Machine | Type | OS | Fonction principale | Réseau | Adresse IP / CIDR | Disques | RAM |
 |----|-------------|------------|------|----|---------------------|--------|-------------------|--------|-----|
