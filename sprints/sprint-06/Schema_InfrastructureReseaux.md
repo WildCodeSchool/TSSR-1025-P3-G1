@@ -30,6 +30,8 @@ Seuls les éléments **complètement fonctionnels** (statut "Terminé") sont rep
 
 ### VLAN 120 - Serveurs AD
 
+| ID              | Nom Machine       | Type | Adresse IP        | Fonction                          | Réseau (vmbr/VLAN) |
+|-----------------|------------------|------|-------------------|-----------------------------------|--------------------|
 | DOM-AD-01       | DOM-AD-01        | VM   | 172.16.12.1/28    | Active Directory / DNS            | VLAN 120           |
 | DOM-DHCP-01     | DOM-DHCP-01      | VM   | 172.16.12.2/28    | DHCP                              | VLAN 120           |
 | DOM-WDS-01      | DOM-WDS-01       | VM   | 172.16.12.3/28    | Déploiement postes (WDS)          | VLAN 120           |
@@ -40,6 +42,8 @@ Seuls les éléments **complètement fonctionnels** (statut "Terminé") sont rep
 
 ### VLAN 130 - Serveurs
 
+| ID              | Nom Machine       | Type | Adresse IP        | Fonction                          | Réseau (vmbr/VLAN) |
+|-----------------|------------------|------|-------------------|-----------------------------------|--------------------|
 | DOM-GLPI-01     | DOM-GLPI-01      | CT   | 172.16.13.1/28    | GLPI                              | VLAN 130           |
 | DOM-LOGS-01     | DOM-LOGS-01      | CT   | 172.16.13.2/28    | Graylog                           | VLAN 130           |
 | DOM-ZABBIX-01   | DOM-ZABBIX-01    | VM   | 172.16.13.3/28    | Supervision                       | VLAN 130           |
@@ -49,6 +53,8 @@ Seuls les éléments **complètement fonctionnels** (statut "Terminé") sont rep
 
 ### VLAN Utilisateurs
 
+| ID              | Nom Machine       | Type | Adresse IP        | Fonction                          | Réseau (vmbr/VLAN) |
+|-----------------|------------------|------|-------------------|-----------------------------------|--------------------|
 | PC-ADMIN-01     | PC-ADMIN-01      | VM   | 172.16.6.14       | Poste administration              | VLAN 60            |
 ---
 
