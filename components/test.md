@@ -114,9 +114,9 @@ sudo apt install snort apache2 php php-mysql libapache2-mod-php mysql-server php
 
 ```bash
 cd /var/www/html
-sudo wget https://github.com/NathanGibbs3/BASE/releases/download/1.4.9/base-1.4.9.tar.gz
-sudo tar -xzf base-1.4.9.tar.gz
-sudo mv base-1.4.9 base
+sudo wget https://github.com/NathanGibbs3/BASE/releases/download/1.4.5/base-1.4.5.tar.gz
+sudo tar -xzf base-1.4.5.tar.gz
+sudo mv base-1.4.5 base
 sudo chown -R www-data:www-data base
 ```
 
