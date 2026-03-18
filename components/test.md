@@ -97,3 +97,35 @@ sudo systemctl enable --now snort
 ---
 
 **Conseil :** Pour les règles de détection, vous pouvez utiliser les règles communautaires gratuites disponibles sur [snort.org](https://www.snort.org/downloads#rules) ou les règles **Emerging Threats** via le paquet `snort-rules-default`.
+
+---  
+
+## Le paquet `acidbase` n'existe plus dans Ubuntu 24.04
+
+Il a été retiré des dépôts. Installez uniquement Snort et BASE séparément :
+
+### Installez Snort + les dépendances de BASE :
+
+```bash
+sudo apt install snort apache2 php php-mysql libapache2-mod-php mysql-server php-gd
+```
+
+### Puis téléchargez BASE manuellement :
+
+```bash
+cd /var/www/html
+sudo wget https://github.com/NathanGibbs3/BASE/releases/download/1.4.9/base-1.4.9.tar.gz
+sudo tar -xzf base-1.4.9.tar.gz
+sudo mv base-1.4.9 base
+sudo chown -R www-data:www-data base
+```
+
+Accédez ensuite à `http://votre-ip/base` pour finaliser la configuration.
+
+---
+
+### Cela dit, je vous recommande vraiment l'option pfSense
+
+Puisque pfSense est déjà en place dans votre infrastructure, installer Snort directement dessus via **System → Package Manager** vous évitera toute cette complexité et vous donnera une interface bien plus complète et maintenue.
+
+**Quelle option vous convient le mieux ?**
