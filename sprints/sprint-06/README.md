@@ -32,9 +32,9 @@ Ce sprint est le sprint final.
 
 | Membre    | Rôle principal                   |
 | --------- | -------------------------------- |
-| Christian | Documentation / Pentesting     |
-| Franck    | Documentation / Pentesting          |
-| Matthias  | Documentation / Pentesting |
+| Christian | Documentation / Pentesting       |
+| Franck    | Documentation / Pentesting       |
+| Matthias  | Documentation / Pentesting       |
 
 ---
 
