@@ -738,6 +738,9 @@ Jour 10 :
 ## 6. Sprint 6
 
 ### 6.1 Liste des objectifs principaux
+* Pentesting
+* Finalisation de la documentation
+
 
 ### 6.2 Liste des tâches de chaque objectifs
 
