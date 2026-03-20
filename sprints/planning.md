@@ -736,20 +736,117 @@ Jour 10 :
 ---
 
 ## 6. Sprint 6
-
+ 
+Ce sprint est le sprint final du projet. Il se concentre sur la finalisation du pentesting de l'infrastructure, la clôture de la documentation et la réalisation de la synthèse de rendu de projet.
+ 
 ### 6.1 Liste des objectifs principaux
-* Pentesting
-* Finalisation de la documentation
-
-
+ 
+* SÉCURITÉ – Pentesting de l'infrastructure *(prioritaire)*
+* Documentation – Finalisation de la documentation *(prioritaire)*
+* Synthèse – Réalisation de la synthèse de rendu de projet *(prioritaire)*
+ 
+---
+ 
 ### 6.2 Liste des tâches de chaque objectifs
-
+ 
+#### Objectif 1 – Pentesting
+ 
+Tâches :
+ 
+* Déploiement d'une machine Kali Linux
+* Mise en place de l'environnement de test
+* Reconnaissance réseau avec nmap
+* Analyse et exploitation avec Kraken
+* Analyse des résultats et identification des vulnérabilités
+* Documentation des tests et des résultats
+ 
+---
+ 
+#### Objectif 2 – Finalisation de la documentation
+ 
+Tâches :
+ 
+* Relecture et correction de l'ensemble des fichiers de documentation
+* Mise à jour des fichiers LLD / HLD / DEX selon les évolutions du sprint
+* Vérification de la cohérence de la documentation globale
+* Publication finale sur GitHub
+ 
+---
+ 
+#### Objectif 3 – Synthèse de rendu de projet
+ 
+Tâches :
+ 
+* Rédaction de la synthèse globale du projet
+* Bilan des objectifs atteints et non atteints
+* Préparation du rendu final
+ 
+---
+ 
 ### 6.3 Organisation chronologique
-
+ 
+Jour 1 :
+ 
+* Analyse des objectifs du sprint final
+* Organisation et répartition des tâches
+* Déploiement de la machine Kali Linux
+ 
+Jour 2 :
+ 
+* Lancement des scans réseau (nmap)
+* Début des tests d'intrusion (Kraken)
+ 
+Jour 3 :
+ 
+* Poursuite du pentesting
+* Relecture de la documentation existante
+ 
+Jour 4 :
+ 
+* Analyse des résultats du pentesting
+* Corrections et ajustements de la documentation
+ 
+Jour 5 :
+ 
+* Rédaction de la synthèse de rendu de projet
+* Finalisation de la documentation
+* Revue et validation globale
+ 
+---
+ 
 ### 6.4 Prérequis
+ 
+* Infrastructure réseau complète et opérationnelle
+* Résultats partiels du pentesting du Sprint 5 disponibles
+* Accès à l'ensemble de la documentation GitHub
+* Outils :
+  * Kali Linux
+  * nmap
+  * Kraken
 
+ 
+---
+ 
 ### 6.5 Estimation du temps par objectifs
-
+ 
+| Objectif         | Charge estimée |
+| ---------------- | -------------- |
+| Pentesting       | 8 JH           |
+| Documentation    | 4 JH           |
+| Synthèse rendu   | 3 JH           |
+| **Total estimé** | **15 JH**      |
+ 
+---
+ 
 ### 6.6 Estimation du temps par tâches
+ 
 
+ 
+---
+ 
 ### 6.7 Synthèse
+ 
+* Le pentesting de l'infrastructure est réalisé à 75% — les tests d'intrusion ont été menés avec nmap et Kraken sur une machine Kali Linux dédiée
+* La documentation est finalisée et publiée
+* La synthèse de rendu de projet est rédigée et livrée
+* Ce sprint conclut le projet BillU
