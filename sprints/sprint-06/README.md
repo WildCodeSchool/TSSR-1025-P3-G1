@@ -22,6 +22,7 @@ Voici une version **Markdown propre**, au niveau du Sprint 4, avec un peu plus d
 
 * Pentesting → 75%
 * Documentation → Terminé
+* Réalisation de la synthèse de rendu de projet → Terminé
 
 Ce sprint est le sprint final.
 
