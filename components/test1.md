@@ -1,13 +1,10 @@
 [
   {
-    "toplevel_name": "Favoris BillU"
-  },
-  {
-    "name": "GitHub - WildCodeSchool/TSSR-1025-P3-G1",
+    "name": "GitHub - WildCodeSchool",
     "url": "https://github.com/WildCodeSchool/TSSR-1025-P3-G1"
   },
   {
-    "name": "Intranet BillU - Accueil",
+    "name": "Intranet BillU",
     "url": "http://172.16.13.6/intranet/"
   },
   {
