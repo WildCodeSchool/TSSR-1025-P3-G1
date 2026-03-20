@@ -1,32 +1,25 @@
-{
-  "policies": {
-    "DisplayBookmarksToolbar": "always",
-    "Bookmarks": [
-      {
-        "Title": "Mail",
-        "URL": "http://dom-mail-01",
-        "Placement": "toolbar"
-      },
-      {
-        "Title": "GLPI",
-        "URL": "http://dom-glpi-01",
-        "Placement": "toolbar"
-      },
-      {
-        "Title": "FreePBX",
-        "URL": "http://172.16.13.7",
-        "Placement": "toolbar"
-      },
-      {
-        "Title": "Intranet",
-        "URL": "http://172.16.13.6/intranet",
-        "Placement": "toolbar"
-      },
-      {
-        "Title": "Site Vitrine",
-        "URL": "https://www.billu.lan",
-        "Placement": "toolbar"
-      }
-    ]
+[
+  {
+    "toplevel_name": "Favoris Billu"
+  },
+  {
+    "name": "Mail",
+    "url": "http://dom-mail-01"
+  },
+  {
+    "name": "GLPI",
+    "url": "http://dom-glpi-01"
+  },
+  {
+    "name": "FreePBX",
+    "url": "http://172.16.13.7"
+  },
+  {
+    "name": "Intranet",
+    "url": "http://172.16.13.6/intranet"
+  },
+  {
+    "name": "Site Vitrine",
+    "url": "https://www.billu.lan"
   }
-}
+]
