@@ -12,6 +12,7 @@ Voici une version **Markdown propre**, au niveau du Sprint 4, avec un peu plus d
 
 * Pentesting
 * Finalisation de la documentation
+* Réalisation de la synthèse de rendu de projet
 
 ---
 
