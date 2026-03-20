@@ -6,7 +6,7 @@ Voici une version **Markdown propre**, au niveau du Sprint 4, avec un peu plus d
 
 ---
 
-# 1. Les objectifs pris par le groupe sur le sprint 5
+# 1. Les objectifs pris par le groupe sur le sprint 6
 
 ## 1.1 Prioritaire :
 
